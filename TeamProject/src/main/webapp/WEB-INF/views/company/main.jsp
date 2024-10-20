@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="icon" type="image/png" href="/img/favicon1.png" />
+<link rel="icon" type="image/png" href="/img/favicon.png" />
 
 <style>
 
@@ -240,7 +240,7 @@ footer {
 
 
 <div class= "div2">
-<a href="/Company/Main"><img src="/img/exaplebanner.png" alt="예시 배너"></a>
+<a href="/Individual/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
 </div>
 
 

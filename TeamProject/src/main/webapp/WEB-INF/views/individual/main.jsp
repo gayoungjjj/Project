@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="icon" type="image/png" href="/img/favicon1.png" />
+
 
 <style>
 
@@ -239,7 +241,7 @@ footer {
  </div>
  
 <div class= "div2">
-<a href="/Individual/Main"><img src="/img/exaplebanner.png" alt="예시 배너"></a>
+<a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시배너"></a>
 </div>
 
 
@@ -264,7 +266,7 @@ footer {
         <div class="description"> 신입/경력 영입합니다 </div>
     </div>
     <div class="job-card">
-        <img src="/img/로고.png" alt="회사 1">
+        <img src="/img/" alt="사진">
         <div class="company-name">PICK ME(픽미)</div>
         <div class="description">테스트용 </div>
     </div>
