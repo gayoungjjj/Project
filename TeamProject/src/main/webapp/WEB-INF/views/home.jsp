@@ -5,11 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style>
+ .firstcheck { display : inline-block;
+ 			   margin-right: 10px ;}
+
+</style>
+
 </head>
 <body>
    <h2>사이트 이름</h2>
-   <div><a href="/Individual/Login">개인회원</a></div>
-   <div><a href="/Company/Login">기업회원</a></div>
+   <div class = "firstcheck"><a href="/Individual/Login">개인회원</a></div>
+   <div class = "firstcheck"><a href="/Company/Login">기업회원</a></div>
        <table>
          <tr>
            <td>아이디</td>

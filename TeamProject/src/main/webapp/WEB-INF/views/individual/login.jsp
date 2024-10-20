@@ -5,11 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style>
+ .firstcheck { display : inline-block; 
+ 			   margin-right: 10px ;}
+
+</style>
+
 </head>
 <body>
    <h2>사이트 이름</h2>
-   <div><a href="/Individual/Login">개인회원</a></div>
-   <div><a href="/Company/Login">기업회원</a></div>
+    <div class = "firstcheck"><a href="/Individual/Login">개인회원</a></div>
+   <div class = "firstcheck"><a href="/Company/Login">기업회원</a></div>
    <!-- 기능 구현
    1. 로그인할때 db에서 id, 암호 확인하는 것
    2. 로그인 후 개인_메인화면으로 이동하게 하는 것  -->
