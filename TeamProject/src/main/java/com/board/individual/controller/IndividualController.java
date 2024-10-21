@@ -39,14 +39,18 @@ public class IndividualController {
     HttpSession session = request.getSession();
     session.setAttribute("login", vo);
 
-    if (vo == null) {
-        // 로그인 실패 처리
-        request.setAttribute("errorMessage", "Invalid username or password.");
-        return "individual/login"; // 로그인 페이지로 돌아가기
-    } else {
+    if (vo != null) {
         // 로그인 성공 처리
-        session.setAttribute("login", vo);
-        return  "individual/main" ; // 메인 페이지로 이동
+    	session.setAttribute("login", vo);
+    	return "redirect:/Individual/Main";
+    	
+       
+    } else {
+    	// 로그인 실패 처리
+    	 request.setAttribute("errorMessage", "Invalid username or password.");
+         return "individual/login"; // 로그인 페이지로 돌아가기
+        
+      
     }
 	}
 		

@@ -40,19 +40,23 @@ public class CompanyController {
 
         CompanyVo vo = companyMapper.login(userid, password);
         System.out.println(vo);
-
-        HttpSession session = request.getSession();
+        
+    	HttpSession session = request.getSession();
         session.setAttribute("login", vo);
+        
+       
 
-        if (vo == null) {
-            // 로그인 실패 처리
-            request.setAttribute("errorMessage", "Invalid username or password.");
-            System.out.println("실패");
-            return "company/login"; // 로그인 페이지로 돌아가기
+        if (vo != null) {
+        	 // 로그인 성공 처리
+        	session.setAttribute("login", vo);
+        	return "redirect:/Company/Main";
+            			
         } else {
-            // 로그인 성공 처리
-            session.setAttribute("login", vo);
-            return  "company/main" ; // 메인 페이지로 이동
+        	// 로그인 실패 처리
+        	 request.setAttribute("errorMessage", "Invalid username or password.");
+             System.out.println("실패");
+            
+             return "company/login"; // 로그인 페이지로 돌아가기
         }
     }
 	
