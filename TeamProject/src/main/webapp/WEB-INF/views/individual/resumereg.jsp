@@ -10,6 +10,7 @@
 
 <style>
 
+/*공통*/
 * {
   box-sizing: border-box;
 }
@@ -178,30 +179,30 @@ body {
    justify-content: center; 
   }
   
+  /* 테스트용 모집공고 css <끝>*/
+  
+  
 .div3{
 background-color: #F7F7F7;
 padding-top: 20px;
 padding-bottom: 20px;
-text-align: center;
+
 }
   
- .div3 div {
- background-color: white;
- 
- }
 
-  .resume-content {
-    max-width: 1200px; /* 최대 너비 설정 */
-    margin: 0 auto; /* 수평 중앙 정렬 */
-    border: 1px solid #ccc; /* 테두리 추가 (선택 사항) */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 (선택 사항) */
+
+.test1{
+width:150px;
+height: 50px;
+border: 1px #DDDDDD solid}
+
+
+.test1div{
+background-color:white;
+padding: 10px 10px;
+border: 1px solid #DBE0E9;
 
 }
-
- .resume-content table{
-   display: inline-flex;
- }
-
 
 
 
@@ -219,7 +220,7 @@ footer {
    border-top: 1px #F4F4F4  solid;    
  		} 
 
-
+ /* (공통) footer css<끝>*/   
 
 
   
@@ -267,126 +268,86 @@ footer {
  <body>
  
  <div class="div3">
+ <form action="/submit-resume" method="POST">
  
- <h2> 이력서 작성</h2>
- <div class ="resume-content" style="border: 1px black solid">
-    <form action="/submit-resume" method="POST">
+  <h3>인적사항</h3> 
+    <table class ="test1div" >
+    <tr>
+       <td>
+          <td rowspan="2"> <input class="test1" type="text" value="사진"  style="width:103px; height:103px;"><td>
+           <input class="test1" type="text" value="이름">
+       	   <input class="test1" type="text" value="주민번호">
+           <input class="test1" type="text" value="성별">
+           <input class="test1" type="text" value="이메일"><br>
+           <input class="test1" type="text" value="전화번호">
+           <input class="test1" type="text" value="핸드폰">
+           <input class="test1" type="text" value="주소"></td>
+    </tr>
+	</table>
+
+  <h3>학력사항</h3> 
+    <table class ="test1div">
+    <tr>
+       <td><input class="test1" type="text" value="제학기간">
+       	   <input class="test1" type="text" value="학력사항">
+           <input class="test1" type="text" value="전공">
+           <input class="test1" type="text" value="학점"></td>
+    </tr>
+	</table>
+    
+
+<h3>자격증</h3> 
+    <table class ="test1div">
+       <tr>
+         <td>
+       	   <input class="test1" type="text" value="자격증1">
+       	   <input class="test1" type="text" value="발행처">
+           <input class="test1" type="text" value="취득월">
+        </td>
+      </tr>
+	</table>
+
+
+
+<h3>보유기술 및 능력</h3> 
+    <table class ="test1div">
+      <tr>
+        <td>
+       	   <input class="test1" type="text" value="보유 기술및 능력1">
+		   <input class="test1" type="text" value="보유 기술및 능력2">
+		   <input class="test1" type="text" value="보유 기술및 능력3">
+		   <input class="test1" type="text" value="보유 기술및 능력4">
+		   <input class="test1" type="text" value="보유 기술및 능력5">
+	    </td>
+      </tr>
+	</table>
+
+   
+   
+<h3>포트폴리오</h3> 
+    <table class ="test1div">
+      <tr>
+        <td>
+		   <input class="test1" type="text" value="주소입력">
+		   <input class="test" type="file" value="파일첨부">
+        </td>
+      </tr>
+	</table>
   
 
-    <p>기본정보</p>
-    <table border="1">
-    <tr>
-        <td rowspan="5">사진</td> 
-        <td>이름</td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-    </tr>
-    <tr>
-        <td>주민번호</td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-    </tr>
-    <tr>
-        <td>핸드폰</td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-    </tr>
-    <tr>
-        <td>주소</td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-    </tr>
-    <tr>
-        <td>이메일</td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-    </tr>
- </table>  
-    
- 	<p>학력사항</p>
- 	<table border="1">
-    <tr>
-        <td>제학기간</td>
-        <td>학력사항</td>
-        <td>전공</td>
-        <td>학점</td>
-    </tr>
-    <tr>
-        <td><input type="text" value="이름을 입력하세요"></td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-    </tr>
-    <tr>
-        <td><input type="text" value="이름을 입력하세요"></td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-    </tr>
+ <h3>자기소개서</h3> 
+    <table class ="test1div">
+      <tr>
+        <td>
+		   <textarea class = "test1" rows="10" cols="50" placeholder="자기소개서를 작성하세요..."></textarea></td>					
+      </tr>
 	</table>
 
-
-    <p>자격증/면허증</p>   
-    <table border="1">
-    <tr>
-        <td>자격증/면허증</td>
-        <td>발행처/발행기관</td>
-        <td>합격구분</td>
-        <td>취득일</td>
-    </tr>
-    <tr>
-        <td><input type="text" value="이름을 입력하세요"></td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-    </tr>
-	</table>
-   
-    <p>보유기술 및 능력</p>   
-    <table border="1">
-    <tr>
-        <td>보유 기술및 능력</td>
-        <td>수준</td>
-        <td>상세내용</td>
-    </tr>
-	<tr>
-        <td><input type="text" value="이름을 입력하세요"></td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-    </tr>
-    <tr>
-        <td><input type="text" value="이름을 입력하세요"></td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-        <td><input type="text" value="이름을 입력하세요"></td>
-    </tr>
-	</table>
-
-    <p>포트폴리오<p>   
-    <table border="1">
-    <tr>
-     <td><input type="text" value="주소입력"></td>
-    </tr>
-	</table>
-	
-	 <p>자기소개서<p>   
-    <table border="1">
-    <tr>
-     <td><textarea rows="10" cols="50" placeholder="자기소개서를 작성하세요..."></textarea></td>
-    </tr>
-	</table>
-    
-    <p><p>
-    <table>
-    <tr>
-    <td><input type="submit"></td>
-    <td><input type="button" value="이전으로"></td>    
-    </tr>
-    
-    </table>
-   
-
-   
-   
     </form>
 </div>
    
    
-</div>   
+ 
  <!-- 이름 추가, 아이디 x ,공고제목 , 경력 ,학력 ,기술 ,자격증 ,포트폴리오 , 자기소개서 --> 
   
   
