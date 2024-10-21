@@ -1,44 +1,66 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick Me</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; 
+            margin: 0;
+            background-color: #e0f7fa; 
+        }  
+        h2 {
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%; 
+            max-width: 600px; 
+        }
+        .button {
+            flex: 1; 
+            margin: 0 10px; 
+            padding: 20px; 
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 18px; 
+            transition: background-color 0.3s;
+        } 
+        .individual {
+            background-color: #00796b; 
+        }
+        .company {
+            background-color: #28a745; 
+        }
+        .individual:hover {
+            background-color: #004d40; 
+        }
+        .company:hover {
+            background-color: #218838; 
+        }
+        a {
+            margin-top: 20px;
+            color: #00796b; 
+            text-decoration: none; 
+        }
+    </style>
 </head>
 <body>
-   <h2>사이트 이름</h2>
-   <div><a href="/Individual/Login">개인회원</a></div>
-   <div><a href="/Company/Login">기업회원</a></div>
-       <table>
-         <tr>
-           <td>아이디</td>
-           <td><input type="text" name=""  value="" /></td>
-         </tr>
-         <tr>
-           <td>암호</td>
-           <td><input type="password" name="" value="" /></td>
-         </tr>
-         <tr>
-           <td colspan="2" >
-             <input type="submit" value="로그인" />
-           </td>
-           <td colspan="2">
-             <input type="button" value="회원가입" id="goSignup"/>
-           </td>
-         </tr>
-       </table>
-       
-       <!-- 기능 구현 
-       1. 로그인을 누르면 각 화면으로 가는 것
-       2. 회원가입 누르면 각 화면으로 가는 것 -->
-       
-       <!-- 로그인 기능 전 화면 확인 용 -->
-       <div><a href="/Individual/Main">개인메인화면</a></div>
-       <div><a href="/Company/Main">기업메인화면</a></div>
+	<h2>Pick Me</h2>
+    <h2>어떤 회원 이신가요?</h2>
+    <div class="button-container">
+        <button class="button individual" onclick="location.href='/Individual/Login'">개인 로그인</button>
+        <button class="button company" onclick="location.href='/Company/Login'">기업 로그인</button>
+    </div>
 </body>
 </html>
-
-
-
-

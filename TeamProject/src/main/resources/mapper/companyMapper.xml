@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.company.mapper.CompanyMapper">  
+	
+  <select id="login">
+	SELECT USER_ID, USERNAME, COMPNAME, EMAIL, PASSWORD, PHONE_NUMBER, J_DATE
+	FROM   COMPANY_USERS
+	WHERE  USER_ID  = #{param1,jdbcType=VARCHAR}
+    AND    PASSWORD = #{param2,jdbcType=VARCHAR}
+   </select>
+   
+  <select id="getUserById" parameterType="String" resultType="com.board.company.vo.CompanyVo">
+    SELECT USER_ID, USERNAME, COMPNAME, EMAIL, PASSWORD, PHONE_NUMBER, J_DATE
+    FROM   COMPANY_USERS
+    WHERE  USER_ID = #{user_id}
+  </select>
+  
+  <!-- 회원가입 처리 쿼리 -->
+  <insert id="signup" parameterType="com.board.company.vo.CompanyVo">
+    INSERT INTO COMPANY_USERS (
+    	USER_ID,
+        USERNAME,
+        COMPNAME,
+        EMAIL,
+        PASSWORD,
+        PHONE_NUMBER,
+        J_DATE
+        )
+    VALUES (
+        #{user_id, jdbcType=VARCHAR}, 
+        #{username, jdbcType=VARCHAR}, 
+        #{compname, jdbcType=VARCHAR}, 
+        #{email, jdbcType=VARCHAR}, 
+        #{password, jdbcType=VARCHAR}, 
+        #{phone_number, jdbcType=VARCHAR},
+        SYSDATE
+        )
+  </insert>
+
+  <!-- ID 중복 확인 쿼리 -->
+  <select id="findByUserId" parameterType="com.board.company.vo.CompanyVo">
+    SELECT USER_ID, USERNAME, COMPNAME, EMAIL, PASSWORD, PHONE_NUMBER, J_DATE
+    FROM   COMPANY_USERS
+    WHERE  USER_ID = #{user_id}
+  </select>
+  
+  <update id="update">
+    UPDATE COMPANY_USERS
+    SET    PASSWORD     = #{password, jdbcType=VARCHAR},
+           USERNAME     = #{username},
+           EMAIL        = #{email},
+           PHONE_NUMBER = #{phone_number, jdbcType=VARCHAR}
+    WHERE  USER_ID    = #{user_id}
+  </update>
+  
+  <delete id="delete">
+    DELETE FROM COMPANY_USERS
+    WHERE  USER_ID = #{user_id, jdbcType=VARCHAR}
+  </delete>
+  
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
