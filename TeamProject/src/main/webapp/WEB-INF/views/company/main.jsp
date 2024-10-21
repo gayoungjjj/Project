@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+  table {border : 1px solid black;}
+  td    {border : 1px solid black;}
+</style>
 </head>
 <body>
  <div>
@@ -33,6 +38,31 @@
    <ul><a href="cs">고객센터</a></ul>
   </nav>
  </div>
+ 
+ <main>
+   <h2>공고 게시판</h2>
+    <table>
+     <tr>
+      <td>공고번호</td>
+      <td>제목</td>
+      <td>기업명</td>
+      <td>마감기한</td>
+     </tr>
+     
+     <c:forEach var="main" items="${mainList}">
+      <tr>
+       <td>${ main.aplnum   }</td>
+       <td>
+       <a href="/Company/View?aplnum=${main.aplnum}">
+       ${ main.post_id  }</a>
+       </td>
+       <td>${ main.compname }</td>
+       <td>${ main.deadline }</td>
+      </tr>
+     </c:forEach>
+    </table>
+ 
+ </main>
  
  <footer>
   <div class="footer1">

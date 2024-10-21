@@ -8,9 +8,7 @@
 </head>
 <body>
     <main>
-        <a href="/Individual/Signup"><input type="button" value="개인 회원가입" /></a>
-        <a href="/Company/Signup"><input type="button" value="기업 회원가입" /></a>
-        
+        <h2>개인 회원가입</h2>
         <!-- 기능 구현
         1. form action 기능
         2. 아이디 중복확인
@@ -50,7 +48,7 @@
         </form>
         <!-- 기능구현
         1. 홈화면으로 이동 -->
-        <a href="/">홈으로</a>
+        <a href="./home">홈으로</a>
     </main>
 </body>
 </html>

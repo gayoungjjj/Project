@@ -18,14 +18,4 @@ public class IndividualController {
 		return "individual/main" ;
 	}
 	
-	// Individual/Signup
-	@RequestMapping("/Signup")
-	public String signup() {
-		return "/individual/signup";
-	}
-	
-	@RequestMapping("/")
-	public String home() {
-		return "/views/home";
-	}
 }
