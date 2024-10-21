@@ -125,13 +125,6 @@ VALUES ('sky3','하늘이3','sky3@gmail.com', '1234', '010-1434-5678', '부산�
 
 
 
-INSERT INTO users ( USER_ID,  USERNAME,  EMAIL,  PASSWORD,  PHONE_NUMBER,  ADDRESS) 
-VALUES ('sky','하늘이','sky@gmail.com', '1234', '010-1234-5678', '부산시 해운대구');
-INSERT INTO users ( USER_ID,  USERNAME,  EMAIL,  PASSWORD,  PHONE_NUMBER,  ADDRESS) 
-VALUES ('sky2','하늘이2','sky2@gmail.com', '1234', '010-1334-5678', '부산시 동구');
-INSERT INTO users ( USER_ID,  USERNAME,  EMAIL,  PASSWORD,  PHONE_NUMBER,  ADDRESS) 
-VALUES ('sky3','하늘이3','sky3@gmail.com', '1234', '010-1434-5678', '부산시 남구');
-
 commit;
 
 

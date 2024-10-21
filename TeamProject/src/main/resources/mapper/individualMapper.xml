@@ -3,19 +3,19 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.board.individual.mapper.IndividualMapper">  
 	<select  id="login">
-    SELECT
-   	 	USER_ID,
-    	USERNAME,
-    	COMPNAME,
+     SELECT
+	    USER_ID,
+   		USERNAME,
     	EMAIL,
     	PASSWORD,
     	PHONE_NUMBER,
-    	J_DATE
-	from
-   		 COMPANY_USERS
-	WHERE 
-	    USER_ID = #{ param1,jdbcType=VARCHAR }
-	 AND
-	    PASSWORD = #{ param2,jdbcType=VARCHAR }
+   		ADDRESS,
+   		J_DATE
+	FROM
+	    USERS
+	 WHERE 
+        USER_ID = #{param1,jdbcType=VARCHAR}
+    AND
+        PASSWORD = #{param2,jdbcType=VARCHAR}
    </select>
 </mapper>

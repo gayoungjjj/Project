@@ -47,6 +47,7 @@ public class CompanyController {
         if (vo == null) {
             // 로그인 실패 처리
             request.setAttribute("errorMessage", "Invalid username or password.");
+            System.out.println("실패");
             return "company/login"; // 로그인 페이지로 돌아가기
         } else {
             // 로그인 성공 처리

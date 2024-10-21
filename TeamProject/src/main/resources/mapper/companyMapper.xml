@@ -8,25 +8,24 @@
 
 <mapper namespace="com.board.company.mapper.CompanyMapper">  
 	
-	
-	
-	<select id="login" >
-		
+
+   <select  id="login">
     SELECT
-	    USER_ID,
-   		USERNAME,
+   	 	USER_ID,
+    	USERNAME,
+    	COMPNAME,
     	EMAIL,
     	PASSWORD,
     	PHONE_NUMBER,
-   		ADDRESS,
-   		J_DATE
-	FROM
-	    USERS
-	 WHERE 
-        USER_ID = #{param1,jdbcType=VARCHAR}
-    AND
-        PASSWORD = #{param2,jdbcType=VARCHAR}
+    	J_DATE
+	from
+   		 COMPANY_USERS
+	WHERE 
+	    USER_ID = #{ param1,jdbcType=VARCHAR }
+	 AND
+	    PASSWORD = #{ param2,jdbcType=VARCHAR }
    </select>
+   
    
    
 </mapper>
