@@ -66,6 +66,12 @@ public class IndividualController {
 		return "/individual/signup";
 	}
 	
+	//Individual/Resumereg
+	@RequestMapping("/Resumereg")
+	public String resumereg() {
+		return "individual/resumereg";
+	}
+	
 	@RequestMapping("/")
 	public String home() {
 		return "/views/home";
