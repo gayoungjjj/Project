@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
-<link rel="icon" type="image/png" href="/img/favicon1.png" />
+<link rel="icon" type="image/png" href="/img/favicon.png" />
 </head>
 <body>
     <main>

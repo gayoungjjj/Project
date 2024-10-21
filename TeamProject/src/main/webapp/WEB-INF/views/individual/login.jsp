@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="icon" type="image/png" href="/img/favicon1.png" />
+<link rel="icon" type="image/png" href="/img/favicon.png" />
 
 <style>
  .firstcheck { display : inline-block; 

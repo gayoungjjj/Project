@@ -5,44 +5,54 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="icon" type="image/png" href="/img/favicon1.png" />
+<link rel="icon" type="image/png" href="/img/favicon.png" />
 
 
 <style>
 
-/*기본 css*/
 * {
-  margin-left: 0;
-  margin-right:0;
-  padding: 0;
   box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    min-width:1320px;
+    margin: 0 auto;
+    overflow-x: auto;
 }
 
 /* (공통) 상단(로고,검색창 , 메뉴 , 로그아웃...) css <시작> */
 
 .div1 {
+  margin-top:-35px;
   display: flex; 
-  align-items: center; 
-  padding-left: 200px;
-  margin-top:-30px;
+   align-items: center; 
+  justify-content: center; 
   border-bottom : 1px solid #E8E8E8;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width:100%;
+  padding: 20px;
+ 
+  
  
 }
 
+  .leftmenu,.rightmenu {white-space:nowrap;}
+
+
+
 .logo img {
-  width: 200px; 
-  height: 120px; 
-  margin-right: 0px; 
+  width:215px; 
+  height:auto; 
+  margin-left: 30px;
+  margin-right: -5px;
 }
 
 
 .search {
   position: relative;
-  width: 400px; 
-  padding-left:10px;
-  margin-right: 20px;
-  margin-top: 30px;
+  width: 450px; 
+  margin-top: 50px;
 }
 
 .search input {
@@ -64,7 +74,8 @@
 
 
 .headernav {
-  margin-top: 30px;
+  width:1320px;
+  margin-top: 60px;
   margin-left: -600px; 
   margin-bottom: -80px;
   display: flex; 
@@ -74,12 +85,11 @@
 
 
 .headernav ul {
-
   list-style: none; 
   display: flex; 
-  gap: 20px; 
+  
   margin-top:30px; 
-  padding: 0; 
+ 
 }
 
 .headernav a {
@@ -87,78 +97,75 @@
   color:black;
 }
 
+.leftmenu {
+  gap: 20px; 
+  padding: 0; 
+  margin-left:30px;
+}
 
-.rightmenu { 
-  margin-left:730px;
+
+.rightmenu {
+  padding-top:10px;
+  margin-left:450px;
+  margin-right:auto;
+  gap:10px;
   font-size: 13px;
-
+ 
 }
 
 /* 상단 css <끝> 10.20 기준 1차 
-
-깔끔하게 코드 정리해야함 = 필요없는 부분 삭제및 정리
-메뉴(카테고리) 폰트 찾아야함
-좌우 비율 맞춰야함
-검색창 = 꾸미기용 없으면 너무 허전함 
-
-*/
-
 
 
 
 
 /* 꾸미기용 배너(공간채우기용)*/
 .div2 {
-   margin-top: 20px;
-
+  display: flex; 
+  margin-top: 20px;
+  justify-content: center;
 }
 .div2 img {
-  width: 78%; /* 원하는 너비로 설정 */
-  height: auto; /* 비율을 유지하면서 높이 자동 조정 */
-  margin-left: 200px;
+  width:  1100px; 
+  height: auto; 
+  margin-bottom: 20px ;
 }
 
 
-
-
-
-/* 테스트용 모집공고 css <시작> */
+/* 테스트용 모집공고 css <시작>*/
 
 .legnav {
-   margin-top:20px;
-   display: flex;
-   flex-wrap: wrap; /* 줄 바꿈을 허용 */
-   justify-content: center; /* 중앙 정렬 */
-   padding-left: 200px;
-   padding-right: 200px;
+   padding-top:20px;
+   display: grid;
+   grid-template-columns: repeat(4, 250px); /* 3개의 열, 각 100px */
+   justify-content: center;
+   gap:8px;
    background-color: #F7F7F7;
-}
+   padding-bottom: 20px;
+  }
+
+
 
 .job-card {
    border: 1px solid #ccc;
    border-radius: 8px;
-   width: 200px;
-   margin: 10px;
-   padding: 10px;
    text-align: center;
    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-   flex: 0 0 calc(25% - 20px); /* 한 줄에 4개 배치 */
-   box-sizing: border-box; /* 패딩과 마진을 포함한 너비 계산 */
+   box-sizing: border-box; 
    background-color: white;
-   height: 300px;
- }
+   height: 220px;
+   }
 
 .job-card img {
-   width: 100%;
-   height: 150px;
-   object-fit: cover;
+   max-width: 200px;
+   height: 100px;
+   object-fit: cover ;
    border-radius: 8px 8px 0 0;
-               }
+   }
 
 .company-name {
    font-weight: bold;
    margin: 5px 0;
-               }
+    }
 
 .description {
    margin-top:10px;
@@ -168,18 +175,12 @@
    display: flex;
    align-items: center; 
    justify-content: center; 
-			  }
-/* 테스트용 모집공고 css <끝> 
-상의 필요함 메인화면이 어떤 화면으로 구성될것인지 
-자체적인 메인 화면을 만들것인지 -> 이경우 모집공고 칸 안에 넣는 기능 구현 필요  
-기능구현된 화면을 메인 화면으로 할것인지 
- */
-    
+  }
     
  
- /* (공통) footer css <시작>*/   
+ /* (공통) footer css<시작>*/   
 footer {   
-   margin-top:20px;
+   margin-top:10px;
    background-color: white;
    color: black;
    text-align: center;
@@ -189,9 +190,7 @@ footer {
    width: 100%;
    border-top: 1px #F4F4F4  solid;    
  		} 
- /* footer css <끝>
- 로고 를 넣을지 말지 고민 
- */		
+
  		
  		
  		
@@ -203,42 +202,36 @@ footer {
 </head>
 <body>
 
-
+<header>
   <div class = "div1">
  	 <h1 class ="logo">
   		<a href="/Individual/Main"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
-     <div class="search">
+ 	 
+    	 <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 취업을 응원합니다!! ">
   		<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" >
-	</div>
+		</div>
  
- 
-  <header>
+
    <nav class ="headernav">
     <ul class ="leftmenu"> 
- 
-    <!-- 기능 구현 
-  1. 채용공고, 고객센터는 기업이랑 똑같음-->
-  
-    <li><a href="/postList">채용공고</a></li>
-    <li><a href="/Individual/ResumeManagement">등록 이력서 관리</a></li>
-    <li><a href="/Individual/????">지원 받은 공고?이게뭐졍??</a></li>
-    <li><a href="/Individual/Recommend">기업 추천</a></li>
-    <li><a href="/cs">고객센터</a></li>  
+   		<li><a href="/postList">채용공고</a></li>
+    	<li><a href="/Individual/ResumeManagement">등록 이력서 관리</a></li>
+   		<li><a href="/Individual/????">지원 받은 공고?이게뭐졍??</a></li>
+    	<li><a href="/Individual/Recommend">기업 추천</a></li>
+    	<li><a href="/cs">고객센터</a></li>  
      </ul>   
-     <div class="rightmenu"> 
-    <!-- 기능 구현
-    1. 로그아웃 기능 구현
-    2. 마이페이지 이동 구현 -->
-     <ul> 
-     <li><a href="/Individual/Logout">로그아웃</a></li>
-     <li><a href="/Individual/Mypage">마이페이지</a></li>
-    </ul>
-    </div>
-   </nav>
+     	 
+    	 <div>
+    		 <ul class="rightmenu"> 
+     		 <li><a href="/Individual/Logout">로그아웃</a></li>
+     		 <li><a href="/Individual/Mypage">마이페이지</a></li>
+    		 </ul>
+   		  </div>
+   	 </nav>
+   	</div> 
   </header>
- </div>
  
 <div class= "div2">
 <a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시배너"></a>
