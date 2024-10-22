@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>기업 회원가입</title>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
     <style>
         body {
             display: flex;
@@ -37,8 +38,7 @@
         }
         input[type="text"],
         input[type="password"],
-        input[type="email"],
-        input[type="date"] {
+        input[type="email"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -61,16 +61,21 @@
             background-color: #004d40;
         }
         .red { color: red; }
+        .green { color: green; }
     </style>
 </head>
 <body>
+	
     <div class="container">
         <h2>기업 회원가입</h2>
-        <form action="/Company/Signup" method="POST">
+        <form action="/Company/SignupForm" method="POST">
             <table>
                 <tr>
                     <td><span class="red">*</span>사용자 아이디</td>
-                    <td><input type="text" name="user_id" required /></td>
+                    <td>
+                    <input type="text" name="user_id" required />
+                    <input type="button"  id="dupCheck"   value="중복확인" />
+                    </td>
                 </tr>
                 <tr>
                     <td><span class="red">*</span>비밀번호</td>
@@ -97,12 +102,8 @@
                     <td><input type="text" name="phone_number" required /></td>
                 </tr>
                 <tr>
-                    <td><span class="red">*</span>가입일</td>
-                    <td><input type="date" name="j_date" id="j_date" value="" readonly /></td>
-                </tr>
-                <tr>
                     <td colspan="2">
-                        <input type="submit" value="가입하기" />
+                        <input type="submit" value="가입하기" id=""/>
                         <input type="button" value="돌아가기" id="goLogin" />
                     </td>
                 </tr>
@@ -111,21 +112,22 @@
     </div>
 
     <script>
-        document.getElementById('goLogin').onclick = function() {
-            location.href = '/Company/Login';
-        };
-
-        document.querySelector('form').onsubmit = function() {
-            const password = document.querySelector('[name=password]').value;
-            const passwordCheck = document.querySelector('[name=passwordCheck]').value;
-
-            if (password !== passwordCheck) {
-                alert('비밀번호가 일치하지 않습니다.');
-                return false;
-            }
-            return true;
-        };
+	    document.getElementById('goLogin').onclick = function() {
+	        location.href = '/Company/Login';
+	    };
+	
+	    document.querySelector('form').onsubmit = function() {
+	        const password = document.querySelector('[name=password]').value;
+	        const passwordCheck = document.querySelector('[name=passwordCheck]').value;
+	
+	        if (password !== passwordCheck) {
+	            alert('비밀번호가 일치하지 않습니다.');
+	            return false;
+	        }
+	        return true;
+	    }
     </script>
+
     <a href="/">홈으로</a>
 </body>
 </html>

@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompanyVo {
-    private String user_id;      // USER_ID
-    private String username;     // USERNAME
-    private String compname;     // COMPNAME
-    private String email;        // EMAIL
-    private String password;     // PASSWORD
-    private String phone_number;  // PHONE_NUMBER
-    private String j_date;       // J_DATE
+	private String user_id;
+	private String password;
+	private String username;
+	private String compname;
+	private String email;
+	private String phone_number;
+	private String j_date;
 }

@@ -68,11 +68,11 @@
 <body>
     <div class="container">
         <h2>기업 로그인</h2>
-        <form action="/Company/Main" method="post">
+        <form action="/Company/Login" method="post">
             <table>
                 <tr>
                     <td>ID</td>
-                    <td><input type="text" name="user_id" required /></td>
+                    <td><input type="text" name="userid" required /></td>
                 </tr>
                 <tr>
                     <td>P/W</td>

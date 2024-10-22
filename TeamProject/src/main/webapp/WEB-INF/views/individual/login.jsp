@@ -76,11 +76,11 @@
 <body>
     <div class="container">
         <h2>개인 로그인</h2>
-        <form action="/Individual/Main" method="post">
+        <form action="/Individual/Login" method="post">
             <table>
                 <tr>
                     <td>ID</td>
-                    <td><input type="text" name="user_id" required /></td>
+                    <td><input type="text" name="userid" required /></td>
                 </tr>
                 <tr>
                     <td>P/W</td>

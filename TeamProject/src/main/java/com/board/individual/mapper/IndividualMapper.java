@@ -1,15 +1,20 @@
 package com.board.individual.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+
 import com.board.individual.vo.IndividualVo;
 
 @Mapper
 public interface IndividualMapper {
 
-    // 로그인 처리 메서드
-    IndividualVo login(String user_id, String password);
+	IndividualVo login(String userid, String password);
 
-    // 회원가입 처리 메서드
+	IndividualVo getUserById(String user_id);
+
+	void update(IndividualVo individualVo);
+
+	void delete(IndividualVo individualVo);
+
     void signup(IndividualVo individualVo);
 
 }

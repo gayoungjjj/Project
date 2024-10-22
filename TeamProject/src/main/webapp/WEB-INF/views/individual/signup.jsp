@@ -37,8 +37,7 @@
         }
         input[type="text"],
         input[type="password"],
-        input[type="email"],
-        input[type="date"] {
+        input[type="email"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -66,11 +65,14 @@
 <body>
     <div class="container">
         <h2>개인 회원가입</h2>
-        <form action="/Individual/Signup" method="POST">
+        <form action="/Individual/SignupForm" method="POST">
             <table>
                 <tr>
                     <td><span class="red">*</span>사용자 아이디</td>
-                    <td><input type="text" name="user_id" required /></td>
+                    <td>
+                    <input type="text" name="user_id" required />
+                    <input type="button" id="dupCheck" value="중복확인" />
+                    </td>
                 </tr>
                 <tr>
                     <td><span class="red">*</span>비밀번호</td>
@@ -85,7 +87,7 @@
                     <td><input type="text" name="username" required /></td>
                 </tr>
                 <tr>
-                    <td>이메일</td>
+                    <td><span class="red">*</span>이메일</td>
                     <td><input type="email" name="email" /></td>
                 </tr>
                 <tr>
@@ -95,10 +97,6 @@
                 <tr>
                     <td>주소</td>
                     <td><input type="text" name="address" /></td>
-                </tr>
-                <tr>
-                    <td><span class="red">*</span>가입일</td>
-                    <td><input type="date" name="j_date" id="j_date" value="" readonly /></td>
                 </tr>
                 <tr>
                     <td colspan="2">

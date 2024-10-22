@@ -7,6 +7,16 @@ import com.board.company.vo.CompanyVo;
 @Mapper
 public interface CompanyMapper {
 
-	void signup(CompanyVo vo);
+	CompanyVo login(String userid, String password);
+	
+	CompanyVo getUserById(String user_id);
+	
 	CompanyVo findByUserId(CompanyVo vo);
+    
+    void update(CompanyVo companyVo);
+    
+    void delete(CompanyVo companyVo);
+
+	void signup(CompanyVo companyVo);
+
 }
