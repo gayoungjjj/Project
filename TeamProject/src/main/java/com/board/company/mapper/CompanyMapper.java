@@ -1,5 +1,7 @@
 package com.board.company.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.board.company.vo.CompanyVo;
@@ -18,5 +20,17 @@ public interface CompanyMapper {
     void delete(CompanyVo companyVo);
 
 	void signup(CompanyVo companyVo);
+
+	List<CompanyVo> getmainList();
+
+	void plushit(CompanyVo companyVo);
+
+	CompanyVo getmain(CompanyVo companyVo);
+
+	void insertposting(CompanyVo companyVo);
+
+	void deleteposting(CompanyVo companyVo);
+
+	void updateposting(CompanyVo companyVo);
 
 }

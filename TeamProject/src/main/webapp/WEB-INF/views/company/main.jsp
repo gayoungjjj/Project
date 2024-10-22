@@ -88,7 +88,7 @@
    <!-- 기능 구현
     1. 로그아웃 기능 구현
     2. 마이페이지 이동 구현 -->
-          	   <li><a href="/Posting/Compmain">채용공고</a></li>
+          	   <li><a href="/Company/Postlist">채용공고</a></li>
       		   <li><a href="/Company/ListManagement">등록 공고 관리</a></li>
       		   <li><a href="/Company/ResumeList">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend">인재 추천</a></li>

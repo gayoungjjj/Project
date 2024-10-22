@@ -1,12 +1,17 @@
 package com.board.individual.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.board.company.mapper.CompanyMapper;
+import com.board.company.vo.CompanyVo;
 import com.board.individual.mapper.IndividualMapper;
 import com.board.individual.vo.IndividualVo;
 
@@ -19,9 +24,13 @@ import jakarta.servlet.http.HttpSession;
 public class IndividualController {
 	
 	@Autowired
+	private CompanyMapper    companyMapper;
+	
+	@Autowired
 	private IndividualMapper individualMapper;
 	
-	// Individual/Login
+	// ------------------------------- 로그인 -------------------------------//
+	// Individual/Login (로그인)
 	@RequestMapping("/Login")
 	public String login(
 		HttpServletRequest  request,
@@ -53,7 +62,8 @@ public class IndividualController {
        }
       
     }
-	// Individual/Logout
+	// ------------------------------- 로그아웃 -------------------------------//
+	// Individual/Logout (로그아웃)
 	@RequestMapping(value="/Logout",
 		method = RequestMethod.GET)
 		public   String   logout(
@@ -68,24 +78,29 @@ public class IndividualController {
 		//return "redirect:" + (String) url;
 		return "/individual/login";
 		}
-
 	
-	// Individual/Main
+	// ------------------------------- 홈 화면 -------------------------------//
+	// /Home (홈 화면)
+	@RequestMapping("/")
+	public String home() {
+		return "views/home";
+	}
+	
+	// ------------------------------- 메인 화면 -------------------------------//
+	// Individual/Main (메인 화면)
 	@RequestMapping("/Main")
 	public String main() {
 		return "individual/main";
 	}
-	
-	// Individual/Signup
+	// ------------------------------- 회원가입 -------------------------------//
+	// Individual/Signup (회원가입)
 	@RequestMapping("/Signup")
 	public String signup() {
 		return "individual/signup";
 	}
 	
-	@RequestMapping("/")
-	public String home() {
-		return "views/home";
-	}
+	// ------------------------------- 마이페이지 -------------------------------//
+	// Individual/Mypage (마이페이지)
 	// http://localhost:9090/Individual/Mypage?user_id=user1
 	@RequestMapping("/Mypage")
 	public String mypage(IndividualVo individualVo, HttpServletRequest request, Model model) {
@@ -99,6 +114,7 @@ public class IndividualController {
 		return "individual/mypage";
 	}
 	
+	// Individual/UpdateForm (마이페이지 수정)
 	// http://localhost:9090/Individual/UpdateForm?user_id=user1
 	@RequestMapping("/UpdateForm")
 	public String updateForm(IndividualVo individualVo, Model model) {
@@ -108,7 +124,7 @@ public class IndividualController {
 		
 		return "individual/update";
 	}
-	// Individual/Update
+	// Individual/Update (마이페이지 수정)
 	@RequestMapping("/Update")
 	public String update(IndividualVo individualVo) {
 		// 수정하기
@@ -118,7 +134,7 @@ public class IndividualController {
 		// 수정 후 목록조회
 		return "redirect:/Individual/Mypage?user_id=" + user_id;
 	}
-	// Individual/Delete
+	// Individual/Delete (마이페이지_회원탈퇴)
 	@RequestMapping("/Delete")
 	public String delete(IndividualVo individualVo, RedirectAttributes redirectAttributes) {
 		System.out.println("IndividualVo는" + individualVo );
@@ -127,5 +143,43 @@ public class IndividualController {
 		redirectAttributes.addFlashAttribute("message", "회원탈퇴가 완료되었습니다.");
 		return "redirect:/Individual/Login";
 	}
+	
+	// ------------------------------- 채용공고 -------------------------------//
+
+	//Individual/Postlist (채용공고 목록)
+	@RequestMapping("/Postlist")
+	public ModelAndView postlist() {
+		
+		List<CompanyVo> mainList = companyMapper.getmainList();
+		System.out.println("mainlist"+mainList);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("mainList", mainList);
+		mv.setViewName("individual/postlist");
+		return mv ;
+		}
+	
+	//Individual/Postview (채용공고 상세페이지)
+	// http://localhost:9090/Individual/View?aplnum=1
+	@RequestMapping("/Postview")
+	public ModelAndView postview(CompanyVo companyVo) {
+				
+		//조회수 증가
+		companyMapper.plushit(companyVo);
+		System.out.println("plusint"+companyVo);
+		
+		//글 조회
+		CompanyVo vo = companyMapper.getmain(companyVo);
+		//System.out.println("vo"+vo);
+		
+		String       duty   =  vo.getDuty().replace("\n", "<br>");
+		vo.setDuty( duty );
+			
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("vo",vo );
+		mv.setViewName("individual/postview");
+		return mv;
+		}
+		
 
 }

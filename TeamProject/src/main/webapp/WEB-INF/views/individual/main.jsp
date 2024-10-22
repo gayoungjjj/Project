@@ -82,13 +82,8 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-   <!-- 기능 구현 
-    1. 채용공고, 고객센터는 개인이랑 똑같음-->
-    
-   <!-- 기능 구현
-    1. 로그아웃 기능 구현
-    2. 마이페이지 이동 구현 -->
-          	   <li><a href="/Posting/Indmain">채용공고</a></li>
+
+          	   <li><a href="/Individual/Postlist">채용공고</a></li>
       		   <li><a href="/Individual/ResumeRegister">이력서 등록</a></li>
       		   <li><a href="/Individual/ResumeList">등록 이력서 관리</a></li>
                <li><a href="/Individual/Recommend">기업 추천</a></li>

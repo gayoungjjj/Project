@@ -130,7 +130,7 @@
   	  <header>
  	    <nav class ="headernav">
     	  <ul class ="leftmenu"> 
-          	   <li><a href="/Posting/Indmain">채용공고</a></li>
+          	   <li><a href="/Individual/Postlist">채용공고</a></li>
       		   <li><a href="/Individual/ResumeRegister">이력서 등록</a></li>
       		   <li><a href="/Individual/ResumeList">등록 이력서 관리</a></li>
                <li><a href="/Individual/Recommend">기업 추천</a></li>
