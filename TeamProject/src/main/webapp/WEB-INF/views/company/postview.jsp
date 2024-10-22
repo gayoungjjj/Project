@@ -1,21 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+g<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 <script src="https://cdn.jsdelivr.net/npm/browser-scss@1.0.3/dist/browser-scss.min.js"></script>
 <script src="https://code.jquery.com/jquery.min.js"></script>
 
-<!-- main style 넣어주세욤 -->
 <style>
- table{border:1px solid black;}
- td{border:1px solid black;}
+ main{
+  h2    {margin-left : 16%;}
+  table {
+         border : 1px solid #DCDBDB;
+         text-align : center;
+         border-collapse: collapse;
+         margin-left : 16%;
+         width : 78%;
+         font-weight : bold;
+         height: auto;
+         }
+   td {border : 1px solid #DCDBDB;
+       padding : 10px;}
+   tr {padding : 10px;}
+   
+   a { text-decoration:none; color : black;}
+   a:hover{color : blue;}
+   }
+  tr:first-child{background : #E7E7E7; }
 </style>
 
 </head>
@@ -35,10 +50,10 @@
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
 
-          	   <li><a href="/Company/Postlist">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend">인재 추천</a></li>
+          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=카카오">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=카카오">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=카카오">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=카카오">인재 추천</a></li>
                <li><a href="cs">고객센터</a></li>   
           </ul> 
               
@@ -100,13 +115,15 @@
      </tr>
      <tr>
       <td colspan="4"> 	
-       <a href="/Company/WriteForm?aplnum=${vo.aplnum}">새 글 쓰기</a>
+       <a href="/Company/WriteForm?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">새 글 쓰기</a>
       
-       <a href="/Company/PostupdateForm?&aplnum=${vo.aplnum}">수정</a>
-       <a href="/Company/Postdelete?&aplnum=${vo.aplnum}">삭제</a>
-          
+      <!-- login이 완성되면 c:if -user_id를 compname로 변경 -->
+      <c:if test="${login.user_id eq vo.user_id}">
+       <a href="/Company/PostupdateForm?&aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">수정</a>
+       <a href="/Company/Postdelete?&aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">삭제</a>
+       </c:if>
 
-       <a href="/Company/Postlist?aplnum=${vo.aplnum}">목록</a>
+       <a href="/Company/Postlist?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">목록</a>
       </td>
      </tr>
     

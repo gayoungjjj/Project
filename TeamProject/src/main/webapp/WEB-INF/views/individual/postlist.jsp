@@ -5,8 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
@@ -35,7 +33,7 @@
     	<ul class ="leftmenu"> 
 
           	   <li><a href="/Individual/Postlist">채용공고</a></li>
-      		   <li><a href="/Individual/Resumereg">이력서 등록</a></li>
+      		   <li><a href="/Individual/ResumeRegister">이력서 등록</a></li>
       		   <li><a href="/Individual/ResumeList">등록 이력서 관리</a></li>
                <li><a href="/Individual/Recommend">기업 추천</a></li>
                <li><a href="cs">고객센터</a></li>   

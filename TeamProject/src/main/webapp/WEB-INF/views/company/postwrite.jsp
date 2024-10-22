@@ -5,8 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
@@ -22,7 +20,7 @@
 
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Company/Main"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Company/Postlist?user_id=${param.user_id}&compname=카카오"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
@@ -34,10 +32,10 @@
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
 
-          	   <li><a href="/Company/Postlist">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend">인재 추천</a></li>
+          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=카카오">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=카카오">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=카카오">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=카카오">인재 추천</a></li>
                <li><a href="cs">고객센터</a></li>   
           </ul> 
               
@@ -61,17 +59,17 @@
 <main>  
     
    
-    <form action="/Company/Postwrite"  method="POST">
+    <form action="/Company/Postwrite?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오 "  method="POST">
     <h2>공고 등록(${ param.aplnum })</h2>
     
     <tr>
-       <select 	name="career">
+       <select 	name="career" id="career">
          <option value="">경력</option>
          <option value="신입">신입</option>
          <option value="경력">경력</option>
          <option value="무관">무관</option>
        </select>
-       <select name="edu">
+       <select name="edu" id="edu">
          <option value="">학력</option>
          <option value="고졸">고졸</option>
          <option value="대졸">대졸</option>
@@ -122,7 +120,7 @@
      </tr>
      <tr>
       <td>직무내용</td>
-      <td><textarea name="duty" maxlength="1300"></textarea></td>
+      <td><textarea name="duty" id = "duty" maxlength="1300"></textarea></td>
      </tr>
      <tr>
       <td colspan="2">
@@ -138,19 +136,28 @@
         
        const  goListEl = document.getElementById('goList')
        goListEl.onclick = function() {
-          location.href = '/Company/Postlist' 
+          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오' 
        }    
        
        const  formEl       = document.querySelector('form');
        const  post_idEl    = document.querySelector('#post_id');
+       const  dutyEl      = document.querySelector('#duty');
+      
        
-       // 회원가입버튼 클릭
+       
        formEl.onsubmit   = function () {           
 		   if(  post_idEl.value.trim() == ''  ) {
                alert('제목을 입력하세요')
                post_idEl.focus()
            	   return  false;
 		   } 
+		   
+		   if(  dutyEl.value.trim() == ''  ) {
+               alert('내용을 입력하세요')
+               dutyEl.focus()
+           	   return  false;
+		   } 
+		  
 
 		   return  true;
 	   }

@@ -33,4 +33,6 @@ public interface CompanyMapper {
 
 	void updateposting(CompanyVo companyVo);
 
+	List<CompanyVo> getCompanyList();
+
 }

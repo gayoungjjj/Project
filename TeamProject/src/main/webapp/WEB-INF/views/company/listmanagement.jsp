@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +10,29 @@
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 
 <style>
-/* 테스트용 모집공고 css <시작>*/
 
-.legnav {
+ /*임시-----------*/
+ main{
+  h2    {margin-left : 16%;}
+  table {
+         border : 1px solid #DCDBDB;
+         text-align : center;
+         border-collapse: collapse;
+         margin-left : 16%;
+         width : 78%;
+         font-weight : bold;
+         height: auto;
+         }
+   td {border : 1px solid #DCDBDB;
+       padding : 10px;}
+   tr {padding : 10px;}
+   
+   a { text-decoration:none; color : black;}
+   a:hover{color : blue;}
+   }
+  tr:first-child{background : #E7E7E7; }
+/*----------------*/
+  .legnav {
    margin-top:20px;
    display: flex;
    flex-wrap: wrap; /* 줄 바꿈을 허용 */
@@ -56,19 +77,10 @@
    align-items: center; 
    justify-content: center; 
   }
-    
-/* 테스트용 모집공고 css <끝> 
-상의 필요함 메인화면이 어떤 화면으로 구성될것인지 
-자체적인 메인 화면을 만들것인지 -> 이경우 모집공고 칸 안에 넣는 기능 구현 필요  
-기능구현된 화면을 메인 화면으로 할것인지 
- */
-
 </style>
-
-
 </head>
-<body>
 
+<body>
  <div class = "div1">
  	 <h1 class ="logo">
   		<a href="/Company/Main"><img src="/img/로고.png"  alt=회사로고/></a>
@@ -89,7 +101,7 @@
     1. 로그아웃 기능 구현
     2. 마이페이지 이동 구현 -->
           	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=카카오">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=카카오">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${param.user_id }&compname=카카오">등록 공고 관리</a></li>
       		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=카카오">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=카카오">인재 추천</a></li>
                <li><a href="cs">고객센터</a></li>   
@@ -104,65 +116,35 @@
     	</nav> 	   
  	</header>
  </div>
-
-
-<div class= "div2">
-<a href="/Individual/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
-</div>
-
-
- <div class= "div3">
-  <!--메인화면 테스트용 -->
-
-  <nav class ="legnav">
-
-    <div class="job-card">
-        <img src="/img/로고.png" alt="회사 1">
-        <div class="company-name">PICK ME(픽미)</div>
-        <div class="description"> 픽미 로 오세요</div>
-    </div>
-    <div class="job-card">
-        <img src="/img/ex.png" alt="회사 1">
-        <div class="company-name">JOBKOREA</div>
-        <div class="description"> 대한민국 대표구인 구직 사이트 잡코리아 </div>
-    </div>
-    <div class="job-card">
-        <img src="/img/ex2.png" alt="회사 1">
-        <div class="company-name">TOSS</div>
-        <div class="description"> 신입/경력 영입합니다 </div>
-    </div>
-    <div class="job-card">
-        <img src="/img/로고.png" alt="회사 1">
-        <div class="company-name">PICK ME(픽미)</div>
-        <div class="description">테스트용 </div>
-    </div>
-    <div class="job-card">
-        <img src="/img/로고.png" alt="회사 1">
-        <div class="company-name">PICK ME(픽미)</div>
-        <div class="description">테스트용 </div>
-    </div>
-    <div class="job-card">
-        <img src="/img/로고.png" alt="회사 1">
-        <div class="company-name">PICK ME(픽미)</div>
-        <div class="description">테스트용 </div>
-    </div>
-    <div class="job-card">
-        <img src="/img/로고.png" alt="회사 1">
-        <div class="company-name">PICK ME(픽미)</div>
-        <div class="description">테스트용 </div>
-    </div>
-    <div class="job-card">
-        <img src="/img/로고.png" alt="회사 1">
-        <div class="company-name">PICK ME(픽미)</div>
-        <div class="description">테스트용 </div>
-    </div>
-  </nav>  
-</div>
-  
+ 
+ <main>
+   <h2>등록 공고 게시판</h2>
+    <table>
+     <tr>
+      <td>공고 번호</td>
+      <td>공고명</td>
+      <td>조회수</td>
+      <td>마감기한</td>
+     </tr>
+     
+     <c:forEach var="main" items="${CompanyList}">
+      <tr>
+       <td>${ main.aplnum   }</td>
+       <td>
+       <a href="/Company/Postview?aplnum=${main.aplnum}&user_id=${param.user_id}&compname=카카오">
+       ${ main.post_id  }</a>
+       </td>
+       <td>${ main.hit }</td>
+       <td>${ main.deadline }</td>
+      </tr>
+     </c:forEach>
+    </table>
+ 
+ </main>
  
  <footer>
   <div class="footer1">
-   <p><small>&copy; 2024 All rights reserved 픽미</small></p>
+   <p><small>&copy; 2024 All rights reserved 기업명</small></p>
   </div>
  </footer>
 

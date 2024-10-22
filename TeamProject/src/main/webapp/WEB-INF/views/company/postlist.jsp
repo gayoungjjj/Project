@@ -5,15 +5,32 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 
 <style>
-  table {border : 1px solid black;}
-  td    {border : 1px solid black;}
+
+main{
+  h2    {margin-left : 16%;}
+  table {
+         border : 1px solid #DCDBDB;
+         text-align : center;
+         border-collapse: collapse;
+         margin-left : 16%;
+         width : 78%;
+         font-weight : bold;
+         height: auto;
+         }
+   td {border : 1px solid #DCDBDB;
+       padding : 10px;}
+   tr {padding : 10px;}
+   
+   a { text-decoration:none; color : black;}
+   a:hover{color : blue;}
+   }
+  tr:first-child{background : #E7E7E7; }
+  
 </style>
 
 
@@ -34,10 +51,10 @@
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
 
-          	   <li><a href="/Company/Postlist">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend">인재 추천</a></li>
+          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=카카오">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=카카오">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=카카오">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=카카오">인재 추천</a></li>
                <li><a href="cs">고객센터</a></li>   
           </ul> 
               
@@ -72,7 +89,7 @@
       <tr>
        <td>${ main.aplnum   }</td>
        <td>
-       <a href="/Company/Postview?aplnum=${main.aplnum}">
+       <a href="/Company/Postview?aplnum=${main.aplnum}&user_id=${param.user_id}&compname=카카오">
        ${ main.post_id  }</a>
        </td>
        <td>${ main.compname }</td>
