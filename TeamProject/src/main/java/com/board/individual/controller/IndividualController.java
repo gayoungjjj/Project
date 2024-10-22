@@ -39,6 +39,7 @@ public class IndividualController {
         String userid    = request.getParameter("userid");
         String password  = request.getParameter("password");
         String uri       = request.getParameter("uri");
+    	String menu_id   = request.getParameter("menu_id");
 		String nowpage   = request.getParameter("nowpage");
 
 		IndividualVo vo = individualMapper.login(userid, password);
@@ -180,6 +181,12 @@ public class IndividualController {
 		mv.setViewName("individual/postview");
 		return mv;
 		}
-		
+	// ------------------------------- 이력서 등록 -------------------------------//
+	
+	//Individual/Resumereg (이력서등록)
+	@RequestMapping("/Resumereg")
+	public String resumereg() {
+		return "individual/resumereg";
+	}	
 
 }

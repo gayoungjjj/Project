@@ -32,8 +32,9 @@ public class CompanyController {
         HttpServletResponse response
 	    ) {
         String userid    = request.getParameter("userid");
-        String password  = request.getParameter("password");
+        String password  = request.getParameter("password");        
         String uri       = request.getParameter("uri");
+		String menu_id   = request.getParameter("menu_id");
 		String nowpage   = request.getParameter("nowpage");
 
         CompanyVo vo = companyMapper.login(userid, password);
