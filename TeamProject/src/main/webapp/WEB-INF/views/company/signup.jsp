@@ -67,7 +67,7 @@
 <body>
 	
     <div class="container">
-        <h2>기업 회원가입</h2>
+        <h2>기업 회원 등록</h2>
         <form action="/Company/SignupForm" method="POST">
             <table>
                 <tr>
@@ -80,11 +80,11 @@
                 </tr>
                 <tr>
                     <td><span class="red">*</span>비밀번호</td>
-                    <td><input type="password" name="password" required /></td>
+                    <td><input type="password" name="password" id="password" required /></td>
                 </tr>
                 <tr>
                     <td><span class="red">*</span>비밀번호 확인</td>
-                    <td><input type="password" name="passwordCheck" required /></td>
+                    <td><input type="password" id="passwordCheck" required /></td>
                 </tr>
                 <tr>
                     <td><span class="red">*</span>사용자 이름</td>
@@ -92,7 +92,10 @@
                 </tr>
                 <tr>
                     <td><span class="red">*</span>기업명</td>
-                    <td><input type="text" name="compname" required /></td>
+                    <td><input type="text" name="compname" required />
+                		<input type="button" value="기업 등록" 
+                        onclick="location.href='/Company/CompanySignup'" />
+                	</td>
                 </tr>
                 <tr>
                     <td>이메일</td>

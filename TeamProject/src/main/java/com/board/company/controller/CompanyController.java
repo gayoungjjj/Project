@@ -92,6 +92,21 @@ public class CompanyController {
         return mv;
     }
     
+    @RequestMapping("/CompanySignup")
+    public ModelAndView companysignup() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/company/companysignup");
+        return mv;
+    }
+    
+    @RequestMapping("/CompanySignupForm")
+    public ModelAndView companysignupForm() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/Company/Signup"); 
+        return mv;
+    }
+    
+    
     @RequestMapping(
     		value   = "/IdDupCheck",
     		method  = RequestMethod.GET,
