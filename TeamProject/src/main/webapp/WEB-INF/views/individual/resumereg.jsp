@@ -6,181 +6,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="icon" type="image/png" href="/img/favicon.png" />
+<link rel="stylesheet"  href="/css/common.css" />
 
 
 <style>
 
-/*공통*/
-* {
-  box-sizing: border-box;
-}
 
-body {
-    width: 100%;
-    min-width:1320px;
-    margin: 0 auto;
-    overflow-x: auto;
- 
-}
-
-/* (공통) 상단(로고,검색창 , 메뉴 , 로그아웃...) css <시작> */
-
-.div1 {
-  margin-top:-35px;
-  display: flex; 
-   align-items: center; 
-  justify-content: center; 
-  border-bottom : 1px solid #E8E8E8;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width:100%;
-  padding: 20px;
- 
-  
- 
-}
-
-  .leftmenu,.rightmenu {white-space:nowrap;}
-
-
-
-.logo img {
-  width:215px; 
-  height:auto; 
-  margin-left: 30px;
-  margin-right: -5px;
-}
-
-
-.search {
-  position: relative;
-  width: 450px; 
-  margin-top: 50px;
-}
-
-.search input {
-  width: 100%;
-  border: 2px solid #1F2C63;
-  border-radius: 8px;
-  padding: 10px 12px ;
-  font-size: 14px;
-}
-
-.search img {
-  position : absolute;
-  width: 18px;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  margin: 0;
-}
-
-
-.headernav {
-  width:1320px;
-  margin-top: 60px;
-  margin-left: -600px; 
-  margin-bottom: -80px;
-  display: flex; 
-  justify-content: flex-start; 
-  font-weight: bold;
-}
-
-
-.headernav ul {
-  list-style: none; 
-  display: flex; 
-  
-  margin-top:30px; 
- 
-}
-
-.headernav a {
-  text-decoration: none; 
-  color:black;
-}
-
-.leftmenu {
-  gap: 20px; 
-  padding: 0; 
-  margin-left:30px;
-}
-
-
-.rightmenu {
-  padding-top:10px;
-  margin-left:450px;
-  margin-right:auto;
-  gap:10px;
-  font-size: 13px;
- 
-}
-
-/* 상단 css <끝> 10.20 기준 1차 
-
-
-
-
-/* 꾸미기용 배너(공간채우기용)*/
-.div2 {
-  display: flex; 
-  margin-top: 20px;
-  justify-content: center;
-}
-.div2 img {
-  width:  1100px; 
-  height: auto; 
-  margin-bottom: 20px ;
-}
-
-
-/* 테스트용 모집공고 css <시작>*/
-
-.legnav {
-   padding-top:20px;
-   display: grid;
-   grid-template-columns: repeat(4, 250px); /* 3개의 열, 각 100px */
-   justify-content: center;
-   gap:8px;
-   background-color: #F7F7F7;
-   padding-bottom: 20px;
-  }
-
-
-
-.job-card {
-   border: 1px solid #ccc;
-   border-radius: 8px;
-   text-align: center;
-   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-   box-sizing: border-box; 
-   background-color: white;
-   height: 220px;
-   }
-
-.job-card img {
-   max-width: 200px;
-   height: 100px;
-   object-fit: cover ;
-   border-radius: 8px 8px 0 0;
-   }
-
-.company-name {
-   font-weight: bold;
-   margin: 5px 0;
-    }
-
-.description {
-   margin-top:10px;
-   color: #555;
-   font-size: 14px;
-    flex-grow: 1; 
-   display: flex;
-   align-items: center; 
-   justify-content: center; 
-  }
-  
-  /* 테스트용 모집공고 css <끝>*/
-  
   
 .div3{
 background-color:#F7F7F7;
@@ -193,6 +24,7 @@ align-items: center;
 }
   
 
+/*이력서 css */
 
 .test1{
 width:150px;
@@ -243,23 +75,9 @@ border: 1px solid #DBE0E9;
 }
 
 
+/*이력서 css (끝)*/
 
 
- /* (공통) footer css<시작>*/   
- 
-footer {   
-   margin-top:10px;
-   background-color: white;
-   color: black;
-   text-align: center;
-   padding: 10px 0;
-   position: relative;
-   bottom: 0;
-   width: 100%;
-   border-top: 1px #F4F4F4  solid;    
- 		} 
-
- /* (공통) footer css<끝>*/   
 
 
   
@@ -472,15 +290,6 @@ footer {
      </table>
       </form>
 </div>
-   
-   
-   
-   
-
-   
-   
-   
-   
    
    
    
