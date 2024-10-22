@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>개인 회원가입</title>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
     <style>
         body {
             display: flex;
@@ -60,6 +61,7 @@
             background-color: #004d40;
         }
         .red { color: red; }
+        .green { color: green; }
     </style>
 </head>
 <body>
@@ -72,6 +74,7 @@
                     <td>
                     <input type="text" name="user_id" required />
                     <input type="button" id="dupCheck" value="중복확인" />
+                    <span id="dupResult"></span>
                     </td>
                 </tr>
                 <tr>
@@ -100,7 +103,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="submit" value="가입하기" />
+                        <input type="submit" value="가입하기" id=""/>
                         <input type="button" value="돌아가기" id="goLogin" />
                     </td>
                 </tr>
@@ -109,20 +112,85 @@
     </div>
 
     <script>
-        document.getElementById('goLogin').onclick = function() {
-            location.href = '/Individual/Login';
-        };
+       let   dupCheckClicked = false;     
+       
+       document.getElementById('goLogin').onclick = function() {
+	        location.href = '/Individual/Login';
+	    };
+	    
+       const  formEl          = document.querySelector('form');
+       const  user_idEl       = document.querySelector('[name=user_id]');
+       const  passwordEl   	  = document.querySelector('#password');
+       const  passwordCheckEl = document.querySelector('#passwordCheck');
+       const  usernameEl   	  = document.querySelector('[name=username]');
+       const  dupCheckEl      = document.querySelector('#dupCheck');
+       
 
-        document.querySelector('form').onsubmit = function() {
-            const password = document.querySelector('[name=password]').value;
-            const passwordCheck = document.querySelector('[name=passwordCheck]').value;
-
-            if (password !== passwordCheck) {
-                alert('비밀번호가 일치하지 않습니다.');
-                return false;
-            }
-            return true;
-        };
+       dupCheckEl.onclick = function() {
+    	   dupCheckClicked = true;  
+       }
+       
+       // 회원가입버튼 클릭
+       formEl.onsubmit   = function () {           
+		   if(  user_idEl.value.trim() == ''  ) {
+               alert('아이디를 입력하세요')
+               user_idEl.focus()
+           	   return  false;
+		   } 
+		   if( passwordEl.value.trim() == '' ) {
+			   alert('비밀번호를 입력하세요')
+               passwordEl.focus()
+	           return  false;
+		   }
+		   if( passwordCheckEl.value.trim() == '' ) {
+			   alert('비밀번호확인을 입력하세요')
+               passwordCheckEl.focus()
+	           return  false;
+		   }          
+           if( passwordEl.value != passwordCheckEl.value ) {
+        	   alert('비밀번호가 일치하지 않습니다')
+               passwordCheckEl.focus()
+        	   return  false;
+           }
+           if( usernameEl.value.trim().length < 2 ) {
+        	   alert('이름은 2자 이상 입력하세요')
+               usernameEl.focus()
+	           return  false;
+		   }	
+           
+           if(  dupCheckClicked == false ) {
+        	   alert('중복확인을 하세요')
+               return false;
+           }
+		   return  true;
+	   }
+    </script> 
+    <script>
+       $( function() {
+           $('#dupCheck').on('click', function() {
+                $.ajax({
+                   url  : '/Individual/IdDupCheck',
+                   
+                   data : { user_id : $('[name=user_id]').val()  }  
+        	       
+               })
+               .done( function( data ) { 
+                   console.log(data)
+                   if( data == '' ) {
+                     let html = '사용가능한 아이디입니다'; 
+                     dupCheckClicked = true;
+                     $('#dupResult').html(html).addClass('green')
+                   }  else  {  
+                     let html = '사용할수 없는 아이디입니다'
+                     dupCheckClicked = false;
+                   	 $('#dupResult').html(html).addClass('red')
+                   }
+               })
+               .fail( function(err) {
+                   console.log(err)
+               }) 
+           })
+       })     
     </script>
     <a href="/">홈으로</a>
 </body>

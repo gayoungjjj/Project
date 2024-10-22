@@ -5,12 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.company.mapper.CompanyMapper;
 import com.board.company.vo.CompanyVo;
-import com.board.individual.vo.IndividualVo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -91,6 +91,17 @@ public class CompanyController {
         mv.setViewName("redirect:/Company/Login"); 
         return mv;
     }
+    
+    @RequestMapping(
+    		value   = "/IdDupCheck",
+    		method  = RequestMethod.GET,
+    		headers = "Accept=application/json" )  
+    	@ResponseBody                           
+    	public  CompanyVo   idDupCheck(String user_id) {
+    		String  result = "";  
+    		CompanyVo  companyVo = companyMapper.idDupCheck( user_id  );		
+    		return  companyVo;
+    	} 
     
 	@RequestMapping("/")
 	public String home() {

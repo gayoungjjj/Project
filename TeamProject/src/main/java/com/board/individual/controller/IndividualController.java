@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.board.company.vo.CompanyVo;
 import com.board.individual.mapper.IndividualMapper;
 import com.board.individual.vo.IndividualVo;
 
@@ -79,7 +81,7 @@ public class IndividualController {
 	
 
 	
-	// 회원가입 폼
+	// 회원가입 
     @RequestMapping("/Signup")
     public ModelAndView signup() {    
         ModelAndView mv = new ModelAndView();
@@ -94,6 +96,16 @@ public class IndividualController {
         mv.setViewName("redirect:/Individual/Login"); 
         return mv;
     }
+    @RequestMapping(
+    		value   = "/IdDupCheck",
+    		method  = RequestMethod.GET,
+    		headers = "Accept=application/json" )  
+    	@ResponseBody                           
+    	public  IndividualVo   idDupCheck(String user_id) {
+    		String  result = "";  
+    		IndividualVo  individualVo = individualMapper.idDupCheck( user_id  );		
+    		return  individualVo;
+    	} 
 	
 	@RequestMapping("/")
 	public String home() {

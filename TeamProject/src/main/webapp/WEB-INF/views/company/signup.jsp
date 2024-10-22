@@ -75,6 +75,7 @@
                     <td>
                     <input type="text" name="user_id" required />
                     <input type="button"  id="dupCheck"   value="중복확인" />
+                    <span id="dupResult"></span>
                     </td>
                 </tr>
                 <tr>
@@ -110,22 +111,83 @@
             </table>
         </form>
     </div>
-
     <script>
-	    document.getElementById('goLogin').onclick = function() {
+       let   dupCheckClicked = false;     
+       
+       document.getElementById('goLogin').onclick = function() {
 	        location.href = '/Company/Login';
 	    };
-	
-	    document.querySelector('form').onsubmit = function() {
-	        const password = document.querySelector('[name=password]').value;
-	        const passwordCheck = document.querySelector('[name=passwordCheck]').value;
-	
-	        if (password !== passwordCheck) {
-	            alert('비밀번호가 일치하지 않습니다.');
-	            return false;
-	        }
-	        return true;
-	    }
+	    
+       const  formEl          = document.querySelector('form');
+       const  user_idEl       = document.querySelector('[name=user_id]');
+       const  passwordEl   	  = document.querySelector('#password');
+       const  passwordCheckEl = document.querySelector('#passwordCheck');
+       const  usernameEl   	  = document.querySelector('[name=username]');
+       const  dupCheckEl      = document.querySelector('#dupCheck');
+       
+
+       dupCheckEl.onclick = function() {
+    	   dupCheckClicked = true;  
+       }
+       
+       formEl.onsubmit   = function () {           
+		   if(  useridEl.value.trim() == ''  ) {
+               alert('아이디를 입력하세요')
+               useridEl.focus()
+           	   return  false;
+		   } 
+		   if( passwordEl.value.trim() == '' ) {
+			   alert('비밀번호를 입력하세요')
+               passwordEl.focus()
+	           return  false;
+		   }
+		   if( passwordCheckEl.value.trim() == '' ) {
+			   alert('비밀번호확인을 입력하세요')
+               passwordCheckEl.focus()
+	           return  false;
+		   }          
+           if( passwordEl.value != passwordCheckEl.value ) {
+        	   alert('비밀번호가 일치하지 않습니다')
+               passwordCheckEl.focus()
+        	   return  false;
+           }
+           if( usernameEl.value.trim().length < 2 ) {
+        	   alert('이름은 2자 이상 입력하세요')
+               usernameEl.focus()
+	           return  false;
+		   }	
+
+           if(  dupCheckClicked == false ) {
+        	   alert('중복확인을 하세요')
+               return false;
+           }
+		   return  true;
+	   }
+    </script> 
+    <script>
+       $( function() {
+           $('#dupCheck').on('click', function() {
+        	   $.ajax({
+                   url  : '/Company/IdDupCheck', 
+                   data : { user_id : $('[name=user_id]').val()  }  
+               })
+               .done( function( data ) {   
+                   console.log(data)
+                   if( data == '' ) {
+                     let html = '사용가능한 아이디입니다'; 
+                     dupCheckClicked = true;
+                     $('#dupResult').html(html).addClass('green')
+                   }  else  {  
+                     let html = '사용할수 없는 아이디입니다'
+                     dupCheckClicked = false;
+                   	 $('#dupResult').html(html).addClass('red')
+                   }
+               })
+               .fail( function(err) {
+                   console.log(err)
+               }) 
+           })
+       })     
     </script>
 
     <a href="/">홈으로</a>

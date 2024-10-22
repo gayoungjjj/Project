@@ -17,4 +17,6 @@ public interface IndividualMapper {
 
     void signup(IndividualVo individualVo);
 
+	IndividualVo idDupCheck(String user_id);
+
 }
