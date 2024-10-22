@@ -1,31 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-
-
-
-
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.board.company.mapper.CompanyMapper">  
-	
-
-   <select  id="login">
-    SELECT
-   	 	USER_ID,
-    	USERNAME,
-    	COMPNAME,
-    	EMAIL,
-    	PASSWORD,
-    	PHONE_NUMBER,
-    	J_DATE
-	from
-   		 COMPANY_USERS
-	WHERE 
-	    USER_ID = #{ param1,jdbcType=VARCHAR }
-	 AND
-	    PASSWORD = #{ param2,jdbcType=VARCHAR }
+  <!-- 로그인 -->
+  <select id="login">
+	SELECT USER_ID, USERNAME, COMPNAME, EMAIL, PASSWORD, PHONE_NUMBER, J_DATE
+	FROM   COMPANY_USERS
+	WHERE  USER_ID  = #{param1,jdbcType=VARCHAR}
+    AND    PASSWORD = #{param2,jdbcType=VARCHAR}
    </select>
+  
+  <!-- 회원가입 -->
+  <insert id="signup" parameterType="com.board.company.vo.CompanyVo">
+    INSERT INTO COMPANY_USERS (
+    	USER_ID,
+        USERNAME,
+        COMPNAME,
+        EMAIL,
+        PASSWORD,
+        PHONE_NUMBER,
+        J_DATE
+        )
+    VALUES (
+        #{user_id, jdbcType=VARCHAR}, 
+        #{username, jdbcType=VARCHAR}, 
+        #{compname, jdbcType=VARCHAR}, 
+        #{email, jdbcType=VARCHAR}, 
+        #{password, jdbcType=VARCHAR}, 
+        #{phone_number, jdbcType=VARCHAR},
+        SYSDATE
+        )
+  </insert>
+
+  <!-- 회원가입_ID 중복 확인 -->
+  <select id="findByUserId" parameterType="com.board.company.vo.CompanyVo">
+    SELECT USER_ID, USERNAME, COMPNAME, EMAIL, PASSWORD, PHONE_NUMBER, J_DATE
+    FROM   COMPANY_USERS
+    WHERE  USER_ID = #{user_id}
+  </select>
+    
+  <!-- 마이페이지_회원정보 -->
+  <select id="getUserById" parameterType="String" resultType="com.board.company.vo.CompanyVo">
+    SELECT USER_ID, USERNAME, COMPNAME, EMAIL, PASSWORD, PHONE_NUMBER, J_DATE
+    FROM   COMPANY_USERS
+    WHERE  USER_ID = #{user_id}
+  </select>
+  
+  <!-- 마이페이지_회원정보수정 -->
+  <update id="update">
+    UPDATE COMPANY_USERS
+    SET    PASSWORD     = #{password, jdbcType=VARCHAR},
+           USERNAME     = #{username},
+           EMAIL        = #{email},
+           PHONE_NUMBER = #{phone_number, jdbcType=VARCHAR}
+    WHERE  USER_ID    = #{user_id}
+  </update>
+  
+  <!-- 마이페이지_회원탈퇴 -->
+  <delete id="delete">
+    DELETE FROM COMPANY_USERS
+    WHERE  USER_ID = #{user_id, jdbcType=VARCHAR}
+  </delete>
    
-   
-   
+  <!-- 채용공고_목록 --> 
+  <select id="getmainList" >
+    SELECT APLNUM, POST_ID,	USER_ID, COMPNAME, RECRUITNUM,
+	       TO_CHAR(DEADLINE,'YYYY-MM-DD') DEADLINE,
+	       DUTY, CAREER, EDU, SKILLS, LICENSES, WORKSPACE, SALARY, DEPARTMENT, HIT
+	FROM   JOBPOSTING 
+	ORDER BY APLNUM DESC 
+  </select>
+  
+  <!-- 채용공고_상세페이지 -->
+  <select id="getmain" >
+    SELECT APLNUM, POST_ID,	USER_ID, COMPNAME, RECRUITNUM,
+	       TO_CHAR(DEADLINE,'YYYY-MM-DD') DEADLINE,
+	       DUTY, CAREER, EDU, SKILLS, LICENSES, WORKSPACE, SALARY, DEPARTMENT, HIT
+	FROM   JOBPOSTING 
+	WHERE  APLNUM=#{aplnum} 
+  </select>
+  
+  <!-- 채용공고_등록 -->
+  <insert id="insertposting">
+    INSERT INTO jobposting (APLNUM ,POST_ID 
+                         ,RECRUITNUM,DEADLINE 
+                         ,DUTY,WORKSPACE 
+                         ,SALARY,DEPARTMENT
+                         ,CAREER,EDU
+                         ,SKILLS,LICENSES) 
+    VALUES ( (SELECT NVL(MAX(APLNUM),0)+1 FROM JOBPOSTING ) ,#{post_id} 
+            ,#{recruitnum} ,#{deadline} 
+            ,#{duty} ,#{workspace} 
+            ,#{salary} ,#{department}
+            ,#{edu},#{career}
+            ,#{skills},#{licenses})
+  
+  </insert>
+  
+  <!-- 채용공고_삭제 -->
+  <delete id="deleteposting">
+    DELETE FROM JOBPOSTING
+    WHERE APLNUM = #{aplnum}
+  </delete>
+  
+  <!-- 채용공고_수정 -->
+  <update id="updateposting">
+    UPDATE 
+           JOBPOSTING
+     SET    
+           POST_ID     = #{post_id}
+          ,RECRUITNUM  = #{recruitnum}
+          ,WORKSPACE   = #{workspace} 
+          ,DEADLINE    = #{deadline}
+          ,SALARY      = #{salary}
+          ,DEPARTMENT  = #{department}
+          ,SKILLS      = #{skills}
+          ,LICENSES    = #{licenses}
+          ,CAREER      = #{career}
+          ,EDU         = #{edu}
+          ,DUTY        = #{duty}
+    WHERE 
+         APLNUM       = #{aplnum}
+  </update>
+  
+  <!-- 채용공고_조회수 -->
+  <update id="plushit">
+   UPDATE JOBPOSTING
+      SET HIT = HIT+1
+      WHERE APLNUM= #{aplnum}
+  </update>
+  
+
+  
+  
 </mapper>
+
+
+
+
+
+
