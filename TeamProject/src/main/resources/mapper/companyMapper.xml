@@ -130,13 +130,25 @@
       WHERE APLNUM= #{aplnum}
   </update>
   
-
+  <!-- 기업별공고 리스트 -->
+  <select id="getCompanyList">
+   SELECT APLNUM, POST_ID, USER_ID, COMPNAME, RECRUITNUM,
+	      TO_CHAR(DEADLINE,'YYYY-MM-DD') DEADLINE,
+	      DUTY, CAREER, EDU, SKILLS, LICENSES, WORKSPACE, SALARY, DEPARTMENT, HIT
+    FROM  JOBPOSTING 
+    WHERE COMPNAME = '삼성'
+	ORDER BY APLNUM ASC
+  </select>
+  
+  <!-- 받은 이력서_목록 --> 
+  <select id="getappList" >
+   SELECT APP_ID, USER_ID, POST_ID, RESUME_ID, APP_DATE, LOCATION
+	FROM   APPLICATIONS 
+	ORDER BY POST_ID DESC 
+  </select>
   
   
 </mapper>
-
-
-
 
 
 

@@ -15,4 +15,9 @@ public class IndividualVo {
 	private String phone_number;
 	private String address;
 	private String j_date;
+	private int    app_id;
+	private String post_id;
+	private int    resume_id;
+	private String app_date;
+	private String location;
 }

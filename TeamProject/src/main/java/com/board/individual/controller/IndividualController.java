@@ -181,6 +181,7 @@ public class IndividualController {
 		mv.setViewName("individual/postview");
 		return mv;
 		}
+	
 	// ------------------------------- 이력서 등록 -------------------------------//
 	
 	//Individual/Resumereg (이력서등록)

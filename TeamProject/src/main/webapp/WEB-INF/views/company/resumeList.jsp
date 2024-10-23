@@ -12,26 +12,8 @@
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 
 <style>
- main{
-  h2    {margin-left : 16%;}
-  table {
-         border : 1px solid #DCDBDB;
-         text-align : center;
-         border-collapse: collapse;
-         margin-left : 16%;
-         width : 78%;
-         font-weight : bold;
-         height: auto;
-         }
-   td {border : 1px solid #DCDBDB;
-       padding : 10px;}
-   tr {padding : 10px;}
-   
-   a { text-decoration:none; color : black;}
-   a:hover{color : blue;}
-   }
-  tr:first-child{background : #E7E7E7; }
-  
+  table {border : 1px solid black;}
+  td    {border : 1px solid black;}
 </style>
 
 
@@ -55,7 +37,7 @@
       		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
       		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
-               <li><a href="cs">고객센터</a></li>   
+               <li><a href="cs">고객센터</a></li> 
           </ul> 
               
             <div class="rightmenu" >   
@@ -74,26 +56,32 @@
 </div>
 
 
-  <!--채용공고 목록_메인화면 -->
+  <!-- 받은 이력서 목록_메인화면 -->
+  <!-- 
+  지원번호 : resume_id 
+  지원자아이디 : user_id
+  -->
 <main>
-   <h2>공고 게시판</h2>
+   <h2>지원 받은 이력서</h2>
     <table>
      <tr>
-      <td>공고번호</td>
-      <td>제목</td>
-      <td>기업명</td>
-      <td>마감기한</td>
+      <td>채용공고명</td>
+      <td>지원번호</td>
+      <td>지원자 아이디</td>
+      <td>희망 근무 지역</td>
+      <td>지원일</td>
      </tr>
      
-     <c:forEach var="main" items="${mainList}">
+     <c:forEach var="app" items="${appList}">
       <tr>
-       <td>${ main.aplnum   }</td>
+       <td>${ app.post_id   }</td>
        <td>
-       <a href="/Company/Postview?aplnum=${main.aplnum}&user_id=${param.user_id}&compname=삼성">
-       ${ main.post_id  }</a>
+       <a href="/Company/Resumeview?resume_id=${app.resume_id}">
+       ${ app.resume_id  }</a>
        </td>
-       <td>${ main.compname }</td>
-       <td>${ main.deadline }</td>
+       <td>${ app.user_id }</td>
+       <td>${ app.location }</td>
+       <td>${ app.app_date }</td>
       </tr>
      </c:forEach>
     </table>

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.board.individual.mapper.IndividualMapper">
-	
+  <!-- 로그인 -->
   <select id="login" >
 	SELECT USER_ID, USERNAME, EMAIL, PASSWORD, PHONE_NUMBER, ADDRESS, J_DATE
 	FROM   USERS
@@ -10,12 +10,14 @@
     AND    PASSWORD = #{param2,jdbcType=VARCHAR}
    </select>
    
+  <!-- 마이페이지_회원정보 --> 
   <select id="getUserById" parameterType="String" resultType="com.board.individual.vo.IndividualVo">
     SELECT USER_ID, USERNAME, EMAIL, PASSWORD, PHONE_NUMBER, ADDRESS, J_DATE
     FROM   USERS
     WHERE  USER_ID = #{user_id}
   </select>
   
+  <!-- 마이페이지_회원정보수정 -->
   <update id="update">
     UPDATE USERS
     SET    PASSWORD     = #{password},
@@ -26,6 +28,7 @@
     WHERE  USER_ID    = #{user_id}
   </update>
   
+  <!-- 마이페이지_회원탈퇴 -->
   <delete id="delete">
     DELETE FROM USERS
     WHERE  USER_ID = #{user_id, jdbcType=VARCHAR}

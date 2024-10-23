@@ -14,8 +14,26 @@
 <script src="https://code.jquery.com/jquery.min.js"></script>
 
 <style>
-  table {border : 1px solid black;}
-  td    {border : 1px solid black;}
+  main{
+  h2    {margin-left : 16%;}
+  table {
+         border : 1px solid #DCDBDB;
+         text-align : center;
+         border-collapse: collapse;
+         margin-left : 16%;
+         width : 78%;
+         font-weight : bold;
+         height: auto;
+         }
+   td {border : 1px solid #DCDBDB;
+       padding : 10px;}
+   tr {padding : 10px;}
+   
+   a { text-decoration:none; color : black;}
+   a:hover{color : blue;}
+   }
+  tr:first-child{background : #E7E7E7; }
+  select{margin-left : 16%;}
 </style>
 
 
@@ -35,11 +53,10 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-
-          	   <li><a href="/Company/Postlist">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend">인재 추천</a></li>
+          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=삼성">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
                <li><a href="cs">고객센터</a></li>   
           </ul> 
               
@@ -63,9 +80,8 @@
 <main>  
     
    
-    <form action="/Company/Postupdate"  method="POST">
+    <form action="/Company/Postupdate?aplnum=${param.aplnum}&user_id=${param.user_id}&compname=삼성"  method="POST">
     <h2>공고 등록(${param.aplnum})</h2>
-    <input type="hidden" name="aplnum" value="${vo.aplnum}" />
     <tr>
        <select 	name="career" value="${vo.career }">
          <option value="">경력</option>
@@ -124,7 +140,7 @@
      </tr>
      <tr>
       <td>직무내용</td>
-      <td><textarea name="duty" maxlength="1300" >${vo.duty}</textarea></td>
+      <td><textarea name="duty" id ="duty" maxlength="1300" >${vo.duty}</textarea></td>
      </tr>
      <tr>
       <td colspan="2">
@@ -140,20 +156,26 @@
         
        const  goListEl = document.getElementById('goList')
        goListEl.onclick = function() {
-          location.href = '/Company/Postlist' 
+          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${param.user_id}&compname=삼성' ' 
        }    
        
        const  formEl       = document.querySelector('form');
        const  post_idEl      = document.querySelector('#post_id');
+       const  dutyEl      = document.querySelector('#duty');
        
-       // 회원가입버튼 클릭
+       
        formEl.onsubmit   = function () {           
 		   if(  post_idEl.value.trim() == ''  ) {
                alert('제목을 입력하세요')
                post_idEl.focus()
            	   return  false;
 		   } 
-
+		   if(  dutyEl.value.trim() == ''  ) {
+               alert('내용을 입력하세요')
+               dutyEl.focus()
+           	   return  false;
+		   } 
+		   
 		   return  true;
 	   }
     </script> 
