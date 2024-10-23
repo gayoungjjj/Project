@@ -1,5 +1,7 @@
 package com.board.individual.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.board.individual.vo.IndividualVo;
@@ -17,5 +19,12 @@ public interface IndividualMapper {
 
     // 회원가입 처리 메서드
     void signup(IndividualVo individualVo);
+
+    
+    
+    // 이력서등록
+
+	void insert(IndividualVo individualVo);
+
 
 }

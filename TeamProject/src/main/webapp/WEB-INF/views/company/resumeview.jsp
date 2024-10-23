@@ -6,34 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
+<script src="https://cdn.jsdelivr.net/npm/browser-scss@1.0.3/dist/browser-scss.min.js"></script>
+<script src="https://code.jquery.com/jquery.min.js"></script>
 
+<!-- main style 넣어주세욤 -->
 <style>
- main{
-  h2    {margin-left : 16%;}
-  table {
-         border : 1px solid #DCDBDB;
-         text-align : center;
-         border-collapse: collapse;
-         margin-left : 16%;
-         width : 78%;
-         font-weight : bold;
-         height: auto;
-         }
-   td {border : 1px solid #DCDBDB;
-       padding : 10px;}
-   tr {padding : 10px;}
-   
-   a { text-decoration:none; color : black;}
-   a:hover{color : blue;}
-   }
-  tr:first-child{background : #E7E7E7; }
-  
+ table{border:1px solid black;}
+ td{border:1px solid black;}
 </style>
-
 
 </head>
 <body>
@@ -55,7 +38,7 @@
       		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
       		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
-               <li><a href="cs">고객센터</a></li>   
+               <li><a href="cs">고객센터</a></li> 
           </ul> 
               
             <div class="rightmenu" >   
@@ -74,31 +57,62 @@
 </div>
 
 
-  <!--채용공고 목록_메인화면 -->
-<main>
-   <h2>공고 게시판</h2>
-    <table>
+  <!--이력서_상세페이지 -->
+<main>  
+   
+    <h2>이력서 내용보기 (${ vo.post_id })</h2>
+    <input type="hidden" name="aplnum" value="${vo.aplnum}" />
+    <table id="table">
      <tr>
       <td>공고번호</td>
-      <td>제목</td>
-      <td>기업명</td>
-      <td>마감기한</td>
+      <td>${  vo.aplnum      }</td>
+      <td>조회수</td>
+      <td>${  vo.hit      }</td>
      </tr>
-     
-     <c:forEach var="main" items="${mainList}">
-      <tr>
-       <td>${ main.aplnum   }</td>
-       <td>
-       <a href="/Company/Postview?aplnum=${main.aplnum}&user_id=${param.user_id}&compname=삼성">
-       ${ main.post_id  }</a>
-       </td>
-       <td>${ main.compname }</td>
-       <td>${ main.deadline }</td>
-      </tr>
-     </c:forEach>
-    </table>
- 
- </main>
+     <tr>
+      <td>기업명</td>
+      <td>${  vo.compname    }</td>
+      <td>마감기한</td>
+      <td>${  vo.deadline   }</td>
+     </tr>
+     <tr>
+      <td>급여</td>
+      <td>${  vo.salary    }</td>
+      <td>모집부서</td>
+      <td>${  vo.department  }</td>
+     </tr>
+     <tr>
+      <td>경력</td>
+      <td>${  vo.career    }</td>
+      <td>학력</td>
+      <td>${  vo.edu  }</td>
+     </tr>
+     <tr>
+      <td>보유기술</td>
+      <td>${  vo.skills    }</td>
+      <td>자격증</td>
+      <td>${  vo.licenses  }</td>
+     </tr>
+     <tr>
+      <td>직무 내용</td>
+      <td colspan="3">${ vo.duty }</td>
+     </tr>
+     <tr>
+      <td colspan="4"> 	
+       <a href="/Company/WriteForm?aplnum=${vo.aplnum}">새 글 쓰기</a>
+      
+       <a href="/Company/PostupdateForm?&aplnum=${vo.aplnum}">수정</a>
+       <a href="/Company/Postdelete?&aplnum=${vo.aplnum}">삭제</a>
+          
+
+       <a href="/Company/Postlist?aplnum=${vo.aplnum}">목록</a>
+      </td>
+     </tr>
+    
+    </table>    
+  
+  
+  </main>
   
  
  <footer>

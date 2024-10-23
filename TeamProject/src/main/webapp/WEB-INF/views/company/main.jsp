@@ -76,11 +76,11 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-          	   <li><a href="/Company/Postlist">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend">인재 추천</a></li>
-               <li><a href="cs">고객센터</a></li>   
+          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=삼성">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
+               <li><a href="cs">고객센터</a></li>  
           </ul> 
               
             <div class="rightmenu" >   

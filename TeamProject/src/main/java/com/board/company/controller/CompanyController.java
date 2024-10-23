@@ -12,6 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.company.mapper.CompanyMapper;
 import com.board.company.vo.CompanyVo;
+import com.board.individual.mapper.IndividualMapper;
+import com.board.individual.vo.IndividualVo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,6 +25,9 @@ public class CompanyController {
 	
 	@Autowired
 	private CompanyMapper companyMapper;
+	
+	@Autowired
+	private IndividualMapper individualMapper;
 	
 	// ------------------------------- 로그인 -------------------------------//
 	// Company/Login (로그인)
@@ -38,7 +43,7 @@ public class CompanyController {
 		String nowpage   = request.getParameter("nowpage");
 
         CompanyVo vo = companyMapper.login(userid, password);
-        // System.out.println("vo=" + vo);
+        System.out.println("vo=" + vo);
 
         HttpSession session = request.getSession();
         session.setAttribute("login", vo);
@@ -149,13 +154,15 @@ public class CompanyController {
     // ------------------------------- 채용공고 -------------------------------//
 	//Company/Postlist (채용공고 목록)
 	@RequestMapping("/Postlist")
-	public ModelAndView postlist() {
+	public ModelAndView postlist(String user_id, String compname) {
 		
 		List<CompanyVo> mainList = companyMapper.getmainList();
 		System.out.println("mainlist"+mainList);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("mainList", mainList);
+		mv.addObject("user_id", user_id);
+		mv.addObject("compname", compname);
 		mv.setViewName("company/postlist");
 		return mv ;
 	}
@@ -163,8 +170,8 @@ public class CompanyController {
 	//Company/Postview (채용공고 상세페이지)
 	// http://localhost:9090/Company/View?aplnum=1
 	@RequestMapping("/Postview")
-	public ModelAndView postview(CompanyVo companyVo) {
-				
+	public ModelAndView postview(CompanyVo companyVo,String user_id) {
+		
 		//조회수 증가
 		companyMapper.plushit(companyVo);
 		System.out.println("plusint"+companyVo);
@@ -178,6 +185,7 @@ public class CompanyController {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("vo",vo );
+		mv.addObject("user_id", user_id);
 		mv.setViewName("company/postview");
 		return mv;
 	}
@@ -186,23 +194,25 @@ public class CompanyController {
 	// http://localhost:9090/Company/WriteForm?aplnum=1
 	
 	@RequestMapping("/WriteForm")
-	public ModelAndView writeform(CompanyVo companyVo) {
+	public ModelAndView writeform(CompanyVo companyVo,String user_id) {
 		
 		ModelAndView mv = new ModelAndView();
 		System.out.println("writeformVo"+companyVo);
 		mv.addObject("companyVo", companyVo);
+		mv.addObject("user_id", user_id);
 		mv.setViewName("company/postwrite");
 		return mv;
 	}
 	
 	@RequestMapping("/Postwrite")
-	public ModelAndView postwrite(CompanyVo companyVo) {
+	public ModelAndView postwrite(CompanyVo companyVo,String user_id) {
 		
 		companyMapper.insertposting(companyVo);
 		
 		System.out.println("writeVo"+companyVo);
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/Company/Main");
+		mv.addObject("user_id", user_id);
+		mv.setViewName("redirect:/Company/Postlist");
 		return mv;
 	}
 	
@@ -210,26 +220,29 @@ public class CompanyController {
 	// /Company/Postdelete (채용공고 삭제)
 	// http://localhost:9090/Company/Postdelete?&aplnum=11
 	@RequestMapping("/Postdelete")
-	public ModelAndView postdelete(CompanyVo companyVo) {
+	public ModelAndView postdelete(CompanyVo companyVo,String user_id) {
 		
 		companyMapper.deleteposting(companyVo);
 		System.out.println("delete"+companyVo);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/Company/Main");
+		mv.addObject("user_id", user_id);
+		mv.setViewName("redirect:/Company/Postlist");
+//		mv.setViewName("redirect:/Company/ListManagement");
 		return mv;
 	}
 	
 	// /Company/PostupdateForm (채용공고 수정)
 	//http://localhost:9090/Company/PostupdateForm?&aplnum=8
 	@RequestMapping("/PostupdateForm")
-	public ModelAndView postupdateForm(CompanyVo companyVo) {
+	public ModelAndView postupdateForm(CompanyVo companyVo,String user_id) {
 		
 		ModelAndView mv = new ModelAndView();
 		CompanyVo vo = companyMapper.getmain(companyVo);
 		System.out.println("postupdateForm"+vo);
 		
 		mv.addObject("vo", vo);
+		mv.addObject("user_id", user_id);
 		mv.setViewName("company/postupdate");
 		return mv;
 	}
@@ -243,6 +256,57 @@ public class CompanyController {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:/Company/Postlist");
+		return mv;
+	}
+	
+	// ---------------------------- 등록공고목록 ----------------------------//
+	// http://localhost:9090/Company/ListManagement
+	// 기업별 등록 공고리스트
+	@RequestMapping("/ListManagement")
+	public ModelAndView listmanagment(String user_id) {
+			
+			List<CompanyVo> CompanyList = companyMapper.getCompanyList();
+			System.out.println("CompanyList"+CompanyList);
+			
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("CompanyList",CompanyList);
+			mv.addObject("user_id", user_id);
+			mv.setViewName("company/listmanagement");
+			return mv;
+		}
+	
+	
+    // ------------------------------- 이력서 -------------------------------//
+	//Company/ResumeList (이력서 목록)
+	@RequestMapping("/ResumeList")
+	public ModelAndView postupdate(CompanyVo companyVo,String user_id) {
+		
+		System.out.println("Postupdate"+companyVo);
+		
+		companyMapper.updateposting(companyVo);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("user_id", user_id);
+		mv.setViewName("redirect:/Company/Postlist");
+		return mv;
+	}
+	
+
+	
+	
+	//Company/Resumview (이력서 상세페이지)
+	// http://localhost:9090/Company/Resumview?resume_id=1001
+	@RequestMapping("/Resumview")
+	public ModelAndView resumview(IndividualVo individualVo) {
+				
+		//이력서 조회
+		//IndividualVo vo = companyMapper.getmain(individualVo);
+		//System.out.println("vo"+vo);
+		
+		
+		ModelAndView mv = new ModelAndView();
+		//mv.addObject("vo",vo );
+		mv.setViewName("company/resumview");
 		return mv;
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.board.company.vo.CompanyVo;
+import com.board.individual.vo.IndividualVo;
 
 @Mapper
 public interface CompanyMapper {
@@ -32,5 +33,9 @@ public interface CompanyMapper {
 	void deleteposting(CompanyVo companyVo);
 
 	void updateposting(CompanyVo companyVo);
+
+	List<IndividualVo> getappList();
+
+	List<CompanyVo> getCompanyList();
 
 }

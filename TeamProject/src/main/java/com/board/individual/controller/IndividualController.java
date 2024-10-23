@@ -181,7 +181,9 @@ public class IndividualController {
 		mv.setViewName("individual/postview");
 		return mv;
 		}
+	
 	// ------------------------------- 이력서 등록 -------------------------------//
+	
 	
 	//Individual/Resumereg (이력서등록)
 	@RequestMapping("/Resumereg")
@@ -191,10 +193,24 @@ public class IndividualController {
 	
 		String userid = login.getUser_id();
 		IndividualVo vo = individualMapper.getUserById(userid);		
-		
+				
 		model.addAttribute("vo", vo); 
 		return "individual/resumereg";
-	}	
-
+	}
+	
+	@RequestMapping("/WriteForm")
+    public ModelAndView write() {    
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/individual/write");
+        return mv;
+    }
+    
+    @RequestMapping("/Write")
+    public ModelAndView signupFrom(IndividualVo individualVo) {
+        individualMapper.insert(individualVo);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/Individual/Main"); 
+        return mv;
+    }
 
 }
