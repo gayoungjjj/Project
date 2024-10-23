@@ -9,6 +9,10 @@
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+
 <style>
 
 main{
@@ -76,6 +80,8 @@ main{
 
   <!--채용공고 목록_메인화면 -->
 <main>
+   <a class="btn btn-outline-secondary" 
+         href="/Company/WriteForm?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">새로운 공고 쓰기</a>
    <h2>공고 게시판</h2>
     <table>
      <tr>

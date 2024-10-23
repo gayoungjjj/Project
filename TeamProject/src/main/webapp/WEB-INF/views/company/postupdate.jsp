@@ -8,6 +8,9 @@
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/browser-scss@1.0.3/dist/browser-scss.min.js"></script>
 <script src="https://code.jquery.com/jquery.min.js"></script>
 
@@ -31,8 +34,35 @@
    a { text-decoration:none; color : black;}
    a:hover{color : blue;}
    }
+   
   tr:first-child{background : #E7E7E7; }
+  
   select{margin-left : 16%;}
+  
+  textarea               {
+      height : 200px;
+      width  : 100%;      
+  }
+  
+  input[type=submit] {padding : 8px;
+                      background : white;
+                      border-radius: 8px;
+                      border:1px solid #FAC104;
+                      color : #FAC104;
+                      font-weight : bold;  }
+                      
+  input[type=submit]:hover {background: #FAC104;
+                            color : white;}
+                            
+  input[type=button] {padding : 8px;
+                      background : white;
+                      border-radius: 8px;
+                      border:1px solid #308752;
+                      color : #308752;
+                      font-weight : bold;}
+                      
+  input[type=button]:hover {background: #308752;
+                            color : white;}
 </style>
 
 
@@ -81,7 +111,7 @@
     
    
     <form action="/Company/Postupdate?aplnum=${param.aplnum}&user_id=${param.user_id}&compname=카카오"  method="POST">
-    <h2>공고 등록(${param.aplnum})</h2>
+    <h2>공고 수정(${param.aplnum})</h2>
     <tr>
        <select 	name="career" value="${vo.career }">
          <option value="">경력</option>
@@ -140,10 +170,10 @@
      </tr>
      <tr>
       <td>직무내용</td>
-      <td><textarea name="duty" id ="duty" maxlength="1300" >${vo.duty}</textarea></td>
+      <td colspan="3"><textarea name="duty" id ="duty" maxlength="1300" >${vo.duty}</textarea></td>
      </tr>
      <tr>
-      <td colspan="2">
+      <td colspan="4">
        <input type="submit" value="수정" />
        <input type="button" value="목록" id="goList" />
       </td>
@@ -156,7 +186,7 @@
         
        const  goListEl = document.getElementById('goList')
        goListEl.onclick = function() {
-          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오' ' 
+          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오'
        }    
        
        const  formEl       = document.querySelector('form');

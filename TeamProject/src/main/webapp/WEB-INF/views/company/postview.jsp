@@ -8,12 +8,19 @@ g<%@ page language="java" contentType="text/html; charset=UTF-8"
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/browser-scss@1.0.3/dist/browser-scss.min.js"></script>
 <script src="https://code.jquery.com/jquery.min.js"></script>
 
 <style>
  main{
-  h2    {margin-left : 16%;}
+  h2    {margin-left : 16%;
+         margin-top : 2%;
+         font-weight : bold;}
   table {
          border : 1px solid #DCDBDB;
          text-align : center;
@@ -76,7 +83,7 @@ g<%@ page language="java" contentType="text/html; charset=UTF-8"
   <!--채용공고 목록_상세페이지 -->
 <main>  
    
-    <h2>공고 내용보기 (${ vo.post_id })</h2>
+    <h2>공고 내용보기</h2>
     <input type="hidden" name="aplnum" value="${vo.aplnum}" />
     <table id="table">
      <tr>
@@ -115,15 +122,19 @@ g<%@ page language="java" contentType="text/html; charset=UTF-8"
      </tr>
      <tr>
       <td colspan="4"> 	
-       <a href="/Company/WriteForm?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">새 글 쓰기</a>
+       <a class="btn btn-outline-primary" 
+         href="/Company/WriteForm?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">새로운 공고 쓰기</a>
       
       <!-- login이 완성되면 c:if -user_id를 compname로 변경 -->
       <c:if test="${login.user_id eq vo.user_id}">
-       <a href="/Company/PostupdateForm?&aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">수정</a>
-       <a href="/Company/Postdelete?&aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">삭제</a>
+       <a class="btn btn-outline-warning" 
+          href="/Company/PostupdateForm?&aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">수정</a>
+       <a class="btn btn-outline-danger" 
+          href="/Company/Postdelete?&aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">삭제</a>
        </c:if>
 
-       <a href="/Company/Postlist?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">목록</a>
+       <a class="btn btn-outline-success" 
+          href="/Company/Postlist?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">목록</a>
       </td>
      </tr>
     

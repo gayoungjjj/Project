@@ -9,9 +9,54 @@
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 
+
 <style>
-  table {border : 1px solid black;}
-  td    {border : 1px solid black;}
+  main{
+  h2    {margin-left : 16%;}
+  table {
+         border : 1px solid #DCDBDB;
+         text-align : center;
+         border-collapse: collapse;
+         margin-left : 16%;
+         width : 78%;
+         font-weight : bold;
+         height: auto;
+         }
+   td {border : 1px solid #DCDBDB;
+       padding : 10px;}
+   tr {padding : 10px;}
+   
+   a { text-decoration:none; color : black;}
+   a:hover{color : blue;}
+   }
+   
+  tr:first-child{background : #E7E7E7; }
+  
+  select{margin-left : 16%;}
+  
+  textarea{
+      height : 200px;
+      width  : 100%;}
+      
+  input[type=submit] {padding : 8px;
+                      background : white;
+                      border-radius: 8px;
+                      border:1px solid #2F70FF;
+                      color : #2F70FF;
+                      font-weight : bold;  }
+                      
+  input[type=submit]:hover {background: #2F70FF;
+                            color : white;}
+                            
+  input[type=button] {padding : 8px;
+                      background : white;
+                      border-radius: 8px;
+                      border:1px solid #308752;
+                      color : #308752;
+                      font-weight : bold;}
+                      
+  input[type=button]:hover {background: #308752;
+                            color : white;}
 </style>
 
 
@@ -60,7 +105,7 @@
     
    
     <form action="/Company/Postwrite?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오 "  method="POST">
-    <h2>공고 등록(${ param.aplnum })</h2>
+    <h2>공고 등록</h2>
     
     <tr>
        <select 	name="career" id="career">
@@ -120,10 +165,10 @@
      </tr>
      <tr>
       <td>직무내용</td>
-      <td><textarea name="duty" id = "duty" maxlength="1300"></textarea></td>
+      <td colspan="3"><textarea name="duty" id = "duty" maxlength="1300"></textarea></td>
      </tr>
      <tr>
-      <td colspan="2">
+      <td colspan="4">
        <input type="submit" value="글 저장" />
        <input type="button" value="목록" id="goList" />
       </td>

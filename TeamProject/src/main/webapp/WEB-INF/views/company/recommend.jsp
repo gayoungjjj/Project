@@ -122,30 +122,25 @@
  </div>
  
  <main>
-   <h2>등록 공고 게시판</h2>
-    <a class="btn btn-outline-secondary" 
-         href="/Company/WriteForm?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">새로운 공고 쓰기</a>
-    <table>
-     <tr>
-      <td>공고 번호</td>
-      <td>공고명</td>
-      <td>조회수</td>
-      <td>마감기한</td>
-
-     </tr>
-     
-     <c:forEach var="main" items="${CompanyList}">
-      <tr>
-       <td>${ main.aplnum   }</td>
-       <td>
-       <a href="/Company/Postview?aplnum=${main.aplnum}&user_id=${param.user_id}&compname=카카오">
-       ${ main.post_id  }</a>
-       </td>
-       <td>${ main.hit }</td>
-       <td>${ main.deadline }</td>
-      </tr>
-     </c:forEach>
-    </table>
+   <h2>인재 추천</h2>
+     <table>
+       <tr>
+        <td>이름</td>
+        <td>이력서 제목</td>
+        <td>전화번호</td>
+        <td>생년월일</td>
+       </tr>
+       
+       <c:forEach var="vo" items="${recommendList}">
+       <tr>
+        <td>${vo.username}</td>
+        <td>${vo.title}</td>
+        <td>${vo.phone_number}</td>
+        <td>${vo.birth}</td>
+       </tr>
+       </c:forEach>
+       
+     </table>
  
  </main>
  

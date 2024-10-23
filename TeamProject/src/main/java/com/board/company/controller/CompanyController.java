@@ -12,6 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.company.mapper.CompanyMapper;
 import com.board.company.vo.CompanyVo;
+import com.board.individual.mapper.IndividualMapper;
+import com.board.individual.vo.IndividualVo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,6 +25,9 @@ public class CompanyController {
 	
 	@Autowired
 	private CompanyMapper companyMapper;
+	
+	@Autowired
+	private IndividualMapper individualMapper;
 	
 	// ------------------------------- 로그인 -------------------------------//
 	// Company/Login (로그인)
@@ -267,6 +272,21 @@ public class CompanyController {
 			mv.setViewName("company/listmanagement");
 			return mv;
 		}
+	
+	
+	// http://localhost:9090/Company/Recommend?user_id=user3&compname=카카오
+	//인재 추천
+	@RequestMapping("/Recommend")
+	public ModelAndView recommend() {
+		
+		List<IndividualVo> recommendList = individualMapper.recommendList();
+		System.out.println("recommend"+recommendList);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("recommendList", recommendList);
+		mv.setViewName("company/recommend");
+		return mv;
+	}
+	
 	
  
 
