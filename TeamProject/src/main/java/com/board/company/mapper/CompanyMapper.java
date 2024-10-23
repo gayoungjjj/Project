@@ -19,6 +19,13 @@ public interface CompanyMapper {
 
 	void signup(CompanyVo companyVo);
 
+	void companysignup(CompanyVo companyVo);
+
 	CompanyVo idDupCheck(String user_id);
+
+	CompanyVo compDupCheck(String compname);
+
+
+
 
 }

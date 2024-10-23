@@ -100,8 +100,10 @@ public class CompanyController {
     }
     
     @RequestMapping("/CompanySignupForm")
-    public ModelAndView companysignupForm() {
+    public ModelAndView companysignupForm(CompanyVo companyVo) {
+    	companyMapper.companysignup(companyVo);
         ModelAndView mv = new ModelAndView();
+        System.out.println("Address: " + companyVo.getAddress());
         mv.setViewName("redirect:/Company/Signup"); 
         return mv;
     }
@@ -116,7 +118,19 @@ public class CompanyController {
     		String  result = "";  
     		CompanyVo  companyVo = companyMapper.idDupCheck( user_id  );		
     		return  companyVo;
-    	} 
+    	}
+    
+    @RequestMapping(
+    		value   = "/CompDupCheck",
+    		method  = RequestMethod.GET,
+    		headers = "Accept=application/json" )  
+    @ResponseBody                           
+    public  CompanyVo   compDupCheck(String compname) {
+    	String  result = "";
+    	CompanyVo  compnameVo = companyMapper.compDupCheck( compname  );
+    	System.out.println("컴퍼니:" + compnameVo);
+    	return  compnameVo;
+    } 
     
 	@RequestMapping("/")
 	public String home() {

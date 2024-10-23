@@ -12,21 +12,21 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #e0f7fa; 
+            background-color: #F5F6F8; 
         }
         .container {
-            background-color: white;
+            background-color: #FFFFFF;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             padding: 20px;
             width: 90%;
-            max-width: 600px;
+            max-width: 500px;
+        }
+        img {
+            height: 200px; 
         }
         h2 {
             text-align: center;
-            color: #00796b;
             margin-bottom: 20px;
         }
         table {
@@ -39,7 +39,7 @@
         input[type="text"],
         input[type="password"],
         input[type="email"] {
-            width: 100%;
+            width: 95%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -47,10 +47,10 @@
         }
         input[type="submit"],
         input[type="button"] {
-            background-color: #00796b;
+            background-color: #2759FF;
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 10px;
             border-radius: 5px;
             cursor: pointer;
             width: 49%; 
@@ -58,48 +58,56 @@
         }
         input[type="submit"]:hover,
         input[type="button"]:hover {
-            background-color: #004d40;
+            background-color: #405DAB;
         }
         .red { color: red; }
         .green { color: green; }
     </style>
 </head>
 <body>
+	<img src="/img/로고.png"  alt=회사로고/>
     <div class="container">
-        <h2>개인 회원가입</h2>
+	<h2>개인 회원 가입</h2>
+        <input type="button" class="inbtn" onclick="location.href='/Individual/Signup'" value="개인회원가입"/>
+        <input type="button" class="cobtn"onclick="location.href='/Company/Signup'" value="기업회원가입"/>
         <form action="/Individual/SignupForm" method="POST">
             <table>
                 <tr>
-                    <td><span class="red">*</span>사용자 아이디</td>
-                    <td>
-                    <input type="text" name="user_id" required />
+                    <td colspan="2">
+                    <input type="text" name="user_id" placeholder="아이디" required />
                     <input type="button" id="dupCheck" value="중복확인" />
                     <span id="dupResult"></span>
                     </td>
                 </tr>
                 <tr>
-                    <td><span class="red">*</span>비밀번호</td>
-                    <td><input type="password" name="password" required /></td>
+                	<td colspan="2">
+                    <input type="password" name="password" placeholder= 비밀번호 required />
+                    </td>
                 </tr>
                 <tr>
-                    <td><span class="red">*</span>비밀번호 확인</td>
-                    <td><input type="password" name="passwordCheck" required /></td>
+                	<td colspan="2">
+                    <input type="password" name="passwordCheck" placeholder="비밀번호 확인" required/>
+                    </td>
                 </tr>
                 <tr>
-                    <td><span class="red">*</span>사용자 이름</td>
-                    <td><input type="text" name="username" required /></td>
+                	<td colspan="2">
+                    <input type="text" name="username" placeholder="이름" required />
+                    </td>
                 </tr>
                 <tr>
-                    <td><span class="red">*</span>이메일</td>
-                    <td><input type="email" name="email" /></td>
+                	<td colspan="2">
+                    <input type="email" name="email" placeholder="이메일" required/>
+                    </td>
                 </tr>
                 <tr>
-                    <td><span class="red">*</span>전화번호</td>
-                    <td><input type="text" name="phone_number" required /></td>
+                	<td colspan="2">
+                    <input type="text" name="phone_number" placeholder="전화번호"  />
+                    </td>
                 </tr>
                 <tr>
-                    <td>주소</td>
-                    <td><input type="text" name="address" /></td>
+                	<td colspan="2">
+                    <input type="text" name="address" placeholder="주소" />
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -120,6 +128,7 @@
 	    
        const  formEl          = document.querySelector('form');
        const  user_idEl       = document.querySelector('[name=user_id]');
+       const  emailEl   	  = document.querySelector('#email');
        const  passwordEl   	  = document.querySelector('#password');
        const  passwordCheckEl = document.querySelector('#passwordCheck');
        const  usernameEl   	  = document.querySelector('[name=username]');
@@ -130,7 +139,7 @@
     	   dupCheckClicked = true;  
        }
        
-       // 회원가입버튼 클릭
+       
        formEl.onsubmit   = function () {           
 		   if(  user_idEl.value.trim() == ''  ) {
                alert('아이디를 입력하세요')
@@ -157,7 +166,11 @@
                usernameEl.focus()
 	           return  false;
 		   }	
-           
+           if (emailEl.value.trim() === '') {
+               alert('이메일을 입력하세요');
+               emailEl.focus();
+               return false;
+           }
            if(  dupCheckClicked == false ) {
         	   alert('중복확인을 하세요')
                return false;
@@ -168,6 +181,14 @@
     <script>
        $( function() {
            $('#dupCheck').on('click', function() {
+        	   
+        	   const user_id = $('[name=user_id]').val().trim();
+               if (user_id === '') {
+                   alert('아이디를 입력하세요'); 
+                   $('[name=user_id]').focus(); 
+                   return; 
+               }
+               
                 $.ajax({
                    url  : '/Individual/IdDupCheck',
                    
@@ -188,6 +209,7 @@
                })
                .fail( function(err) {
                    console.log(err)
+                   alert('오류:다시 시도해주세요.');
                }) 
            })
        })     
