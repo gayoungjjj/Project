@@ -68,7 +68,7 @@
   		<a href="/Individual/Main"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
-  		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
+  		<input type="text" placeholder="#픽미 는 당신의 취업을 응원합니다!! ">
   		<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" >
 	</div>
 
