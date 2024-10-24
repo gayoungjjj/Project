@@ -20,6 +20,12 @@ public interface IndividualMapper {
     // 회원가입 처리 메서드
     void signup(IndividualVo individualVo);
 
+	IndividualVo idDupCheck(String user_id);
+
+	List<IndividualVo> recommendList();
+
+	void insert(IndividualVo individualVo);
+
 
 
 }

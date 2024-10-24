@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -95,10 +96,31 @@ public class IndividualController {
 	}
 	// ------------------------------- 회원가입 -------------------------------//
 	// Individual/Signup (회원가입)
-	@RequestMapping("/Signup")
-	public String signup() {
-		return "individual/signup";
-	}
+    @RequestMapping("/Signup")
+    public ModelAndView signup() {    
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/individual/signup");
+        return mv;
+    }
+    // Individual/SignupForm (회원가입)
+    @RequestMapping("/SignupForm")
+    public ModelAndView signupFrom(IndividualVo individualVo) {
+        individualMapper.signup(individualVo);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/Individual/Login"); 
+        return mv;
+    }
+	// 아이디 중복 확인
+    @RequestMapping(
+    		value   = "/IdDupCheck",
+    		method  = RequestMethod.GET,
+    		headers = "Accept=application/json" )  
+    	@ResponseBody                           
+    	public  IndividualVo   idDupCheck(String user_id) {
+    		String  result = "";  
+    		IndividualVo  individualVo = individualMapper.idDupCheck( user_id  );		
+    		return  individualVo;
+    	} 
 	
 	// ------------------------------- 마이페이지 -------------------------------//
 	// Individual/Mypage (마이페이지)
@@ -196,5 +218,19 @@ public class IndividualController {
 		model.addAttribute("vo", vo); 
 		return "individual/resumereg";
 	}	
+	@RequestMapping("/WriteForm")
+    public ModelAndView write() {    
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/individual/write");
+        return mv;
+    }
+    
+    @RequestMapping("/Write")
+    public ModelAndView signupForm(IndividualVo individualVo) {
+        individualMapper.insert(individualVo);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/Individual/Main"); 
+        return mv;
+    }
 
 }

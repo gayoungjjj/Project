@@ -122,7 +122,6 @@
       <td colspan="4"> 	
        <a href="/Individual/Postlist?aplnum=${vo.aplnum}">목록</a>
        <a href="/Individual/Postlist?aplnum=${vo.aplnum}">이력서 작성</a>
-       <a href="/Individual/Postlist?aplnum=${vo.aplnum}">이력서 작성</a>
       </td>
      </tr>
     

@@ -13,8 +13,6 @@ public interface CompanyMapper {
 	CompanyVo login(String userid, String password);
 	
 	CompanyVo getUserById(String user_id);
-	
-	CompanyVo findByUserId(CompanyVo vo);
     
     void update(CompanyVo companyVo);
     
@@ -39,6 +37,12 @@ public interface CompanyMapper {
 	List<CompanyVo> getCompanyList();
 
 	IndividualVo getresumeList(IndividualVo individualVo);
+
+	void companysignup(CompanyVo companyVo);
+
+	CompanyVo idDupCheck(String user_id);
+
+	CompanyVo compDupCheck(String compname);
 
 
 }

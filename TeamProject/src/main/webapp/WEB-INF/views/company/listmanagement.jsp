@@ -8,7 +8,8 @@
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <style>
 
  /*임시-----------*/
@@ -76,7 +77,7 @@
    display: flex;
    align-items: center; 
    justify-content: center; 
-  }
+  }s
 </style>
 </head>
 
@@ -94,12 +95,6 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-   <!-- 기능 구현 
-    1. 채용공고, 고객센터는 개인이랑 똑같음-->
-    
-   <!-- 기능 구현
-    1. 로그아웃 기능 구현
-    2. 마이페이지 이동 구현 -->
           	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=삼성">채용공고</a></li>
       		   <li><a href="/Company/ListManagement?user_id=${param.user_id }&compname=삼성">등록 공고 관리</a></li>
       		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
@@ -123,6 +118,8 @@
  
  <main>
    <h2>등록 공고 게시판</h2>
+    <a class="btn btn-outline-secondary" 
+         href="/Company/WriteForm?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">새로운 공고 쓰기</a>
     <table>
      <tr>
       <td>공고 번호</td>
@@ -135,7 +132,7 @@
       <tr>
        <td>${ main.aplnum   }</td>
        <td>
-       <a href="/Company/Postview?aplnum=${main.aplnum}&user_id=${param.user_id}&compname=삼성">
+       <a href="/Company/Postview?aplnum=${main.aplnum}&user_id=${param.user_id}&compname=카카오">
        ${ main.post_id  }</a>
        </td>
        <td>${ main.hit }</td>
