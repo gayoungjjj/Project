@@ -132,6 +132,18 @@ public class CompanyController {
     	return  compnameVo;
     } 
     
+    	@RequestMapping(
+    	    value = "/EmailDupCheck",
+    	    method = RequestMethod.GET,
+    	    headers = "Accept=application/json")
+    	@ResponseBody
+    	public CompanyVo emailDupCheck(String email) { // 인자를 email로 수정
+    	    CompanyVo compemailVo = companyMapper.emailDupCheck(email);
+    	    System.out.println(compemailVo);
+    	    return compemailVo;
+    	}
+
+    
 	@RequestMapping("/")
 	public String home() {
 		return "views/home";

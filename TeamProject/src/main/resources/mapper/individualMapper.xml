@@ -16,6 +16,15 @@
     WHERE  USER_ID = #{user_id}
   </select>
   
+  <select id="emailDupCheck">
+	SELECT
+  		EMAIL
+	FROM
+    	USERS
+    WHERE
+    	EMAIL = #{email}
+  </select>
+  
   <update id="update">
     UPDATE USERS
     SET    PASSWORD     = #{password},

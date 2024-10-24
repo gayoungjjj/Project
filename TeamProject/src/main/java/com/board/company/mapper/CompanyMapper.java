@@ -25,7 +25,5 @@ public interface CompanyMapper {
 
 	CompanyVo compDupCheck(String compname);
 
-
-
-
+	CompanyVo emailDupCheck(String email);
 }

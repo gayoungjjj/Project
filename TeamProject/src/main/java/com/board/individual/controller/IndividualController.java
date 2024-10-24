@@ -105,7 +105,18 @@ public class IndividualController {
     		String  result = "";  
     		IndividualVo  individualVo = individualMapper.idDupCheck( user_id  );		
     		return  individualVo;
-    	} 
+    	}
+    
+    @RequestMapping(
+        value = "/EmailDupCheck",
+        method = RequestMethod.GET,
+        headers = "Accept=application/json")
+    @ResponseBody
+    public CompanyVo emailDupCheck(String email) { // 인자를 email로 수정
+        CompanyVo individualemailVo = individualMapper.emailDupCheck(email);
+        System.out.println(individualemailVo);
+        return individualemailVo;
+    	}
 	
 	@RequestMapping("/")
 	public String home() {
