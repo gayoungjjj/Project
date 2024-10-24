@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
@@ -12,40 +14,38 @@
 /* 테스트용 모집공고 css <시작>*/
 
 .legnav {
-   margin-top:20px;
-   display: flex;
-   flex-wrap: wrap; /* 줄 바꿈을 허용 */
-   justify-content: center; /* 중앙 정렬 */
-   padding-left: 200px;
-   padding-right: 200px;
+   padding-top:20px;
+   display: grid;
+   grid-template-columns: repeat(4, 250px); /* 3개의 열, 각 100px */
+   justify-content: center;
+   gap:8px;
    background-color: #F7F7F7;
- }
+   padding-bottom: 20px;
+  }
+
+
 
 .job-card {
    border: 1px solid #ccc;
    border-radius: 8px;
-   width: 200px;
-   margin: 10px;
-   padding: 10px;
    text-align: center;
    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-   flex: 0 0 calc(25% - 20px); /* 한 줄에 4개 배치 */
-   box-sizing: border-box; /* 패딩과 마진을 포함한 너비 계산 */
+   box-sizing: border-box; 
    background-color: white;
-   height: 300px;
- }
+   height: 220px;
+   }
 
 .job-card img {
-   width: 100%;
-   height: 150px;
-   object-fit: cover;
+   max-width: 200px;
+   height: 100px;
+   object-fit: cover ;
    border-radius: 8px 8px 0 0;
- }
+   }
 
 .company-name {
    font-weight: bold;
    margin: 5px 0;
- }
+    }
 
 .description {
    margin-top:10px;
@@ -56,12 +56,6 @@
    align-items: center; 
    justify-content: center; 
   }
-    
-/* 테스트용 모집공고 css <끝> 
-상의 필요함 메인화면이 어떤 화면으로 구성될것인지 
-자체적인 메인 화면을 만들것인지 -> 이경우 모집공고 칸 안에 넣는 기능 구현 필요  
-기능구현된 화면을 메인 화면으로 할것인지 
- */
 
 </style>
 
@@ -71,7 +65,7 @@
 
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Individual/Main"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Individual/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
@@ -83,17 +77,17 @@
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
 
-          	   <li><a href="/Individual/Postlist">채용공고</a></li>
-      		   <li><a href="/Individual/ResumeRegister">이력서 등록</a></li>
-      		   <li><a href="/Individual/ResumeList">등록 이력서 관리</a></li>
-               <li><a href="/Individual/Recommend">기업 추천</a></li>
+          	   <li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+      		   <li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
+      		   <li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>
+               <li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
                <li><a href="cs">고객센터</a></li>   
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Individual/Logout">로그아웃</a></li>
-     		   <li><a href="/Individual/Mypage">마이페이지</a></li>
+     		   <li><a href="/Individual/Mypage?user_id=${param.user_id}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   

@@ -10,31 +10,64 @@
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
 
 <style>
-  main{
-  h2    {margin-left : 9%;}
-  table {
-         border : 1px solid #DCDBDB;
-         text-align : center;
-         border-collapse: collapse;
-         margin-left : 11%;
-         width : 78%;
-         font-weight : bold;
-         height: auto;
-         }
-   td {border : 1px solid #DCDBDB;
-       padding : 10px;}
-   tr {padding : 10px;}
+.div3 {
+   margin-top:20px;
+   display: flex;
+   flex-wrap: wrap; 
+   justify-content: center; 
+   padding: 20px;
+   background-color: #F7F7F7;
    
-   a { text-decoration:none; color : black;}
-   a:hover{color : blue;}
-   }
-  tr:first-child{background : #E7E7E7; }
+}
+
+main {
+  padding: 40px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  width: 90%;
+  max-width: 1100px;
+  border-radius: 10px; 
+}
+
+main h2 {
+  font-size: 24px;
+  color: #1f2c63;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
   
+}
+
+table tr {
+  border-bottom: 1px solid #ddd;
+}
+
+table th, table td {
+  padding: 12px;
+  text-align: center;
+}
+
+table th {
+  font-size: 14pt;
+  background-color: #CBD5F5;
+  font-weight: bold;
+  color: #333;
+}
+
+table td a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+table td a:hover {
+  text-decoration: underline;
+}
 </style>
 
 
@@ -58,7 +91,7 @@
       		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
       		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
-               <li><a href="cs">고객센터</a></li>   
+               <li><a href="cs">고객센터</a></li> 
           </ul> 
               
             <div class="rightmenu" >   
@@ -77,34 +110,41 @@
 </div>
 
 
-  <!--채용공고 목록_메인화면 -->
-<main>
-   <a class="btn btn-outline-secondary" 
-         href="/Company/WriteForm?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">새로운 공고 쓰기</a>
-   <h2>공고 게시판</h2>
+  <!-- 받은 이력서 목록_메인화면 -->
+  <!-- 지원자아이디 : user_id -->
+  
+<div class= "div3">
+ <main>
     <table>
+    <h2 style=text-align:center;>지원 받은 이력서</h2>
      <tr>
-      <td>공고번호</td>
-      <td>제목</td>
-      <td>기업명</td>
-      <td>마감기한</td>
+      <th>지원번호</th>
+      <th>공고번호</th>
+      <th>채용공고명</th>
+      <th>이력서제목</th>
+      <th>희망 근무 지역</th>
+      <th>지원일</th>
+      <th>합격여부</th>
      </tr>
      
-     <c:forEach var="main" items="${mainList}">
+     <c:forEach var="app" items="${appList}">
       <tr>
-       <td>${ main.aplnum   }</td>
+       <td>${ app.app_id   }</td>
+       <td>${ app.aplnum   }</td>
+       <td>${ app.post_id }</td>
        <td>
-       <a href="/Company/Postview?aplnum=${main.aplnum}&user_id=${param.user_id}&compname=카카오">
-       ${ main.post_id  }</a>
+       <a href="/Company/Resumeview?title=${app.title}">
+           ${ app.title }</a>
        </td>
-       <td>${ main.compname }</td>
-       <td>${ main.deadline }</td>
+       <td>${ app.location }</td>
+       <td>${ app.app_date }</td>
+       <td>${ app.result }</td>
       </tr>
      </c:forEach>
     </table>
  
  </main>
-  
+</div>  
  
  <footer>
   <div class="footer1">

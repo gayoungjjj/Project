@@ -129,6 +129,8 @@
         <td>이력서 제목</td>
         <td>전화번호</td>
         <td>생년월일</td>
+        <td>자격증</td>
+        <td>공고제목</td>
        </tr>
        
        <c:forEach var="vo" items="${recommendList}">
@@ -137,6 +139,8 @@
         <td>${vo.title}</td>
         <td>${vo.phone_number}</td>
         <td>${vo.birth}</td>
+        <td>${vo.licenses}</td>
+        <td>${vo.post_id}</td>
        </tr>
        </c:forEach>
        

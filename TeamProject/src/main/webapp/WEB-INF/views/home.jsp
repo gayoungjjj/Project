@@ -6,61 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pick Me</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+body {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh; 
-            margin: 0;
-            background-color: #e0f7fa; 
+            background-color: #F5F6F8; 
         }  
-        h2 {
-            margin-bottom: 20px;
+        img {
+            height: 200px; 
         }
         .button-container {
             display: flex;
             justify-content: space-between;
-            width: 80%; 
-            max-width: 600px; 
+            width: 600px;
+            height: 200px;
+            margin: 50px;
         }
         .button {
             flex: 1; 
-            margin: 0 10px; 
-            padding: 20px; 
+            margin:  10px; 
+            padding: 10px; 
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             color: white;
             cursor: pointer;
-            font-size: 18px; 
+            font-size: 25px; 
             transition: background-color 0.3s;
+            background-color: #2759FF
         } 
-        .individual {
-            background-color: #00796b; 
-        }
-        .company {
-            background-color: #28a745; 
-        }
-        .individual:hover {
-            background-color: #004d40; 
-        }
-        .company:hover {
-            background-color: #218838; 
-        }
-        a {
-            margin-top: 20px;
-            color: #00796b; 
-            text-decoration: none; 
+        .button:hover {
+            background-color: #405DAB; 
         }
     </style>
 </head>
 <body>
-	<h2>Pick Me</h2>
+	<img src="/img/로고.png"  alt=회사로고/>
     <h2>어떤 회원 이신가요?</h2>
     <div class="button-container">
         <button class="button individual" onclick="location.href='/Individual/Login'">개인 로그인</button>
-        <button class="button company" onclick="location.href='/Company/Login'">기업 로그인</button>
+        <button class="button company" onclick="location.href='/Company/Login'">기업 로그인</button>        
     </div>
 </body>
 </html>

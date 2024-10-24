@@ -16,15 +16,22 @@ public class IndividualVo {
 	private String address;
 	private String j_date;
 	
+	private int    app_id;
+	private int    aplnum;
+	private String post_id;
+	private String title;  
+	private String app_date;
+	private String picture;
+	private String location;
+	private String result;
 	
-	private String title;
 	private String birth;
 	private String gender;
 	private String number2;
 	private String career;
 	private String careers;
 	private String eduwhen;
-	private String eduwher;
+	private String eduwhere;
 	private String edu;
 	private String major;
 	private String licenses1;
@@ -45,4 +52,6 @@ public class IndividualVo {
 	private String selfintro;
 	private String c_date;
 	private String u_date;
+	
+
 }

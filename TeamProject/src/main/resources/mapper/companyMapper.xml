@@ -13,30 +13,51 @@
   <!-- 회원가입 -->
   <insert id="signup" parameterType="com.board.company.vo.CompanyVo">
     INSERT INTO COMPANY_USERS (
-    	USER_ID,
-        USERNAME,
-        COMPNAME,
-        EMAIL,
-        PASSWORD,
-        PHONE_NUMBER,
-        J_DATE
-        )
-    VALUES (
-        #{user_id, jdbcType=VARCHAR}, 
+	    USER_ID,
+	    USERNAME,
+	    COMPNAME,
+	    EMAIL,
+	    PASSWORD,
+	    PHONE_NUMBER
+	) VALUES (
+		#{user_id, 	jdbcType=VARCHAR}, 
         #{username, jdbcType=VARCHAR}, 
-        #{compname, jdbcType=VARCHAR}, 
-        #{email, jdbcType=VARCHAR}, 
+        #{compname, jdbcType=VARCHAR},
+        #{email, 	jdbcType=VARCHAR}, 
         #{password, jdbcType=VARCHAR}, 
-        #{phone_number, jdbcType=VARCHAR},
-        SYSDATE
-        )
+        #{phone_number, jdbcType=VARCHAR}
+    )
   </insert>
-
-  <!-- 회원가입_ID 중복 확인 -->
-  <select id="findByUserId" parameterType="com.board.company.vo.CompanyVo">
+  
+  <!-- 기업 등록 쿼리 -->
+  <insert id="companysignup">
+	INSERT INTO COMPANY (
+	    COMPNAME,
+	    CEO,
+	    PHONE_NUMBER,
+	    ADDRESS,
+	    BUSINESS_TYPE
+	) VALUES (
+		#{compname, 	 jdbcType=VARCHAR},
+		#{ceo,			 jdbcType=VARCHAR},
+		#{phone_number,  jdbcType=VARCHAR},
+		#{address,		 jdbcType=VARCHAR},
+		#{business_type, jdbcType=VARCHAR}
+	)
+  </insert>
+  
+  <!-- ID 중복 확인 쿼리 -->
+  <select id="idDupCheck">
     SELECT USER_ID, USERNAME, COMPNAME, EMAIL, PASSWORD, PHONE_NUMBER, J_DATE
     FROM   COMPANY_USERS
     WHERE  USER_ID = #{user_id}
+  </select>
+  
+  <!-- 기업 확인 쿼리 -->
+  <select id="compDupCheck" >
+    SELECT COMPNAME 
+    FROM   COMPANY 
+    WHERE  COMPNAME = #{compname}
   </select>
     
   <!-- 마이페이지_회원정보 -->
@@ -130,38 +151,43 @@
       WHERE APLNUM= #{aplnum}
   </update>
   
-  
   <!-- 기업별공고 리스트 -->
   <select id="getCompanyList">
-  SELECT
-	    APLNUM,
-	    POST_ID,
-	    USER_ID,
-	    COMPNAME,
-	    RECRUITNUM,
-	    TO_CHAR(DEADLINE,'YYYY-MM-DD') DEADLINE,
-	    DUTY,
-	    CAREER,
-	    EDU,
-	    SKILLS,
-	    LICENSES,
-	    WORKSPACE,
-	    SALARY,
-	    DEPARTMENT,
-	    HIT
-	FROM
-	    JOBPOSTING 
-    WHERE COMPNAME = '카카오'
-	ORDER BY
-	     APLNUM ASC
+   SELECT APLNUM, POST_ID, USER_ID, COMPNAME, RECRUITNUM,
+	      TO_CHAR(DEADLINE,'YYYY-MM-DD') DEADLINE,
+	      DUTY, CAREER, EDU, SKILLS, LICENSES, WORKSPACE, SALARY, DEPARTMENT, HIT
+    FROM  JOBPOSTING 
+    WHERE COMPNAME = '삼성'
+	ORDER BY APLNUM ASC
   </select>
   
+  <!-- 인재추천 리스트 -->
+  <select id="recommendList">
+  SELECT *
+	FROM RESUMES RE FULL JOIN APPLICATIONS AP ON RE.TITLE = AP.TITLE
+	                FULL JOIN JOBPOSTING JP ON AP.APLNUM = JP.APLNUM
+	WHERE (RE.LICENSES1 = JP.LICENSES OR RE.LICENSES2 = JP.LICENSES OR RE.LICENSES2 = JP.LICENSES)
+      AND JP.COMPNAME='삼성'
+  </select>
   
+  <!-- 받은 이력서_목록 --> 
+  <select id="getappList" >
+   SELECT APP_ID, USER_ID, APLNUM, POST_ID, REPLACE(TITLE, ' ', '') AS TITLE, APP_DATE, PICTURE, LOCATION, RESULT
+	FROM  APPLICATIONS 
+	ORDER BY APP_ID ASC 
+  </select>
+  
+  <!-- 이력서_상세페이지 -->
+  <select id="getresumeList">
+   SELECT REPLACE(TITLE, ' ', '') AS TITLE, USER_ID, USERNAME, EMAIL, PHONE_NUMBER, ADDRESS, BIRTH, GENDER, NUMBER2, CAREER,
+          CAREERS, EDUWHEN, EDUWHER, EDU, MAJOR, LICENSES1, LICENSES2, LICENSES3, PUBLISHER1,
+          PUBLISHER2, PUBLISHER3, PASSDATE1, PASSDATE2, PASSDATE3, SKILLS1, SKILLS2, SKILLS3,
+          SKILLS4, SKILLS5, PORTFOLIO, SELFINTRO
+    FROM  RESUMES
+    WHERE REPLACE(TITLE, ' ', '')= #{title}
+  </select>
   
 </mapper>
-
-
-
 
 
 

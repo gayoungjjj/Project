@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,6 +40,7 @@ public class IndividualController {
         String userid    = request.getParameter("userid");
         String password  = request.getParameter("password");
         String uri       = request.getParameter("uri");
+    	String menu_id   = request.getParameter("menu_id");
 		String nowpage   = request.getParameter("nowpage");
 
 		IndividualVo vo = individualMapper.login(userid, password);
@@ -94,10 +96,31 @@ public class IndividualController {
 	}
 	// ------------------------------- 회원가입 -------------------------------//
 	// Individual/Signup (회원가입)
-	@RequestMapping("/Signup")
-	public String signup() {
-		return "individual/signup";
-	}
+    @RequestMapping("/Signup")
+    public ModelAndView signup() {    
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/individual/signup");
+        return mv;
+    }
+    // Individual/SignupForm (회원가입)
+    @RequestMapping("/SignupForm")
+    public ModelAndView signupFrom(IndividualVo individualVo) {
+        individualMapper.signup(individualVo);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/Individual/Login"); 
+        return mv;
+    }
+	// 아이디 중복 확인
+    @RequestMapping(
+    		value   = "/IdDupCheck",
+    		method  = RequestMethod.GET,
+    		headers = "Accept=application/json" )  
+    	@ResponseBody                           
+    	public  IndividualVo   idDupCheck(String user_id) {
+    		String  result = "";  
+    		IndividualVo  individualVo = individualMapper.idDupCheck( user_id  );		
+    		return  individualVo;
+    	} 
 	
 	// ------------------------------- 마이페이지 -------------------------------//
 	// Individual/Mypage (마이페이지)
@@ -180,6 +203,34 @@ public class IndividualController {
 		mv.setViewName("individual/postview");
 		return mv;
 		}
+	
+	// ------------------------------- 이력서 등록 -------------------------------//
+	
+	//Individual/Resumereg (이력서등록)
+	@RequestMapping("/Resumereg")
+	public String resumereg(IndividualVo individualVo, HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		IndividualVo login = (IndividualVo) session.getAttribute("login");
+	
+		String userid = login.getUser_id();
+		IndividualVo vo = individualMapper.getUserById(userid);		
 		
+		model.addAttribute("vo", vo); 
+		return "individual/resumereg";
+	}	
+	@RequestMapping("/WriteForm")
+    public ModelAndView write() {    
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/individual/write");
+        return mv;
+    }
+    
+    @RequestMapping("/Write")
+    public ModelAndView signupForm(IndividualVo individualVo) {
+        individualMapper.insert(individualVo);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/Individual/Main"); 
+        return mv;
+    }
 
 }
