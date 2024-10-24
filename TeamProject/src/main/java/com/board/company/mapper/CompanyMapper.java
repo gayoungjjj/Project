@@ -24,9 +24,9 @@ public interface CompanyMapper {
 
 	List<CompanyVo> getmainList();
 
-	void plushit(CompanyVo companyVo);
-
 	CompanyVo getmain(CompanyVo companyVo);
+
+	void plushit(CompanyVo companyVo);
 
 	void insertposting(CompanyVo companyVo);
 
@@ -37,5 +37,8 @@ public interface CompanyMapper {
 	List<IndividualVo> getappList();
 
 	List<CompanyVo> getCompanyList();
+
+	IndividualVo getresumeList(IndividualVo individualVo);
+
 
 }

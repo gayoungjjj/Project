@@ -89,7 +89,7 @@ public class CompanyController {
 	// Company/Main (메인 화면)
 	@RequestMapping("/Main")
 	public String main() {
-		return "company/main";
+		return "company/main" ;
 	}
 	
 	// ------------------------------- 회원가입 -------------------------------//		
@@ -279,34 +279,35 @@ public class CompanyController {
     // ------------------------------- 이력서 -------------------------------//
 	//Company/ResumeList (이력서 목록)
 	@RequestMapping("/ResumeList")
-	public ModelAndView postupdate(CompanyVo companyVo,String user_id) {
+	public ModelAndView resumeList(IndividualVo individualVo, String user_id, String compname) {
 		
-		System.out.println("Postupdate"+companyVo);
-		
-		companyMapper.updateposting(companyVo);
+		List<IndividualVo> appList = companyMapper.getappList();
+		System.out.println("applist=" + appList);
 		
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("appList", appList);
 		mv.addObject("user_id", user_id);
-		mv.setViewName("redirect:/Company/Postlist");
+		mv.addObject("compname", compname);
+		mv.setViewName("company/resumeList");
 		return mv;
 	}
 	
-
-	
-	
-	//Company/Resumview (이력서 상세페이지)
+	//Company/Resumeview (이력서 상세페이지)
 	// http://localhost:9090/Company/Resumview?resume_id=1001
-	@RequestMapping("/Resumview")
-	public ModelAndView resumview(IndividualVo individualVo) {
-				
+	@RequestMapping("/Resumeview")
+	public ModelAndView resumeview(IndividualVo individualVo, String title) {				
 		//이력서 조회
-		//IndividualVo vo = companyMapper.getmain(individualVo);
-		//System.out.println("vo"+vo);
+		IndividualVo vo = companyMapper.getresumeList(individualVo);
+		System.out.println("vo"+vo);
 		
+		title = title.replaceAll(" ", "");
+		System.out.println("Title without spaces: " + title);
 		
 		ModelAndView mv = new ModelAndView();
 		//mv.addObject("vo",vo );
-		mv.setViewName("company/resumview");
+		mv.addObject("vo", vo);
+		mv.addObject("title", title);
+		mv.setViewName("company/resumeview");
 		return mv;
 	}
 

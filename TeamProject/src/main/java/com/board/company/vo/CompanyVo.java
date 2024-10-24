@@ -15,9 +15,15 @@ public class CompanyVo {
 	private String email;
 	private String phone_number;
 	private String j_date;
-	private String aplnum;
+	
+	private String ceo;
+	private String address;
+	private int    create_date;
+	private String business_type;
+	
+	private int    aplnum;
 	private String post_id;
-	private String recruitnum;
+	private int    recruitnum;
 	private String deadline;
 	private String duty;
 	private String career;
@@ -25,7 +31,7 @@ public class CompanyVo {
 	private String skills;
 	private String licenses;
 	private String workspace;
-	private String salary;
+	private int    salary;
 	private String department;
-	private int hit;
+	private int    hit;
 }

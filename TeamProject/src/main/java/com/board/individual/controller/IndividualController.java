@@ -186,7 +186,14 @@ public class IndividualController {
 	
 	//Individual/Resumereg (이력서등록)
 	@RequestMapping("/Resumereg")
-	public String resumereg() {
+	public String resumereg(IndividualVo individualVo, HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		IndividualVo login = (IndividualVo) session.getAttribute("login");
+	
+		String userid = login.getUser_id();
+		IndividualVo vo = individualMapper.getUserById(userid);		
+		
+		model.addAttribute("vo", vo); 
 		return "individual/resumereg";
 	}	
 

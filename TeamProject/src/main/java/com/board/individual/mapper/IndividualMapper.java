@@ -21,4 +21,5 @@ public interface IndividualMapper {
     void signup(IndividualVo individualVo);
 
 
+
 }

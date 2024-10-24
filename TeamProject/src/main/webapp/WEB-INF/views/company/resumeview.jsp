@@ -14,8 +14,100 @@
 
 <!-- main style 넣어주세욤 -->
 <style>
- table{border:1px solid black;}
- td{border:1px solid black;}
+.div3 {
+   margin-top:20px;
+   display: flex;
+   flex-wrap: wrap; 
+   justify-content: center; 
+   padding: 20px;
+   background-color: #F7F7F7;
+   
+}
+
+main {
+  padding: 40px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  width: 90%;
+  max-width: 1100px;
+  border-radius: 10px; 
+}
+
+main h2 {
+  font-size: 24px;
+  color: #1f2c63;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  
+}
+
+table tr {
+  border-bottom: 1px solid #ddd;
+}
+
+table th, table td {
+  padding: 12px;
+  text-align: center;
+}
+
+table th {
+  font-size: 14pt;
+  background-color: #CBD5F5;
+  font-weight: bold;
+  color: #333;
+}
+
+table td a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+table td a:hover {
+  text-decoration: underline;
+}
+
+/* 버튼 스타일 */
+main input[type="button"] {
+  padding: 10px 15px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007BFF;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+/* 합격 버튼 색상 */
+#goPass {
+  background-color: #007BFF;
+}
+
+#goPass:hover {
+  background-color: #0056b3;
+}
+
+/* 불합격 버튼 색상 */
+#goFail {
+  background-color: #dc3545;
+}
+
+#goFail:hover {
+  background-color: #c82333;
+}
+
+/* 보류 버튼 색상 */
+#goPending {
+  background-color: #6c757d;
+}
+
+#goPending:hover {
+  background-color: #5a6268;
+}
 </style>
 
 </head>
@@ -23,7 +115,7 @@
 
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Company/Main"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Company/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
@@ -44,7 +136,7 @@
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage">마이페이지</a></li>
+     		   <li><a href="/Company/Mypage?user_id=${param.user_id}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -58,28 +150,26 @@
 
 
   <!--이력서_상세페이지 -->
-<main>  
-   
-    <h2>이력서 내용보기 (${ vo.post_id })</h2>
-    <input type="hidden" name="aplnum" value="${vo.aplnum}" />
+
+<div class= "div3">
+  <main>    
+    <h2 style=text-align:center;>이력서 내용보기 (${ vo.title })</h2>
     <table id="table">
      <tr>
-      <td>공고번호</td>
-      <td>${  vo.aplnum      }</td>
-      <td>조회수</td>
-      <td>${  vo.hit      }</td>
+      <td>지원자명</td>
+      <td>${  vo.username      }</td>
+      <td>생년월일</td>
+      <td>${  vo.birth      }</td>
      </tr>
      <tr>
-      <td>기업명</td>
-      <td>${  vo.compname    }</td>
-      <td>마감기한</td>
-      <td>${  vo.deadline   }</td>
+      <td>연락처</td>
+      <td>${  vo.phone_number    }</td>
+      <td>비상연락처</td>
+      <td>${  vo.number2   }</td>
      </tr>
      <tr>
-      <td>급여</td>
-      <td>${  vo.salary    }</td>
-      <td>모집부서</td>
-      <td>${  vo.department  }</td>
+      <td>주소</td>
+      <td colspan="3">${  vo.address    }</td>
      </tr>
      <tr>
       <td>경력</td>
@@ -89,31 +179,56 @@
      </tr>
      <tr>
       <td>보유기술</td>
-      <td>${  vo.skills    }</td>
+      <td>${  vo.skills1    }</td>
       <td>자격증</td>
-      <td>${  vo.licenses  }</td>
+      <td>${  vo.licenses1  }</td>
+     </tr>    
+     <tr>
+      <td>포트폴리오</td>
+      <td colspan="3">${  vo.portfolio    }</td>
      </tr>
      <tr>
-      <td>직무 내용</td>
-      <td colspan="3">${ vo.duty }</td>
+      <td>자기소개서</td>
+      <td colspan="3">${  vo.selfintro    }</td>
      </tr>
+     
+     
      <tr>
       <td colspan="4"> 	
-       <a href="/Company/WriteForm?aplnum=${vo.aplnum}">새 글 쓰기</a>
-      
-       <a href="/Company/PostupdateForm?&aplnum=${vo.aplnum}">수정</a>
-       <a href="/Company/Postdelete?&aplnum=${vo.aplnum}">삭제</a>
-          
-
-       <a href="/Company/Postlist?aplnum=${vo.aplnum}">목록</a>
+       <input type="button" value="합격" id="goPass" />
+       <input type="button" value="불합격" id="goFail" />
+       <input type="button" value="보류" id="goPending" />
       </td>
      </tr>
     
     </table>    
-  
-  
+	<script>
+		const  goPassEl    = document.getElementById('goPass')
+		const  goFailEl    = document.getElementById('goFail')
+		const  goPendingEl = document.getElementById('goPending')
+		
+
+		
+	    goPassEl.onclick = function() {
+        const title = '${vo.title}'; // title을 가지고 가야함
+        window.location.href = `/Company/resumeupdate?title=${title}&result=합격`;
+        };
+
+        goFailEl.onclick = function() {
+        const title = '${vo.title}'; 
+        window.location.href = `/Company/resumeupdate?title=${title}&result=불합격`;
+        };
+
+        goPendingEl.onclick = function() {
+        const title = '${vo.title}'; 
+        window.location.href = `/Company/resumeupdate?title=${title}&result=보류`;
+        };
+	</script>
+
   </main>
-  
+</div>  
+
+
  
  <footer>
   <div class="footer1">

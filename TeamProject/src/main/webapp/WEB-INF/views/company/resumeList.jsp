@@ -12,8 +12,62 @@
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 
 <style>
-  table {border : 1px solid black;}
-  td    {border : 1px solid black;}
+.div3 {
+   margin-top:20px;
+   display: flex;
+   flex-wrap: wrap; 
+   justify-content: center; 
+   padding: 20px;
+   background-color: #F7F7F7;
+   
+}
+
+main {
+  padding: 40px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  width: 90%;
+  max-width: 1100px;
+  border-radius: 10px; 
+}
+
+main h2 {
+  font-size: 24px;
+  color: #1f2c63;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  
+}
+
+table tr {
+  border-bottom: 1px solid #ddd;
+}
+
+table th, table td {
+  padding: 12px;
+  text-align: center;
+}
+
+table th {
+  font-size: 14pt;
+  background-color: #CBD5F5;
+  font-weight: bold;
+  color: #333;
+}
+
+table td a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+table td a:hover {
+  text-decoration: underline;
+}
 </style>
 
 
@@ -22,7 +76,7 @@
 
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Company/Main"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Company/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
@@ -43,7 +97,7 @@
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage">마이페이지</a></li>
+     		   <li><a href="/Company/Mypage?user_id=${param.user_id}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -57,37 +111,40 @@
 
 
   <!-- 받은 이력서 목록_메인화면 -->
-  <!-- 
-  지원번호 : resume_id 
-  지원자아이디 : user_id
-  -->
-<main>
-   <h2>지원 받은 이력서</h2>
+  <!-- 지원자아이디 : user_id -->
+  
+<div class= "div3">
+ <main>
     <table>
+    <h2 style=text-align:center;>지원 받은 이력서</h2>
      <tr>
-      <td>채용공고명</td>
-      <td>지원번호</td>
-      <td>지원자 아이디</td>
-      <td>희망 근무 지역</td>
-      <td>지원일</td>
+      <th>지원번호</th>
+      <th>공고번호</th>
+      <th>채용공고명</th>
+      <th>이력서제목</th>
+      <th>희망 근무 지역</th>
+      <th>지원일</th>
+      <th>합격여부</th>
      </tr>
      
      <c:forEach var="app" items="${appList}">
       <tr>
-       <td>${ app.post_id   }</td>
+       <td>${ app.app_id   }</td>
+       <td>${ app.aplnum   }</td>
+       <td>${ app.post_id }</td>
        <td>
-       <a href="/Company/Resumeview?resume_id=${app.resume_id}">
-       ${ app.resume_id  }</a>
+       <a href="/Company/Resumeview?title=${app.title}">
+           ${ app.title }</a>
        </td>
-       <td>${ app.user_id }</td>
        <td>${ app.location }</td>
        <td>${ app.app_date }</td>
+       <td>${ app.result }</td>
       </tr>
      </c:forEach>
     </table>
  
  </main>
-  
+</div>  
  
  <footer>
   <div class="footer1">
