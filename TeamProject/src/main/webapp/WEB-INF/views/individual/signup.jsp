@@ -81,12 +81,12 @@
                 </tr>
                 <tr>
                 	<td colspan="2">
-                    <input type="password" name="password" placeholder="*비밀번호" required />
+                    <input type="password" name="password" id="password" placeholder="*비밀번호" required />
                     </td>
                 </tr>
                 <tr>
                 	<td colspan="2">
-                    <input type="password" name="passwordCheck" placeholder="*비밀번호 확인" required/>
+                    <input type="password" name="passwordCheck" id="passwordCheck" placeholder="*비밀번호 확인" required/>
                     </td>
                 </tr>
                 <tr>
@@ -142,28 +142,28 @@
        
        
        formEl.onsubmit   = function () {           
-		   if(  user_idEl.value.trim() == ''  ) {
+		   if(  user_idEl.value.trim() === ''  ) {
                alert('아이디를 입력하세요')
                user_idEl.focus()
            	   return  false;
 		   } 
-		   if( passwordEl.value.trim() == '' ) {
+		   if( passwordEl.value.trim() === '' ) {
 			   alert('비밀번호를 입력하세요')
                passwordEl.focus()
 	           return  false;
 		   }
-		   if( passwordCheckEl.value.trim() == '' ) {
+		   if( passwordCheckEl.value.trim() === '' ) {
 			   alert('비밀번호확인을 입력하세요')
                passwordCheckEl.focus()
 	           return  false;
 		   }          
-           if( passwordEl.value != passwordCheckEl.value ) {
+           if( passwordEl.value !== passwordCheckEl.value ) {
         	   alert('비밀번호가 일치하지 않습니다')
                passwordCheckEl.focus()
         	   return  false;
            }
            if( usernameEl.value.trim().length < 2 ) {
-        	   alert('이름은 2자 이상 입력하세요')
+        	   alert('이름은 두자 이상 입력하세요')
                usernameEl.focus()
 	           return  false;
 		   }	
@@ -172,13 +172,12 @@
                emailEl.focus();
                return false;
            }
-           if(  dupCheckClicked == false ) {
+           if(  dupCheckClicked === false ) {
         	   alert('중복확인을 하세요')
                return false;
            }
-           alert('회원가입이 완료되었습니다. 로그인을 해주세요');
 		   return  true;
-	   }
+	   };
     </script> 
     <script>
        $( function() {

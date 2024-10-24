@@ -31,7 +31,7 @@ public class IndividualVo {
 	private String career;
 	private String careers;
 	private String eduwhen;
-	private String eduwher;
+	private String eduwhere;
 	private String edu;
 	private String major;
 	private String licenses1;
@@ -43,13 +43,24 @@ public class IndividualVo {
 	private String passdate1;
 	private String passdate2;
 	private String passdate3;
-	private String skill1;
-	private String skill2;
-	private String skill3;
-	private String skill4;
-	private String skill5;
+	private String skills1;
+	private String skills2;
+	private String skills3;
+	private String skills4;
+	private String skills5;
 	private String portfolio;
 	private String selfintro;
 	private String c_date;
 	private String u_date;
+	
+	private int    recruitnum;
+	private String deadline;
+	private String duty;
+	private String skills;
+	private String licenses;
+	private String workspace;
+	private int    salary;
+	private String department;
+	private String compname;
+	private int    hit;
 }

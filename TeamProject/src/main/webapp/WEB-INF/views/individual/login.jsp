@@ -61,7 +61,7 @@
     </style>
 </head>
 <body>
-	<img src="/img/로고.png"  alt=회사로고/>
+    <img src="/img/로고.png"  alt=회사로고/>
     <div class="container">
         <h2>개인 로그인</h2>
         <form action="/Individual/Login" method="post">
