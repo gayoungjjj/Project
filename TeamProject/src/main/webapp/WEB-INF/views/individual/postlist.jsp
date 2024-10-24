@@ -72,7 +72,7 @@
       <tr>
        <td>${ main.aplnum   }</td>
        <td>
-       <a href="/Individual/Postview?aplnum=${main.aplnum}">
+       <a href="/Individual/Postview?aplnum=${main.aplnum}&user_id=${param.user_id}">
        ${ main.post_id  }</a>
        </td>
        <td>${ main.compname }</td>

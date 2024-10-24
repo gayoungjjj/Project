@@ -26,5 +26,13 @@ public interface IndividualMapper {
 
 	void insert(IndividualVo individualVo);
 
+	
+	//공고목록 이력서
+	
+	IndividualVo getmain2(String userid);
+
+	List<String> getTitlesByUSerId(String userid);
+
+
 
 }

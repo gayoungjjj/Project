@@ -54,15 +54,10 @@
  </div>
 
 
-<div class= "div2">
-<a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
-</div>
-
-
   <!--채용공고 목록_상세페이지 -->
 <main>  
    
-    <h2>공고 내용보기 (${ vo.post_id })</h2>
+    <h2>선택 공고  (${ vo.post_id })</h2>
     <input type="hidden" name="aplnum" value="${vo.aplnum}" />
     <table id="table">
      <tr>
@@ -104,11 +99,51 @@
      <tr>
       <td colspan="4"> 	
        <a href="/Individual/Postlist?aplnum=${vo.aplnum}">목록</a>
-       <a href="/Individual/Postapp?aplnum=${vo.aplnum}&user_id=${param.user_id}">이력서 작성</a>
       </td>
      </tr>
     
     </table>    
+  
+  
+   <h2>입사 지원서 </h2>
+
+   <input type="hidden" name="aplnum" value="${vo.aplnum}" />
+    <table id="table">
+     <tr>
+      <td>지원 공고 번호</td>
+      <td>${  vo.aplnum  }</td>
+       <td>공고 이름</td>
+      <td>${ vo.post_id     }</td>
+     </tr> 
+     <tr>
+      <td>희망 근무지역 <span class="red"> *</span></td>
+      <td><input type="text"  name = "location" placeholder="  "></td>
+       <td>이력서 첨부</td>
+       <td>
+          <select>
+             <c:forEach items="${titles}" var="title">
+                <option value="${title}">${title}</option>
+             </c:forEach>
+          </select>
+       </td>
+
+     </tr>
+     
+     <!-- 이력서 작성(이력서 불러오기 등)해서 이력서 보내기로 넘어가는 기능 구현하면 어떨까요? -->
+     <tr>
+      <td colspan="4"> 	
+       <a>제출전 이력서 내용을 확인해주세요</a><br>
+       <a>보유기술 , 자격증 칸으로 지원자의 보유 기술 및 자격증 을 확인할수있음 </a><br>
+       <a>지원공고 입력된 사항과 비교해볼수있습니다.</a>
+      
+      </td>
+      
+ 
+     </tr>
+      </table>    
+  
+        <input type="submit" value="지원하기">
+  
   
   
   </main>
@@ -119,6 +154,9 @@
    <p><small>&copy; 2024 All rights reserved 픽미</small></p>
   </div>
  </footer>
+<script>
 
+
+</script>
 </body>
 </html>

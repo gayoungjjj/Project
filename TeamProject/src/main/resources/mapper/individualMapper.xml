@@ -47,6 +47,20 @@
   </insert>
   
   
+   <!-- 이력서 가져오기-->
+  <select id="getmain2">
+   SELECT * FROM RESUMES 
+   WHERE   USER_ID=#{userid} 
+  </select>
+  
+  <!-- title 가져오기-->
+    <select id="getTitlesByUSerId" resultType="string" parameterType="string">
+        SELECT TITLE
+        FROM RESUMES
+        WHERE USER_ID = #{user_id}
+    </select>
+  
+  
 </mapper>
 
 

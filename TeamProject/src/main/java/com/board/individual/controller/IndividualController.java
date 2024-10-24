@@ -163,11 +163,11 @@ public class IndividualController {
 	//Individual/Postview (채용공고 상세페이지)
 	// http://localhost:9090/Individual/View?aplnum=1
 	@RequestMapping("/Postview")
-	public ModelAndView postview(CompanyVo companyVo) {
+	public ModelAndView postview(CompanyVo companyVo ,IndividualVo individualVo ,HttpServletRequest request, Model model) {
 				
 		//조회수 증가
 		companyMapper.plushit(companyVo);
-		System.out.println("plusint"+companyVo);
+		// System.out.println("plusint"+companyVo);
 		
 		//글 조회
 		CompanyVo vo = companyMapper.getmain(companyVo);
@@ -179,9 +179,36 @@ public class IndividualController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("vo",vo );
 		mv.setViewName("individual/postview");
+
 		return mv;
+		
+	}
+	
+	       //채용공고 지원 //
+		@RequestMapping("/Postapp")
+		public ModelAndView postapp(String user_id, CompanyVo companyVo ,IndividualVo individualVo ,HttpServletRequest request, Model model) {
+			
+			CompanyVo vo = companyMapper.getmain(companyVo);
+					
+			String       duty   =  vo.getDuty().replace("\n", "<br>");
+			vo.setDuty( duty );
+		    
+			
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("vo",vo );
+			
+			mv.setViewName("individual/postapp");
+
+			List<String> titles = individualMapper.getTitlesByUSerId(user_id);
+			System.out.println("titles"+titles);
+			
+			model.addAttribute("titles", titles);
+			
+			return mv;
 		}
 	
+		
+
 	// ------------------------------- 이력서 등록 -------------------------------//
 	
 	
