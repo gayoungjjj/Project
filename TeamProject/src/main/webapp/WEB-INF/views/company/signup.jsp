@@ -208,7 +208,7 @@
                })
                .done( function( data ) {   
                    console.log(data)
-                   if( data == '' ) {
+                   if( data === '' ) {
                      let html = '사용가능한 아이디입니다'; 
                      dupCheckClicked = true;
                      $('#dupResult').html(html).addClass('green')
