@@ -38,6 +38,7 @@ public class CompanyVo {
 	
 	
 	private String title;
+	private int    app_id;
 	private String birth;
 	private String gender;
 	private String number2;

@@ -337,8 +337,11 @@ public class CompanyController {
 	//Company/Resumeview (이력서 상세페이지)
 	// http://localhost:9090/Company/Resumview?resume_id=1001
 	@RequestMapping("/Resumeview")
-	public ModelAndView resumeview(IndividualVo individualVo, String title) {				
+	public ModelAndView resumeview(IndividualVo individualVo, String title) {	
+		
+		System.out.println("individualList "+individualVo);
 		//이력서 조회
+		
 		IndividualVo vo = companyMapper.getresumeList(individualVo);
 		System.out.println("vo"+vo);
 		
@@ -362,11 +365,32 @@ public class CompanyController {
 		
 		List<CompanyVo> recommendList = companyMapper.recommendList();
 		System.out.println("recommendList"+recommendList);
-		
 		ModelAndView mv = new ModelAndView();
+		
 		mv.addObject("recommendList", recommendList);
 		mv.setViewName("company/recommend");
 		return mv;
 	}
+	
+	//-----------------------------------북마크--------------------------------------//
+	//http://localhost:9090/Company/Bookmark?user_id=user3&compname=%EC%82%BC%EC%84%B1
+	//북마크
+	@RequestMapping("/Bookmark")
+	public ModelAndView bookmark() {
+		
+		
+		List<CompanyVo> recommendList = companyMapper.recommendList();
+		System.out.println("recommendList"+recommendList);
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("recommendList", recommendList);
+		
+		mv.setViewName("company/bookmark");
+		return mv;
+		
+	}
+	
+	
+	
 
 }
