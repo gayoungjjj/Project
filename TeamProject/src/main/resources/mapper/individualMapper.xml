@@ -17,6 +17,41 @@
     WHERE  USER_ID = #{user_id}
   </select>
   
+  <!-- 회원가입 -->
+  <insert id="signup">
+  	INSERT INTO USERS (
+	    USER_ID,
+	    USERNAME,
+	    EMAIL,
+	    PASSWORD,
+	    PHONE_NUMBER,
+	    ADDRESS
+    ) VALUES (
+        #{user_id, jdbcType=VARCHAR}, 
+        #{username, jdbcType=VARCHAR}, 
+        #{email, jdbcType=VARCHAR}, 
+        #{password, jdbcType=VARCHAR}, 
+        #{phone_number, jdbcType=VARCHAR}, 
+        #{address, jdbcType=VARCHAR}
+    )
+  </insert>
+  
+  <!-- ID 중복 확인 쿼리 -->
+  <select id="idDupCheck">
+  	SELECT
+	    USER_ID,
+	    USERNAME,
+	    EMAIL,
+	    PASSWORD,
+	    PHONE_NUMBER,
+	    ADDRESS,
+	    J_DATE
+	FROM
+    	USERS
+    WHERE
+    	USER_ID = #{user_id}
+  </select>
+  
   <!-- 마이페이지_회원정보수정 -->
   <update id="update">
     UPDATE USERS
@@ -34,7 +69,6 @@
     WHERE  USER_ID = #{user_id, jdbcType=VARCHAR}
   </delete>
   
-  
   <!-- 이력서 등록 -->
   <insert id="insert">
   
@@ -46,14 +80,16 @@
   #{skills1}  ,    #{skills2}  ,  #{skills3} ,    #{skills4} ,    #{skills5} ,      #{portfolio} ,    #{selfintro}     )
   </insert>
   
-  
-   <!-- 이력서 가져오기-->
-  <select id="getmain2">
-   SELECT * FROM RESUMES 
-   WHERE   USER_ID=#{user_id} 
+  <!-- 기업 - 인재추천 -->
+  <select id="recommendList">
+  SELECT TITLE, USER_ID, USERNAME, EMAIL, PHONE_NUMBER, ADDRESS, BIRTH, GENDER, NUMBER2,
+	    CAREER, CAREERS, EDUWHEN, EDUWHER, EDU, MAJOR, LICENSES1, LICENSES2, LICENSES3,
+	    PUBLISHER1, PUBLISHER2, PUBLISHER3, PASSDATE1, PASSDATE2, PASSDATE3, SKILLS1, 
+	    SKILLS2, SKILLS3, SKILLS4, SKILLS5, PORTFOLIO, SELFINTRO, C_DATE, U_DATE
+	FROM RESUMES
   </select>
   
-  <!-- title 가져오기-->
+   <!-- title 가져오기-->
     <select id="getTitlesByUSerId" resultType="string" parameterType="string">
         SELECT TITLE 
         FROM RESUMES
@@ -79,7 +115,61 @@
 )
   </insert>
   
+  <!--  이력서_목록 --> 
+  <select id="getappList" >
+   SELECT APP_ID, USER_ID, APLNUM, POST_ID, REPLACE(TITLE, ' ', '') AS TITLE, APP_DATE, PICTURE, LOCATION, RESULT
+	FROM  APPLICATIONS 
+	WHERE USER_ID = #{user_id}
+	ORDER BY APP_ID ASC 
+    
+  </select>
   
+  <!-- 이력서_상세페이지 -->
+  <select id="getresumeList">
+   SELECT REPLACE(TITLE, ' ', '') AS TITLE, USER_ID, USERNAME, EMAIL, PHONE_NUMBER, ADDRESS, BIRTH, GENDER, NUMBER2, CAREER,
+          CAREERS, EDUWHEN, EDUWHER, EDU, MAJOR, LICENSES1, LICENSES2, LICENSES3, PUBLISHER1,
+          PUBLISHER2, PUBLISHER3, PASSDATE1, PASSDATE2, PASSDATE3, SKILLS1, SKILLS2, SKILLS3,
+          SKILLS4, SKILLS5, PORTFOLIO, SELFINTRO
+    FROM  RESUMES
+    WHERE REPLACE(TITLE, ' ', '')= #{title}
+  </select>
+  
+  <!-- 등록 이력서 수정  -->
+<update id="update2">
+    UPDATE        RESUMES
+    SET            
+    BIRTH =        #{birth },
+    GENDER =       #{gender  } ,
+    NUMBER2 =      #{number2 } ,
+    CAREER =       #{career } ,
+    CAREERS =      #{careers },
+    EDUWHEN =      #{eduwhen} ,
+    EDUWHER =      #{eduwher} ,
+    EDU =   	   #{edu },
+    MAJOR =        #{major },
+    LICENSES1 =    #{licenses1},
+    LICENSES2 =    #{licenses2}, 
+    LICENSES3 =    #{licenses3},
+    PUBLISHER1 =   #{publisher1} ,
+    PUBLISHER2 =   #{publisher2} ,
+    PUBLISHER3 =   #{publisher3} ,
+    PASSDATE1 =    #{passdate1} ,
+    PASSDATE2 =    #{passdate2} ,
+    PASSDATE3 =    #{passdate3} ,
+    SKILLS1 =      #{skills1}  , 
+    SKILLS2 =      #{skills2}  ,
+    SKILLS3 =      #{skills3} ,
+    SKILLS4 =      #{skills4} ,
+    SKILLS5 =      #{skills5} ,
+    PORTFOLIO =    #{portfolio} ,
+    SELFINTRO =    #{selfintro},
+    U_DATE =       SYSDATE
+    WHERE        TITLE=#{title}
+     AND         USER_ID=#{user_id}             
+ 
+ 
+  </update>
+
 </mapper>
 
 

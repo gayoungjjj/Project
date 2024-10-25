@@ -87,17 +87,18 @@ table td a:hover {
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=삼성">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
-               <li><a href="cs">고객센터</a></li> 
+
+          	   <li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+      		   <li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
+      		   <li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>
+               <li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
+               <li><a href="cs">고객센터</a></li>   
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
-  			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage?user_id=${param.user_id}">마이페이지</a></li>
+  			   <li><a href="/Individual/Logout">로그아웃</a></li>
+     		   <li><a href="/Individual/Mypage?user_id=${param.user_id}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -105,9 +106,11 @@ table td a:hover {
  </div>
 
 
+
 <div class= "div2">
-<a href="/Individual/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
+<a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
 </div>
+
 
 
   <!-- 받은 이력서 목록_메인화면 -->
@@ -116,11 +119,32 @@ table td a:hover {
 <div class= "div3">
  <main>
     <table>
-    <h2 style=text-align:center;>지원 받은 이력서</h2>
+    <h2 style=text-align:center;>등록된 이력서 내역</h2>
      <tr>
-      <th>지원번호</th>
-      <th>공고번호</th>
-      <th>채용공고명</th>
+      <th>등록자명</th>
+      <th>이력서제목</th>
+      <th>작성일</th>
+     </tr>
+     
+     <c:forEach var="app" items="${appList}">
+      <tr>
+
+       <td>${ app.user_id }</td>
+       <td>${ app.post_id }</td>
+       <td>
+       <a href="/Individual/Resumeview?title=${app.title}&user_id=${param.user_id }" >
+           ${ app.title }</a>
+       </td>
+      </tr>
+     </c:forEach>
+    </table>
+ 
+ 
+ <table>
+    <h2 style=text-align:center;>지원 내역</h2>
+     <tr>
+      <th>지용자명</th>
+      <th>지원공고명</th>
       <th>이력서제목</th>
       <th>희망 근무 지역</th>
       <th>지원일</th>
@@ -129,11 +153,11 @@ table td a:hover {
      
      <c:forEach var="app" items="${appList}">
       <tr>
-       <td>${ app.app_id   }</td>
-       <td>${ app.aplnum   }</td>
+
+       <td>${ app.user_id }</td>
        <td>${ app.post_id }</td>
        <td>
-       <a href="/Company/Resumeview?title=${app.title}">
+       <a href="/Individual/Resumeview?title=${app.title}&user_id=${param.user_id }" >
            ${ app.title }</a>
        </td>
        <td>${ app.location }</td>
@@ -142,7 +166,6 @@ table td a:hover {
       </tr>
      </c:forEach>
     </table>
- 
  </main>
 </div>  
  

@@ -15,8 +15,38 @@
 
 <!-- main style 넣어주세욤 -->
 <style>
- table{border:1px solid black;}
- td{border:1px solid black;}
+  main{
+  h2    {margin-left : 16%;}
+  table {
+         border : 1px solid #DCDBDB;
+         text-align : center;
+         border-collapse: collapse;
+         margin-left : 16%;
+         width : 78%;
+         font-weight : bold;
+         height: auto;
+         }
+   td {border : 1px solid #DCDBDB;
+       padding : 10px;}
+   tr {padding : 10px;}
+   
+   a { text-decoration:none; color : black;}
+   a:hover{color : blue;}
+   }
+  tr:first-child{background : #E7E7E7; }
+  
+  .submitbtn{
+    margin-left:22px;
+  background-color:#4c5cc5;
+  font-weight:bolder;
+  font-size:15px;
+  color:white;
+  width:200px;
+  margin-bottom:10px;
+  height:40px;
+  border: 1px #DDDDDD solid; 
+  border-radius: 20px;
+  }
 </style>
 
 </head>
@@ -105,11 +135,11 @@
     </table>    
   
   
-   <h2>입사 지원서  ${ param.user_id } </h2>
- <form action="/Individual/Write2?" method="POST" >
+   <h2>입사 지원서  ${param.user_id} </h2>
+ <form action="/Individual/Write2?aplnum=${vo.aplnum}&user_id2=${param.user_id}" method="POST" >
    <input type="hidden" name="aplnum" value="${vo.aplnum}" />
    <input type="hidden" name="post_id" value="${vo.post_id}" />
-   <input type="hidden" name="user_id2" value="${ param.user_id }" />
+   <input type="hidden" name="user_id" value="${ param.user_id }" />
     <table id="table">
      <tr>
       <td>지원 공고 번호</td>
@@ -134,17 +164,14 @@
      <!-- 이력서 작성(이력서 불러오기 등)해서 이력서 보내기로 넘어가는 기능 구현하면 어떨까요? -->
      <tr>
       <td colspan="4"> 	
-       <a>제출전 이력서 내용을 확인해주세요</a><br>
-       <a>보유기술 , 자격증 칸으로 지원자의 보유 기술 및 자격증 을 확인할수있음 </a><br>
-       <a>지원공고 입력된 사항과 비교해볼수있습니다.</a>
-      
+       <input class ="submitbtn"type="submit" value="지원하기">
       </td>
       
  
      </tr>
       </table>    
   
-        <input type="submit" value="지원하기">
+    
   
    </form>
   

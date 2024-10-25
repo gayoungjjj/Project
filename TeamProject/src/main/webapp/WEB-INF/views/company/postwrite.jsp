@@ -12,8 +12,52 @@
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 
 <style>
-  table {border : 1px solid black;}
-  td    {border : 1px solid black;}
+  main{
+  h2    {margin-left : 16%;}
+  table {
+         border : 1px solid #DCDBDB;
+         text-align : center;
+         border-collapse: collapse;
+         margin-left : 16%;
+         width : 78%;
+         font-weight : bold;
+         height: auto;
+         }
+   td {border : 1px solid #DCDBDB;
+       padding : 10px;}
+   tr {padding : 10px;}
+   
+   a { text-decoration:none; color : black;}
+   a:hover{color : blue;}
+   }
+   
+  tr:first-child{background : #E7E7E7; }
+  
+  select{margin-left : 16%;}
+  
+  textarea{
+      height : 200px;
+      width  : 100%;}
+      
+  input[type=submit] {padding : 8px;
+                      background : white;
+                      border-radius: 8px;
+                      border:1px solid #2F70FF;
+                      color : #2F70FF;
+                      font-weight : bold;  }
+                      
+  input[type=submit]:hover {background: #2F70FF;
+                            color : white;}
+                            
+  input[type=button] {padding : 8px;
+                      background : white;
+                      border-radius: 8px;
+                      border:1px solid #308752;
+                      color : #308752;
+                      font-weight : bold;}
+                      
+  input[type=button]:hover {background: #308752;
+                            color : white;}
 </style>
 
 
@@ -22,7 +66,7 @@
 
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Company/Main"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Company/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
@@ -43,7 +87,7 @@
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage">마이페이지</a></li>
+     		   <li><a href="/Company/Mypage?user_id=${param.user_id}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -58,8 +102,8 @@
 
   <!--채용공고 목록_등록 -->
 <main>  
-    <form action="/Company/Postwrite?aplnum=${aplnum}&user_id=${param.user_id}&compname=삼성 "  method="POST">
-    <h2>공고 등록(${ param.aplnum })</h2>
+    <form action="/Company/Postwrite?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오 "  method="POST">
+    <h2>공고 등록</h2>
     
     <tr>
        <select 	name="career" id="career">
@@ -119,10 +163,10 @@
      </tr>
      <tr>
       <td>직무내용</td>
-      <td><textarea name="duty" id = "duty" maxlength="1300"></textarea></td>
+      <td colspan="3"><textarea name="duty" id = "duty" maxlength="1300"></textarea></td>
      </tr>
      <tr>
-      <td colspan="2">
+      <td colspan="4">
        <input type="submit" value="글 저장" />
        <input type="button" value="목록" id="goList" />
       </td>
@@ -135,7 +179,7 @@
         
        const  goListEl = document.getElementById('goList')
        goListEl.onclick = function() {
-          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${param.user_id}&compname=삼성' 
+          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오' 
        }    
        
        const  formEl       = document.querySelector('form');
@@ -160,7 +204,8 @@
 
 		   return  true;
 	   }
-    </script>
+    </script> 
+   
   </main>
   
  

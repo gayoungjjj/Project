@@ -33,6 +33,7 @@ public class IndividualVo {
 	private String careers;
 	private String eduwhen;
 	private String eduwhere;
+	private String eduwher;
 	private String edu;
 	private String major;
 	private String licenses1;
@@ -55,4 +56,5 @@ public class IndividualVo {
 	private String u_date;
 	
 
+	
 }

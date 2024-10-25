@@ -42,14 +42,13 @@
 
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Company/Main"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Company/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
   		<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" >
 	</div>
-
-   
+ 
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
@@ -63,7 +62,7 @@
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage">마이페이지</a></li>
+     		   <li><a href="/Company/Mypage?user_id=${param.user_id}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -77,11 +76,9 @@
 
 
   <!--채용공고 목록_수정 -->
-<main>  
-    
-   
-    <form action="/Company/Postupdate?aplnum=${param.aplnum}&user_id=${param.user_id}&compname=삼성"  method="POST">
-    <h2>공고 등록(${param.aplnum})</h2>
+<main>   
+    <form action="/Company/Postupdate?aplnum=${param.aplnum}&user_id=${param.user_id}&compname=카카오"  method="POST">
+    <h2>공고 수정(${param.aplnum})</h2>
     <tr>
        <select 	name="career" value="${vo.career }">
          <option value="">경력</option>
@@ -140,10 +137,10 @@
      </tr>
      <tr>
       <td>직무내용</td>
-      <td><textarea name="duty" id ="duty" maxlength="1300" >${vo.duty}</textarea></td>
+      <td colspan="3"><textarea name="duty" id ="duty" maxlength="1300" >${vo.duty}</textarea></td>
      </tr>
      <tr>
-      <td colspan="2">
+      <td colspan="4">
        <input type="submit" value="수정" />
        <input type="button" value="목록" id="goList" />
       </td>
@@ -156,7 +153,7 @@
         
        const  goListEl = document.getElementById('goList')
        goListEl.onclick = function() {
-          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${param.user_id}&compname=삼성' ' 
+          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오'
        }    
        
        const  formEl       = document.querySelector('form');

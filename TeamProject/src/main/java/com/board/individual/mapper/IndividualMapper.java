@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.board.company.vo.CompanyVo;
 import com.board.individual.vo.IndividualVo;
 
 @Mapper
@@ -20,21 +21,26 @@ public interface IndividualMapper {
     // 회원가입 처리 메서드
     void signup(IndividualVo individualVo);
 
-    
-    
-    // 이력서등록
+	IndividualVo idDupCheck(String user_id);
+
+	List<IndividualVo> recommendList();
 
 	void insert(IndividualVo individualVo);
 
-	
-	//공고목록 이력서
-	
-	IndividualVo getmain2(String userid);
+	List<IndividualVo> getappList(IndividualVo vo);
 
-	List<String> getTitlesByUSerId(String userid);
-
+	List<String> getTitlesByUSerId(String user_id);
 
 	void insert2(IndividualVo individualVo);
+
+
+
+	IndividualVo getResum(String userid);
+
+	void update2(IndividualVo individualVo);
+
+
+
 
 
 

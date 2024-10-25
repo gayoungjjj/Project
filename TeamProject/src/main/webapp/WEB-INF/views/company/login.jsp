@@ -7,22 +7,22 @@
     <title>기업 회원 로그인</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #e0f7fa;
+            background-color: #F5F6F8;
         }
         .container {
-            background-color: white;
+            background-color: #FFFFFF;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             width: 90%;
-            max-width: 400px; 
+            max-width: 500px; 
+        }
+        img {
+            height: 200px; 
         }
         h2 {
             text-align: center;
@@ -37,7 +37,7 @@
         }
         input[type="text"],
         input[type="password"] {
-            width: 100%;
+            width: 95%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -45,38 +45,36 @@
         }
         input[type="submit"],
         input[type="button"] {
-            background-color: #28a745;
+            width: 100%; 
+            padding: 10px;
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            width: 100%; 
+            background-color: #2759FF;
             transition: background-color 0.3s;
         }
         input[type="submit"]:hover,
         input[type="button"]:hover {
-            background-color: #218838; 
-        }
-        .link-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
+            background-color: #405DAB; 
         }
     </style>
 </head>
 <body>
+	<img src="/img/로고.png"  alt=회사로고/>
     <div class="container">
         <h2>기업 로그인</h2>
         <form action="/Company/Login" method="post">
             <table>
                 <tr>
-                    <td>ID</td>
-                    <td><input type="text" name="userid" required /></td>
+                    <td>
+                    <input type="text" name="userid" placeholder="아이디" required />
+                    </td>
                 </tr>
                 <tr>
-                    <td>P/W</td>
-                    <td><input type="password" name="password" required /></td>
+                    <td>
+                    <input type="password" name="password" placeholder="비밀번호"required />
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -85,9 +83,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <div class="link-container">
-                            <input type="button" value="기업 회원가입" onclick="location.href='/Company/Signup'" />
-                        </div>
+                            <input type="button" value="회원가입" onclick="location.href='/Company/Signup'" />
                     </td>
                 </tr>
             </table>

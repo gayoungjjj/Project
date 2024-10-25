@@ -111,27 +111,27 @@
 
     <div class = "div1">
  	  <h1 class ="logo">
-  		<a href="/Individual/Main"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Individual/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
  	  </h1>
       <div class="search">
-  		<input type="text" placeholder="#픽미 는 당신의 취업을 응원합니다!! ">
+  		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
   		<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" >
 	  </div>
    
   	  <header>
  	    <nav class ="headernav">
     	  <ul class ="leftmenu"> 
-          	   <li><a href="/Individual/Postlist">채용공고</a></li>
-      		   <li><a href="/Individual/Resumereg">이력서 등록</a></li>
-      		   <li><a href="/Individual/ResumeList">등록 이력서 관리</a></li>
-               <li><a href="/Individual/Recommend">기업 추천</a></li>
+          	   <li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+      		   <li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
+      		   <li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>
+               <li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
                <li><a href="cs">고객센터</a></li>   
           </ul> 
               
           <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Individual/Logout">로그아웃</a></li>
-     		   <li><a href="/Individual/Mypage">마이페이지</a></li>
+     		   <li><a href="/Individual/Mypage?user_id=${param.user_id}">마이페이지</a></li>
     		</ul>  	
           </div>
         </nav> 	   
