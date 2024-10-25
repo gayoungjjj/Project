@@ -10,7 +10,7 @@ import com.board.individual.vo.IndividualVo;
 @Mapper
 public interface IndividualMapper {
 
-	IndividualVo login(String userid, String password);
+	IndividualVo login(String user_id, String password);
 
 	IndividualVo getUserById(String user_id);
 
@@ -27,7 +27,7 @@ public interface IndividualMapper {
 
 	void insert(IndividualVo individualVo);
 
-	CompanyVo emailDupCheck(String email);
+	IndividualVo emailDupCheck(String email);
 
 
 

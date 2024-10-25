@@ -65,7 +65,7 @@
     </style>
 </head>
 <body>
-	<img src="/img/로고.png"  alt=회사로고/>
+	<img src="/img/로고.png"  alt=회사로고 onclick="location.href='/'"/>
     <div class="container">
         <h2>기업 회원 가입</h2>
         <input type="button" onclick="location.href='/Individual/Signup'" value="개인회원가입" style="width: 190px; background-color: #405DAB;"/>
@@ -290,6 +290,5 @@
         })
     });
 </script>
-    <a href="/">홈으로</a>
 </body>
 </html>

@@ -65,7 +65,7 @@
     </style>
 </head>
 <body>
-	<img src="/img/로고.png"  alt=회사로고/>
+	<img src="/img/로고.png"  alt=회사로고 onclick="location.href='/'"/>
     <div class="container">
 	<h2>개인 회원 가입</h2>
         <input type="button" class="inbtn" onclick="location.href='/Individual/Signup'" value="개인회원가입" style="width: 300px;"/>
@@ -192,7 +192,6 @@
                
                 $.ajax({
                    url  : '/Individual/IdDupCheck',
-                   
                    data : { user_id : $('[name=user_id]').val()  }  
         	       
                })
@@ -241,7 +240,6 @@
             })
         })
     });
-</script>
-    <a href="/">홈으로</a>
+	</script>
 </body>
 </html>

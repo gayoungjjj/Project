@@ -21,7 +21,7 @@ public class CompanyVo {
 	private int    create_date;
 	private String business_type;
 	
-	private int    aplnum;
+	private Integer aplnum;
 	private String post_id;
 	private int    recruitnum;
 	private String deadline;

@@ -10,7 +10,7 @@ import com.board.individual.vo.IndividualVo;
 @Mapper
 public interface CompanyMapper {
 
-	CompanyVo login(String userid, String password);
+	CompanyVo login(String user_id, String password);
 	
 	CompanyVo getUserById(String user_id);
     
@@ -48,6 +48,7 @@ public interface CompanyMapper {
 	
 	List<CompanyVo> recommendList();
 
+	List<CompanyVo> getSortedPostList();
 
 
 }

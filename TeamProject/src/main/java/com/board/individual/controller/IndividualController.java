@@ -37,34 +37,34 @@ public class IndividualController {
 		HttpServletRequest  request,
         HttpServletResponse response
 	    ) {
-        String userid    = request.getParameter("userid");
+        String user_id   = request.getParameter("user_id");
         String password  = request.getParameter("password");
         String uri       = request.getParameter("uri");
     	String menu_id   = request.getParameter("menu_id");
 		String nowpage   = request.getParameter("nowpage");
 
-		IndividualVo vo = individualMapper.login(userid, password);
+		IndividualVo vo = individualMapper.login(user_id, password);
         System.out.println("vo=" + vo);
 
         HttpSession session = request.getSession();
         session.setAttribute("login", vo);
         
-        System.out.println("userid=" + userid);
+        System.out.println("user_id=" + user_id);
 
         if (vo != null) {
        	 // 로그인 성공 처리
        	session.setAttribute("login", vo);
-       	return "redirect:/Individual/Main?user_id=" + userid;
-           			
+       	return "redirect:/Individual/Main?user_id=" + user_id;
        } else {
        	// 로그인 실패 처리
-       	 request.setAttribute("errorMessage", "Invalid userid or password.");
+       	 request.setAttribute("errorMessage", "아이디 또는 비밀번호를 확인하세요.");
             //System.out.println("실패");        
-            return "individual/login"; // 로그인 페이지로 돌아가기
+            return "/individual/login"; // 로그인 페이지로 돌아가기
        }
       
     }
-	// ------------------------------- 로그아웃 -------------------------------//
+	//---------------------- 로그아웃 -------------------------------//
+	
 	// Individual/Logout (로그아웃)
 	@RequestMapping(value="/Logout",
 		method = RequestMethod.GET)
@@ -91,8 +91,12 @@ public class IndividualController {
 	// ------------------------------- 메인 화면 -------------------------------//
 	// Individual/Main (메인 화면)
 	@RequestMapping("/Main")
-	public String main() {
-		return "individual/main";
+	public String main(Model model) {
+	    List<CompanyVo> postList = companyMapper.getSortedPostList();
+	    
+	    System.out.println("postList" + postList);
+	    model.addAttribute("PostList", postList); 
+	    return "individual/main"; 
 	}
 	// ------------------------------- 회원가입 -------------------------------//
 	// Individual/Signup (회원가입)
@@ -127,8 +131,8 @@ public class IndividualController {
             method = RequestMethod.GET,
             headers = "Accept=application/json")
         @ResponseBody
-        public CompanyVo emailDupCheck(String email) { 
-            CompanyVo individualemailVo = individualMapper.emailDupCheck(email);
+        public IndividualVo emailDupCheck(String email) { 
+    	IndividualVo individualemailVo = individualMapper.emailDupCheck(email);
             System.out.println(individualemailVo);
             return individualemailVo;
         	}
@@ -142,8 +146,8 @@ public class IndividualController {
 		HttpSession session = request.getSession();
 		IndividualVo login = (IndividualVo) session.getAttribute("login");
 	
-		String userid = login.getUser_id();
-		IndividualVo vo = individualMapper.getUserById(userid);		
+		String user_id = login.getUser_id();
+		IndividualVo vo = individualMapper.getUserById(user_id);		
 		
 		model.addAttribute("vo", vo);
 		return "individual/mypage";
@@ -183,8 +187,7 @@ public class IndividualController {
 
 	//Individual/Postlist (채용공고 목록)
 	@RequestMapping("/Postlist")
-	public ModelAndView postlist() {
-		
+	public ModelAndView postlist() {	
 		List<CompanyVo> mainList = companyMapper.getmainList();
 		System.out.println("mainlist"+mainList);
 		
@@ -224,8 +227,8 @@ public class IndividualController {
 		HttpSession session = request.getSession();
 		IndividualVo login = (IndividualVo) session.getAttribute("login");
 	
-		String userid = login.getUser_id();
-		IndividualVo vo = individualMapper.getUserById(userid);		
+		String user_id = login.getUser_id();
+		IndividualVo vo = individualMapper.getUserById(user_id);		
 		
 		model.addAttribute("vo", vo); 
 		return "individual/resumereg";
@@ -254,5 +257,4 @@ public class IndividualController {
 		mv.setViewName("/individual/recommend");
 		return mv;
 	}
-
 }

@@ -17,7 +17,7 @@ public class IndividualVo {
 	private String j_date;
 	
 	private int    app_id;
-	private int    aplnum;
+	private Integer aplnum;
 	private String post_id;
 	private String title;  
 	private String app_date;

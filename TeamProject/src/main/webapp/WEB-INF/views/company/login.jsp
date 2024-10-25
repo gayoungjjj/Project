@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>기업 회원 로그인</title>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
     <style>
         body {
             display: flex;
@@ -61,14 +62,14 @@
     </style>
 </head>
 <body>
-	<img src="/img/로고.png"  alt=회사로고/>
+	<img src="/img/로고.png"  alt=회사로고 onclick="location.href='/'"/>
     <div class="container">
         <h2>기업 로그인</h2>
         <form action="/Company/Login" method="post">
             <table>
                 <tr>
                     <td>
-                    <input type="text" name="userid" placeholder="아이디" required />
+                    <input type="text" name="user_id" placeholder="아이디" required />
                     </td>
                 </tr>
                 <tr>
@@ -88,7 +89,6 @@
                 </tr>
             </table>
         </form>
-            <a href="/">홈으로</a>
     </div>
 </body>
 </html>

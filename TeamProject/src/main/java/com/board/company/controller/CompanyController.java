@@ -35,15 +35,16 @@ public class CompanyController {
 	@RequestMapping("/Login")
 	public String login(
 		HttpServletRequest  request,
-        HttpServletResponse response
+        HttpServletResponse response,
+        RedirectAttributes redirectAttributes
 	    ) {
-        String userid    = request.getParameter("userid");
+        String user_id    = request.getParameter("user_id");
         String password  = request.getParameter("password");        
         String uri       = request.getParameter("uri");
 		String menu_id   = request.getParameter("menu_id");
 		String nowpage   = request.getParameter("nowpage");
 
-        CompanyVo vo = companyMapper.login(userid, password);
+        CompanyVo vo = companyMapper.login(user_id, password);
         System.out.println("vo=" + vo);
 
         HttpSession session = request.getSession();
@@ -52,12 +53,13 @@ public class CompanyController {
         if (vo != null) {
        	 // 로그인 성공 처리
        	session.setAttribute("login", vo);
-       	return "redirect:/Company/Main?user_id=" + userid;
+       	return "redirect:/Company/Main?user_id=" + user_id;
            			
        } else {
        	// 로그인 실패 처리
-       	 request.setAttribute("errorMessage", "Invalid username or password.");
-            //System.out.println("실패");        
+    	   
+       	 request.setAttribute("errorMessage", "아이디 또는 비밀번호를 확인하세요.");
+            //System.out.println("실패");
             return "company/login"; // 로그인 페이지로 돌아가기
        }      
     }
@@ -169,8 +171,8 @@ public class CompanyController {
 		HttpSession session = request.getSession();
 		CompanyVo login = (CompanyVo) session.getAttribute("login");
 	
-		String userid = login.getUser_id();
-		CompanyVo vo = companyMapper.getUserById(userid);		
+		String user_id = login.getUser_id();
+		CompanyVo vo = companyMapper.getUserById(user_id);		
 		
 		model.addAttribute("vo", vo);
 		return "company/mypage";
