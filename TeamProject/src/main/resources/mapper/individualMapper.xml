@@ -162,12 +162,9 @@
     SKILLS4 =      #{skills4} ,
     SKILLS5 =      #{skills5} ,
     PORTFOLIO =    #{portfolio} ,
-    SELFINTRO =    #{selfintro},
-    U_DATE =       SYSDATE
+    SELFINTRO =    #{selfintro}
     WHERE        TITLE=#{title}
      AND         USER_ID=#{user_id}             
- 
- 
   </update>
 
 </mapper>

@@ -331,7 +331,7 @@ public class IndividualController {
   		
   		String user_id = individualVo.getUser_id();
 		System.out.println("user_id는:" + user_id);
- 		
+	      System.out.println("Title without spaces: " + title);
   		ModelAndView mv = new ModelAndView();
   		//mv.addObject("vo",vo );
   		mv.addObject("vo", vo);
@@ -355,7 +355,8 @@ public class IndividualController {
         individualMapper.update2(individualVo);
         
         System.out.println("IndividualVo: " + individualVo);
-        
+       
+  
         System.out.println("완료");
         ModelAndView mv = new ModelAndView();
         mv.setViewName("redirect:/Individual/Main"); 
