@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class IndividualVo {
 	private String user_id;
+	private String user_id2;
 	private String username;
 	private String email;
 	private String password;

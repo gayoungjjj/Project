@@ -50,15 +50,34 @@
    <!-- 이력서 가져오기-->
   <select id="getmain2">
    SELECT * FROM RESUMES 
-   WHERE   USER_ID=#{userid} 
+   WHERE   USER_ID=#{user_id} 
   </select>
   
   <!-- title 가져오기-->
     <select id="getTitlesByUSerId" resultType="string" parameterType="string">
-        SELECT TITLE
+        SELECT TITLE 
         FROM RESUMES
         WHERE USER_ID = #{user_id}
     </select>
+  
+   <!-- 입사 지원서 제출  -->
+  <insert id="insert2">
+  INSERT INTO APPLICATIONS (
+    APP_ID,
+    USER_ID,
+    APLNUM,
+    POST_ID,
+    TITLE,
+    LOCATION
+) VALUES (
+ (SELECT NVL(MAX(app_id),0)+1 FROM applications ),
+    #{user_id2},
+    #{aplnum},
+    #{post_id},
+    #{title},
+    #{location}     
+)
+  </insert>
   
   
 </mapper>

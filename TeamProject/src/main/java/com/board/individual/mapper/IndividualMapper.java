@@ -34,5 +34,8 @@ public interface IndividualMapper {
 	List<String> getTitlesByUSerId(String userid);
 
 
+	void insert2(IndividualVo individualVo);
+
+
 
 }

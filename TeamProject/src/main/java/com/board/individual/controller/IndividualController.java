@@ -201,13 +201,28 @@ public class IndividualController {
 
 			List<String> titles = individualMapper.getTitlesByUSerId(user_id);
 			System.out.println("titles"+titles);
-			
 			model.addAttribute("titles", titles);
+
 			
 			return mv;
 		}
-	
 		
+		@RequestMapping("/WriteForm2")
+	    public ModelAndView writeForm2() {    
+	        ModelAndView mv = new ModelAndView();
+	        mv.setViewName("/individual/write2");
+	        return mv;
+	    }
+	    
+	    @RequestMapping("/Write2")
+	    public ModelAndView white2(IndividualVo individualVo) {
+	        individualMapper.insert2(individualVo);
+	        ModelAndView mv = new ModelAndView();
+	        mv.setViewName("redirect:/Individual/Main"); 
+	        return mv;
+	    }
+	
+
 
 	// ------------------------------- 이력서 등록 -------------------------------//
 	
@@ -226,14 +241,14 @@ public class IndividualController {
 	}
 	
 	@RequestMapping("/WriteForm")
-    public ModelAndView write() {    
+    public ModelAndView writeForm() {    
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/individual/write");
         return mv;
     }
     
     @RequestMapping("/Write")
-    public ModelAndView signupFrom(IndividualVo individualVo) {
+    public ModelAndView white(IndividualVo individualVo) {
         individualMapper.insert(individualVo);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("redirect:/Individual/Main"); 

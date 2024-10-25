@@ -105,9 +105,11 @@
     </table>    
   
   
-   <h2>입사 지원서 </h2>
-
+   <h2>입사 지원서  ${ param.user_id } </h2>
+ <form action="/Individual/Write2?" method="POST" >
    <input type="hidden" name="aplnum" value="${vo.aplnum}" />
+   <input type="hidden" name="post_id" value="${vo.post_id}" />
+   <input type="hidden" name="user_id2" value="${ param.user_id }" />
     <table id="table">
      <tr>
       <td>지원 공고 번호</td>
@@ -120,9 +122,9 @@
       <td><input type="text"  name = "location" placeholder="  "></td>
        <td>이력서 첨부</td>
        <td>
-          <select>
+          <select name="title">
              <c:forEach items="${titles}" var="title">
-                <option value="${title}">${title}</option>
+                <option  value="${title}">${title}</option>
              </c:forEach>
           </select>
        </td>
@@ -144,7 +146,7 @@
   
         <input type="submit" value="지원하기">
   
-  
+   </form>
   
   </main>
   
