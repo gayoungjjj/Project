@@ -43,6 +43,8 @@ public interface IndividualMapper {
 
 	List<IndividualVo> getreList(IndividualVo vo);
 
+	void deleteres(IndividualVo individualVo);
+
 
 
 

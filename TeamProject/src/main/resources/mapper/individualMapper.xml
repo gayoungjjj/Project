@@ -180,6 +180,18 @@
      AND         USER_ID=#{user_id}             
   </update>
 
+
+
+
+<delete id="deleteres">
+	
+	DELETE FROM RESUMES
+	WHERE   REPLACE(TITLE, ' ', '')= #{title}
+	
+	
+</delete>
+
+
 </mapper>
 
 

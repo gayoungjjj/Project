@@ -267,8 +267,9 @@ public class IndividualController {
     @RequestMapping("/Write")
     public ModelAndView signupForm(IndividualVo individualVo) {
         individualMapper.insert(individualVo);
+        String user_id = individualVo.getUser_id();
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("redirect:/Individual/Main"); 
+        mv.setViewName("redirect:/Individual/Main?user_id=" + user_id); 
         return mv;
     }
     
@@ -324,8 +325,6 @@ public class IndividualController {
     
   	
   	
-  	
-  	
     // 이력서 수정하기 
   	@RequestMapping("/Resumeupdate")
   	public ModelAndView resumeupdate(IndividualVo individualVo, String title) {				
@@ -370,6 +369,16 @@ public class IndividualController {
         mv.setViewName("redirect:/Individual/ResumeList?user_id=" + user_id); 
         return mv;
     }
-    
-  	
+    // 삭제 
+    @RequestMapping("/Deleteres")
+	public String deleteres(IndividualVo individualVo, RedirectAttributes redirectAttributes) {
+		System.out.println("IndividualVo는" + individualVo );
+		individualMapper.deleteres(individualVo);
+		
+		
+		String user_id = individualVo.getUser_id();
+		System.out.println(user_id);
+		redirectAttributes.addFlashAttribute("message", "선택한 이력서가 삭제되었습니다");
+		return "redirect:/Individual/ResumeList?user_id=" + user_id;
+	}
 }

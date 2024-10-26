@@ -93,6 +93,9 @@ main input[type="submit"] {
   cursor: pointer;
 }
 
+
+
+
 </style>
 
 </head>
@@ -187,7 +190,7 @@ main input[type="submit"] {
       <td colspan="4"> 	
        <input type="submit" value="수정하기" id="goUpdate" />
        <input type="button" value="목록으로" id="goList" />
-
+	   <input  type="button" value="삭제하기" id="goDel" />
       </td>
      </tr>
     
@@ -196,15 +199,20 @@ main input[type="submit"] {
 
 		const  goListEl    = document.getElementById('goList')
 		
-
-		
-
+	
         goListEl.onclick = function() {
         const user_id = '${param.user_id}'; 
-        window.location.href = `/Individual/ResumeList?user_id=${param.user_id}`;
+        window.location.href = '/Individual/ResumeList?user_id=${param.user_id}'
         };
 
-      
+        
+        const  goDel   = document.getElementById('goDel')
+			goDel.onclick  = function() {
+		 		const confirmed = confirm("정말로 선택한 이력서를 삭제 하시겠습니까?")
+		 		if(confirmed) {
+    			location.href = '/Individual/Deleteres?title=${vo.title}&user_id=${param.user_id}'
+		 		}
+		}    
   
 	</script>
  </form>
