@@ -85,7 +85,7 @@ border: 1px solid #DBE0E9;
     <ul class ="leftmenu"> 
    		<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
    		<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
-    	<li><a href="/Individual/ResumeManagement?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
+    	<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
     	<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
     	<li><a href="/cs">고객센터</a></li>  
      </ul>   
@@ -122,7 +122,7 @@ border: 1px solid #DBE0E9;
  			<table class ="resumetable" >
   		  	<tr>
           		<td style="width:800px;">
-            	<input class="resumeinput1" type="text" name="title" placeholder ="제목(필수)     (ex)기업에게 나에 대해 알려줍시다. 강점,목표 등을 넣은 제목을 작성해보세요!" style="width:800px; height:50px; font-size: 18px;" >
+            	<input class="resumeinput1" type="text" name="title"  placeholder ="제목(필수)   (ex)기업에게 나에 대해 알려줍시다. 강점,목표 등을 넣은 제목을 작성해보세요!" style="width:800px; height:50px; font-size: 18px;" >
 		        </td>
    			 </tr>
 	</table>
@@ -276,7 +276,7 @@ border: 1px solid #DBE0E9;
 <script>
 const  goList = document.getElementById('goList')
 goList.onclick = function() {
-   location.href = '/Individual/Main'
+   location.href = '/Individual/Main?user_id=${param.user_id}'
 } 
 </script>
 

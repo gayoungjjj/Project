@@ -104,13 +104,13 @@ border: 1px solid #DBE0E9;
  <body>
  <div class="div3">
  <form action="/Individual/Updating"   method="POST">
-  <h2 style="margin-top: -5px;text-align: center;">이력서작성</h2>
+  <h2 style="margin-top: -5px;text-align: center;">이력서수정</h2>
 
  <table  id="aside">
   <tr>
    <td>
    <input  class ="asidesubmit"type="submit" value="수정완료" >
-   <input  class ="asidesubmit"type="button" value="이전으로" id="goList" style="background-color: white; color:black"></td>
+   <input  class ="asidesubmit"type="button" value="목록으로" id="goList" style="background-color: white; color:black"></td>
   </tr>
  </table>
  
@@ -122,7 +122,7 @@ border: 1px solid #DBE0E9;
  			<table class ="resumetable" >
   		  	<tr>
           		<td style="width:800px;">
-            	<input class="resumeinput1" type="text" name="title" value="${vo.title }" style="width:800px; height:50px; font-size: 18px;" >
+            	<input class="resumeinput1" type="text" name="title" value="${vo.title }" style="width:800px; height:50px; font-size: 18px;"  readonly> 
 		        </td>
    			 </tr>
 	</table>
@@ -279,7 +279,7 @@ border: 1px solid #DBE0E9;
 <script>
 const  goList = document.getElementById('goList')
 goList.onclick = function() {
-   location.href = '/Individual/Main'
+   location.href = '/Individual/ResumeList?user_id=${param.user_id}'
 } 
 </script>
 

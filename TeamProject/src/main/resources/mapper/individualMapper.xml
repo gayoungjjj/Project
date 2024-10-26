@@ -115,7 +115,7 @@
 )
   </insert>
   
-  <!--  이력서_목록 --> 
+  <!-- 제출한 이력서_목록 --> 
   <select id="getappList" >
    SELECT APP_ID, USER_ID, APLNUM, POST_ID, REPLACE(TITLE, ' ', '') AS TITLE, APP_DATE, PICTURE, LOCATION, RESULT
 	FROM  APPLICATIONS 
@@ -123,6 +123,16 @@
 	ORDER BY APP_ID ASC 
     
   </select>
+  
+  <!-- 등록한 이력서_목록 --> 
+  <select id="getreList" >
+   SELECT USERNAME, USER_ID, REPLACE(TITLE, ' ', '') AS TITLE, C_DATE, U_DATE
+	FROM  RESUMES
+	WHERE USER_ID = #{user_id}
+	ORDER BY C_DATE ASC 
+  </select>
+  
+  
   
   <!-- 이력서_상세페이지 -->
   <select id="getresumeList">
@@ -133,13 +143,16 @@
     FROM  RESUMES
     WHERE REPLACE(TITLE, ' ', '')= #{title}
   </select>
+
+
+  
+  
   
   <!-- 등록 이력서 수정  -->
 <update id="update2">
     UPDATE        RESUMES
-    SET            
-    BIRTH =        #{birth },
-    GENDER =       #{gender  } ,
+    SET           
+    GENDER =       #{gender} ,
     NUMBER2 =      #{number2 } ,
     CAREER =       #{career } ,
     CAREERS =      #{careers },
@@ -163,18 +176,11 @@
     SKILLS5 =      #{skills5} ,
     PORTFOLIO =    #{portfolio} ,
     SELFINTRO =    #{selfintro}
-    WHERE        TITLE=#{title}
+    WHERE        REPLACE(TITLE, ' ', '')= #{title}
      AND         USER_ID=#{user_id}             
   </update>
 
 </mapper>
-
-
-
-
-
-
-
 
 
 

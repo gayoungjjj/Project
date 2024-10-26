@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+    <%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"   %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -113,28 +113,28 @@ table td a:hover {
 
 
 
+
   <!-- 받은 이력서 목록_메인화면 -->
   <!-- 지원자아이디 : user_id -->
   
 <div class= "div3">
  <main>
     <table>
-    <h2 style=text-align:center;>등록된 이력서 내역</h2>
+    <h2 style="text-align:center;">등록된 이력서 내역</h2>
      <tr>
       <th>등록자명</th>
       <th>이력서제목</th>
-      <th>작성일</th>
+      <th>최근 작성/수정일</th>
      </tr>
      
-     <c:forEach var="app" items="${appList}">
+     <c:forEach var="ree" items="${reList}">
       <tr>
-
-       <td>${ app.user_id }</td>
-       <td>${ app.post_id }</td>
+       <td>${ ree.username }</td>
        <td>
-       <a href="/Individual/Resumeview?title=${app.title}&user_id=${param.user_id }" >
-           ${ app.title }</a>
+       <a href="/Individual/Resumeview?title=${ree.title}&user_id=${param.user_id }" >
+           ${ ree.title }</a>
        </td>
+       <td>${ ree.u_date}</td>
       </tr>
      </c:forEach>
     </table>
@@ -143,7 +143,7 @@ table td a:hover {
  <table>
     <h2 style=text-align:center;>지원 내역</h2>
      <tr>
-      <th>지용자명</th>
+      <th>지원자명</th>
       <th>지원공고명</th>
       <th>이력서제목</th>
       <th>희망 근무 지역</th>

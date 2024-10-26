@@ -287,10 +287,14 @@ public class IndividualController {
    		
    		
    		List<IndividualVo> appList = individualMapper.getappList(vo);
+   		List<IndividualVo> reList = individualMapper.getreList(vo);
+   		
    		System.out.println("applist=" + appList);
+   		System.out.println("relist="+ reList);
    		
    		ModelAndView mv = new ModelAndView();
    		mv.addObject("appList", appList);
+   		mv.addObject("reList", reList);
    		mv.addObject("user_id", user_id);
    		mv.addObject("compname", compname);
    		mv.setViewName("individual/resumeList");
@@ -304,7 +308,7 @@ public class IndividualController {
   	@RequestMapping("/Resumeview")
   	public ModelAndView resumeview(IndividualVo individualVo, String title) {				
   		//이력서 조회
-  		IndividualVo vo = companyMapper.getresumeList(individualVo);
+  		IndividualVo vo = individualMapper.getresumeList(individualVo);
   		System.out.println("vo"+vo);
   		
   		title = title.replaceAll(" ", "");
@@ -326,15 +330,17 @@ public class IndividualController {
   	@RequestMapping("/Resumeupdate")
   	public ModelAndView resumeupdate(IndividualVo individualVo, String title) {				
   		//이력서 조회
-  		IndividualVo vo = companyMapper.getresumeList(individualVo);
-  		System.out.println("vo"+vo);
+  		IndividualVo vo = individualMapper.getresumeList(individualVo);
+  		System.out.println("vo2"+vo);
+  		
   		
   		String user_id = individualVo.getUser_id();
 		System.out.println("user_id는:" + user_id);
-	      System.out.println("Title without spaces: " + title);
+	    System.out.println("Title without spaces: " + title);
   		ModelAndView mv = new ModelAndView();
   		//mv.addObject("vo",vo );
   		mv.addObject("vo", vo);
+  		mv.addObject("user_id",user_id);
   		mv.addObject("title", title);
   		mv.setViewName("individual/resumeupdate");
   		return mv;
@@ -356,10 +362,12 @@ public class IndividualController {
         
         System.out.println("IndividualVo: " + individualVo);
        
-  
+        
         System.out.println("완료");
+        
+        String user_id = individualVo.getUser_id();
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("redirect:/Individual/Main"); 
+        mv.setViewName("redirect:/Individual/ResumeList?user_id=" + user_id); 
         return mv;
     }
     

@@ -39,6 +39,10 @@ public interface IndividualMapper {
 
 	void update2(IndividualVo individualVo);
 
+	IndividualVo getresumeList(IndividualVo individualVo);
+
+	List<IndividualVo> getreList(IndividualVo vo);
+
 
 
 

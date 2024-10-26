@@ -82,32 +82,17 @@ main input[type="button"] {
   font-size: 14px;
   cursor: pointer;
 }
-/* 합격 버튼 색상 */
-#goPass {
-  background-color: #007BFF;
+main input[type="submit"] {
+  padding: 10px 15px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4c5cc5;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
 }
 
-#goPass:hover {
-  background-color: #0056b3;
-}
-
-/* 불합격 버튼 색상 */
-#goFail {
-  background-color: #dc3545;
-}
-
-#goFail:hover {
-  background-color: #c82333;
-}
-
-/* 보류 버튼 색상 */
-#goPending {
-  background-color: #6c757d;
-}
-
-#goPending:hover {
-  background-color: #5a6268;
-}
 </style>
 
 </head>
