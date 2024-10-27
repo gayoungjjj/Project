@@ -82,32 +82,20 @@ main input[type="button"] {
   font-size: 14px;
   cursor: pointer;
 }
-/* 합격 버튼 색상 */
-#goPass {
-  background-color: #007BFF;
+main input[type="submit"] {
+  padding: 10px 15px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4c5cc5;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
 }
 
-#goPass:hover {
-  background-color: #0056b3;
-}
 
-/* 불합격 버튼 색상 */
-#goFail {
-  background-color: #dc3545;
-}
 
-#goFail:hover {
-  background-color: #c82333;
-}
 
-/* 보류 버튼 색상 */
-#goPending {
-  background-color: #6c757d;
-}
-
-#goPending:hover {
-  background-color: #5a6268;
-}
 </style>
 
 </head>
@@ -126,18 +114,17 @@ main input[type="button"] {
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=삼성">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>
-               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>
+			<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+   			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
+    		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
+    		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
+            <li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>  
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
-  			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage?user_id=${param.user_id}">마이페이지</a></li>
+  			   <li><a href="/Individual/Logout">로그아웃</a></li>
+     		   <li><a href="/Individual/Mypage?user_id=${param.user_id}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -146,15 +133,19 @@ main input[type="button"] {
 
 
 <div class= "div2">
-<a href="/Individual/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
+<a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
 </div>
+
+
+
 
 
   <!--이력서_상세페이지 -->
 
 <div class= "div3">
   <main>    
-    <h2 style=text-align:center;>이력서 내용보기 (${post_id }_${ vo.title })</h2>
+    <form action="/Individual/Resumeupdate?title=${vo.title }&user_id=${param.user_id } "method="POST" >
+    <h2 style=text-align:center;> 제출이력서 내용 (${ vo.title })</h2>
     <table id="table">
      <tr>
       <td>지원자명</td>
@@ -196,34 +187,34 @@ main input[type="button"] {
      
      <tr>
       <td colspan="4"> 	
-       <input type="button" value="합격" id="goPass" />
-       <input type="button" value="불합격" id="goFail" />
-       <input type="button" value="보류" id="goPending" />
+       <input type="submit" value="수정하기" id="goUpdate" />
+       <input type="button" value="목록으로" id="goList" />
+	   <input  type="button" value="삭제하기" id="goDel" />
       </td>
      </tr>
     
     </table>    
 	<script>
-		const  goPassEl    = document.getElementById('goPass')
-		const  goFailEl    = document.getElementById('goFail')
-		const  goPendingEl = document.getElementById('goPending')
+
+		const  goListEl    = document.getElementById('goList')
+		
 	
-	    goPassEl.onclick = function() {
-        const title = '${vo.title}'; // title을 가지고 가야함
-        window.location.href = `/Company/updateresume?title=${title}&result=합격&post_id=${post_id}`;
+        goListEl.onclick = function() {
+        const user_id = '${param.user_id}'; 
+        window.location.href = '/Individual/ResumeList?user_id=${param.user_id}'
         };
 
-        goFailEl.onclick = function() {
-        const title = '${vo.title}'; 
-        window.location.href = `/Company/updateresume?title=${title}&result=불합격&post_id=${post_id}`;
-        };
-
-        goPendingEl.onclick = function() {
-        const title = '${vo.title}'; 
-        window.location.href = `/Company/updateresume?title=${title}&result=대기&post_id=${post_id}`;
-        };
+        
+        const  goDel   = document.getElementById('goDel')
+			goDel.onclick  = function() {
+		 		const confirmed = confirm("정말로 선택한 이력서를 삭제 하시겠습니까?")
+		 		if(confirmed) {
+    			location.href = '/Individual/Deleteres?title=${vo.title}&user_id=${param.user_id}'
+		 		}
+		}    
+  
 	</script>
-
+ </form>
   </main>
 </div>  
 
