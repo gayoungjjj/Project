@@ -130,7 +130,8 @@ main input[type="button"] {
       		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
       		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
-               <li><a href="cs">고객센터</a></li> 
+               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>
+               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>
           </ul> 
               
             <div class="rightmenu" >   
@@ -153,7 +154,7 @@ main input[type="button"] {
 
 <div class= "div3">
   <main>    
-    <h2 style=text-align:center;>이력서 내용보기 (${ vo.title })</h2>
+    <h2 style=text-align:center;>이력서 내용보기 (${post_id }_${ vo.title })</h2>
     <table id="table">
      <tr>
       <td>지원자명</td>
@@ -206,22 +207,20 @@ main input[type="button"] {
 		const  goPassEl    = document.getElementById('goPass')
 		const  goFailEl    = document.getElementById('goFail')
 		const  goPendingEl = document.getElementById('goPending')
-		
-
-		
+	
 	    goPassEl.onclick = function() {
         const title = '${vo.title}'; // title을 가지고 가야함
-        window.location.href = `/Company/resumeupdate?title=${title}&result=합격`;
+        window.location.href = `/Company/updateresume?title=${title}&result=합격&post_id=${post_id}`;
         };
 
         goFailEl.onclick = function() {
         const title = '${vo.title}'; 
-        window.location.href = `/Company/resumeupdate?title=${title}&result=불합격`;
+        window.location.href = `/Company/updateresume?title=${title}&result=불합격&post_id=${post_id}`;
         };
 
         goPendingEl.onclick = function() {
         const title = '${vo.title}'; 
-        window.location.href = `/Company/resumeupdate?title=${title}&result=보류`;
+        window.location.href = `/Company/updateresume?title=${title}&result=대기&post_id=${post_id}`;
         };
 	</script>
 

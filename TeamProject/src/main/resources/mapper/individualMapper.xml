@@ -76,7 +76,7 @@
   LICENSES2,   LICENSES3,  PUBLISHER1,    PUBLISHER2,   PUBLISHER3,  PASSDATE1,  PASSDATE2,  PASSDATE3,  SKILLS1,  SKILLS2, SKILLS3,  SKILLS4,  SKILLS5,  PORTFOLIO,  SELFINTRO
  ) VALUES ( 
   #{title } ,  #{user_id  },  #{username },  #{email  } ,  #{phone_number },  #{address  },   #{birth  },   #{gender   } ,   #{number2 } ,   #{career  } ,   #{careers  },  #{eduwhen } , 
-  #{eduwhere} ,  #{edu },  #{major },  #{licenses1},   #{licenses2},   #{licenses3},  #{publisher1} ,    #{publisher2} ,    #{publisher3} ,   #{passdate1} ,    #{passdate2} ,   #{passdate3} ,  
+  #{eduwher} ,  #{edu },  #{major },  #{licenses1},   #{licenses2},   #{licenses3},  #{publisher1} ,    #{publisher2} ,    #{publisher3} ,   #{passdate1} ,    #{passdate2} ,   #{passdate3} ,  
   #{skills1}  ,    #{skills2}  ,  #{skills3} ,    #{skills4} ,    #{skills5} ,      #{portfolio} ,    #{selfintro}     )
   </insert>
   
@@ -88,68 +88,62 @@
 	    SKILLS2, SKILLS3, SKILLS4, SKILLS5, PORTFOLIO, SELFINTRO, C_DATE, U_DATE
 	FROM RESUMES
   </select>
-  
-   <!-- title 가져오기-->
+  	
+   	<!-- title 가져오기-->
     <select id="getTitlesByUSerId" resultType="string" parameterType="string">
         SELECT TITLE 
         FROM RESUMES
         WHERE USER_ID = #{user_id}
     </select>
   
-   <!-- 입사 지원서 제출  -->
-  <insert id="insert2">
-  INSERT INTO APPLICATIONS (
+   	<!-- 입사 지원서 제출  -->
+  	<insert id="insert2">
+  	INSERT INTO APPLICATIONS (
     APP_ID,
     USER_ID,
     APLNUM,
     POST_ID,
     TITLE,
     LOCATION
-) VALUES (
- (SELECT NVL(MAX(app_id),0)+1 FROM applications ),
+	) VALUES (
+ 	(SELECT NVL(MAX(app_id),0)+1 FROM applications ),
     #{user_id2},
     #{aplnum},
     #{post_id},
     #{title},
     #{location}     
-)
-  </insert>
+	)
+  	</insert>
   
-  <!-- 제출한 이력서_목록 --> 
-  <select id="getappList" >
-   SELECT APP_ID, USER_ID, APLNUM, POST_ID, REPLACE(TITLE, ' ', '') AS TITLE, APP_DATE, PICTURE, LOCATION, RESULT
+  	<!-- 제출한 이력서_목록 --> 
+  	<select id="getappList" >
+   	SELECT APP_ID, USER_ID, APLNUM, POST_ID, REPLACE(TITLE, ' ', '') AS TITLE, APP_DATE, PICTURE, LOCATION, RESULT
 	FROM  APPLICATIONS 
 	WHERE USER_ID = #{user_id}
 	ORDER BY APP_ID ASC 
-    
-  </select>
+  	</select>
   
-  <!-- 등록한 이력서_목록 --> 
-  <select id="getreList" >
-   SELECT USERNAME, USER_ID, REPLACE(TITLE, ' ', '') AS TITLE, C_DATE, U_DATE
+  	<!-- 등록한 이력서_목록 --> 
+  	<select id="getreList" >
+   	SELECT USERNAME, USER_ID, REPLACE(TITLE, ' ', '') AS TITLE, C_DATE, U_DATE
 	FROM  RESUMES
 	WHERE USER_ID = #{user_id}
 	ORDER BY C_DATE ASC 
-  </select>
+  	</select>
   
-  
-  
-  <!-- 이력서_상세페이지 -->
-  <select id="getresumeList">
-   SELECT REPLACE(TITLE, ' ', '') AS TITLE, USER_ID, USERNAME, EMAIL, PHONE_NUMBER, ADDRESS, BIRTH, GENDER, NUMBER2, CAREER,
+
+  	<!-- 이력서_상세페이지 -->
+  	<select id="getresumeList">
+    SELECT REPLACE(TITLE, ' ', '') AS TITLE, USER_ID, USERNAME, EMAIL, PHONE_NUMBER, ADDRESS, BIRTH, GENDER, NUMBER2, CAREER,
           CAREERS, EDUWHEN, EDUWHER, EDU, MAJOR, LICENSES1, LICENSES2, LICENSES3, PUBLISHER1,
           PUBLISHER2, PUBLISHER3, PASSDATE1, PASSDATE2, PASSDATE3, SKILLS1, SKILLS2, SKILLS3,
           SKILLS4, SKILLS5, PORTFOLIO, SELFINTRO
     FROM  RESUMES
     WHERE REPLACE(TITLE, ' ', '')= #{title}
-  </select>
+  	</select>
 
-
-  
-  
-  
-  <!-- 등록 이력서 수정  -->
-<update id="update2">
+  	<!-- 등록 이력서 수정  -->
+	<update id="update2">
     UPDATE        RESUMES
     SET           
     GENDER =       #{gender} ,
@@ -177,24 +171,25 @@
     SKILLS5 =      #{skills5} ,
     PORTFOLIO =    #{portfolio} ,
     SELFINTRO =    #{selfintro}
-    WHERE        REPLACE(TITLE, ' ', '')= #{title}
-     AND         USER_ID=#{user_id}             
+  WHERE        REPLACE(TITLE, ' ', '')= #{title}
+     AND         USER_ID=#{user_id}              
   </update>
 
-
-
-
-<delete id="deleteres">
-	
+	<delete id="deleteres">	
 	DELETE FROM RESUMES
 	WHERE   REPLACE(TITLE, ' ', '')= #{title}
-	AND         USER_ID=#{user_id} 
+     AND         USER_ID=#{user_id} 
 	
-	
-</delete>
-
-
+ 
+	</delete>  
 </mapper>
+
+
+
+
+
+
+
 
 
 

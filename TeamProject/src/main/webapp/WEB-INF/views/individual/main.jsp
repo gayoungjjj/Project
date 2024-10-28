@@ -76,12 +76,11 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-
-          	   <li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
-      		   <li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
-      		   <li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>
-               <li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
-               <li><a href="cs">고객센터</a></li>   
+			<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+   			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
+    		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
+    		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
+            <li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>  
           </ul> 
               
             <div class="rightmenu" >   

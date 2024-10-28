@@ -64,8 +64,6 @@ border: 1px solid #DBE0E9;
 }
 
 .red{color:red;}
-
-
 /*이력서 css (끝)*/
 
 </style>
@@ -87,11 +85,11 @@ border: 1px solid #DBE0E9;
 
    <nav class ="headernav">
     <ul class ="leftmenu"> 
-   		<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
-   		<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
-    	<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
-    	<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
-    	<li><a href="/cs">고객센터</a></li>  
+   			<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+   			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
+    		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
+    		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
+            <li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>    
      </ul>   
      	 
     	 <div>
@@ -122,7 +120,7 @@ border: 1px solid #DBE0E9;
   	<tr>
   	   <td>
   	   
-         <h3 style="margin-top: -18px;">이력서 제목 <span class="red" style="font-size: 11px;">* 이력서 제목은 작성후 수정이 불가합니다. </span></h3> 
+            <h3 style="margin-top: -18px;">이력서 제목 <span class="red" style="font-size: 11px;">* 이력서 제목은 작성후 수정이 불가합니다. </span></h3> 
  			<table class ="resumetable" >
   		  	<tr>
           		<td style="width:800px;">
@@ -181,7 +179,7 @@ border: 1px solid #DBE0E9;
        <td style="width:800px;">
 
     <input class="resumeinput1" type="text" name="eduwhen" placeholder="제학기간 2018-02 ~ 2022-03"  style="width:250px;"> 
-    <input class="resumeinput1" type="text" name="eduwhere" placeholder="학교명(필수)" >
+    <input class="resumeinput1" type="text" name="eduwher" placeholder="학교명(필수)" >
     
 
 

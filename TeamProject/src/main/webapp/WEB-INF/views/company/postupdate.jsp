@@ -34,6 +34,26 @@
    }
   tr:first-child{background : #E7E7E7; }
   select{margin-left : 16%;}
+  
+  input[type=submit] {padding : 8px;
+                      background : white;
+                      border-radius: 8px;
+                      border:1px solid #2F70FF;
+                      color : #2F70FF;
+                      font-weight : bold;  }
+                      
+  input[type=submit]:hover {background: #2F70FF;
+                            color : white;}
+                            
+  input[type=button] {padding : 8px;
+                      background : white;
+                      border-radius: 8px;
+                      border:1px solid #308752;
+                      color : #308752;
+                      font-weight : bold;}
+                      
+  input[type=button]:hover {background: #308752;
+                            color : white;}
 </style>
 
 
@@ -56,7 +76,8 @@
       		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
       		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
-               <li><a href="cs">고객센터</a></li>   
+               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>               
+               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>    
           </ul> 
               
             <div class="rightmenu" >   

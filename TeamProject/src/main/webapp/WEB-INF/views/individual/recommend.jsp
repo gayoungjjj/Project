@@ -8,8 +8,11 @@
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+
 <style>
 
  /*임시-----------*/
@@ -77,14 +80,14 @@
    display: flex;
    align-items: center; 
    justify-content: center; 
-  }s
+  }
 </style>
 </head>
 
 <body>
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Company/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Individual/Main"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
@@ -95,52 +98,47 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=삼성">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id }&compname=삼성">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>
-               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>   
+          	<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+   			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
+    		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
+    		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
+            <li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>      
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
-  			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage?user_id=${param.user_id}">마이페이지</a></li>
+  			   <li><a href="/Individual/Logout">로그아웃</a></li>
+     		   <li><a href="/Individual/Mypage">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
  	</header>
  </div>
-
-<div class= "div2">
-<a href="/Individual/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
-</div>
  
  <main>
-   <h2>등록 공고 게시판</h2>
-    <a class="btn btn-outline-secondary" 
-         href="/Company/WriteForm?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">새로운 공고 쓰기</a>
-    <table>
-     <tr>
-      <td>공고 번호</td>
-      <td>공고명</td>
-      <td>조회수</td>
-      <td>마감기한</td>
-     </tr>
-     
-     <c:forEach var="main" items="${CompanyList}">
-      <tr>
-       <td>${ main.aplnum   }</td>
-       <td>
-       <a href="/Company/Postview?aplnum=${main.aplnum}&user_id=${param.user_id}&compname=카카오">
-       ${ main.post_id  }</a>
-       </td>
-       <td>${ main.hit }</td>
-       <td>${ main.deadline }</td>
-      </tr>
-     </c:forEach>
-    </table>
+   <h2>기업 추천</h2>
+     <table>
+       <tr>
+        <td>기업명</td>
+        <td>채용공고</td>
+        <td>경력</td>
+        <td>급여</td>
+        <td>필수 자격증</td>
+        <td>등록 마감일</td>
+       </tr>
+       
+       <c:forEach var="vo" items="${recommendList}">
+       <tr>
+        <td>${vo.compname}</td>
+        <td><a href="/Individual/Postview?aplnum=${ vo.aplnum }" />${vo.post_id}</td>
+        <td>${vo.career}</td>
+        <td>${vo.salary}</td>
+        <td>${vo.licenses}</td>
+        <td>${vo.deadline}</td>
+       </tr>
+       </c:forEach>
+       
+     </table>
  
  </main>
  

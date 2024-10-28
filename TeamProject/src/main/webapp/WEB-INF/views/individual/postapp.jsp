@@ -13,7 +13,6 @@
 <script src="https://cdn.jsdelivr.net/npm/browser-scss@1.0.3/dist/browser-scss.min.js"></script>
 <script src="https://code.jquery.com/jquery.min.js"></script>
 
-<!-- main style 넣어주세욤 -->
 <style>
   main{
   h2    {margin-left : 16%;}
@@ -65,12 +64,11 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-
-          	   <li><a href="/Individual/Postlist">채용공고</a></li>
-      		   <li><a href="/Individual/Resumereg">이력서 등록</a></li>
-      		   <li><a href="/Individual/ResumeList">등록 이력서 관리</a></li>
-               <li><a href="/Individual/Recommend">기업 추천</a></li>
-               <li><a href="cs">고객센터</a></li>   
+			<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+   			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
+    		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
+    		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
+            <li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>    
           </ul> 
               
             <div class="rightmenu" >   
@@ -135,7 +133,7 @@
     </table>    
   
   
-   <h2>입사 지원서  ${param.user_id} </h2>
+      <h2>입사 지원서  ${param.user_id} </h2>
  <form action="/Individual/Write2?aplnum=${vo.aplnum}&user_id2=${param.user_id}" method="POST" >
    <input type="hidden" name="aplnum" value="${vo.aplnum}" />
    <input type="hidden" name="post_id" value="${vo.post_id}" />
