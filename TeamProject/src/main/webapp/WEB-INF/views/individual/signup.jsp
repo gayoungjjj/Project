@@ -176,6 +176,7 @@
         	   alert('중복확인을 하세요')
                return false;
            }
+           alert('회원가입이 완료되었습니다. 로그인을 해주세요.');
 		   return  true;
 	   };
     </script> 

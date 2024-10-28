@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,37 +34,31 @@ public class IndividualController {
 	
 	// ------------------------------- 로그인 -------------------------------//
 	// Individual/Login (로그인)
-	@RequestMapping("/Login")
-	public String login(
-		HttpServletRequest  request,
-        HttpServletResponse response
-	    ) {
-        String user_id   = request.getParameter("user_id");
-        String password  = request.getParameter("password");
-        String uri       = request.getParameter("uri");
-    	String menu_id   = request.getParameter("menu_id");
-		String nowpage   = request.getParameter("nowpage");
+		@GetMapping("/Login")
+	    public String loginForm(Model model) {
+	        return "/individual/login"; 
+	    }
+		
+		@PostMapping("/Login")
+	    public String login(HttpServletRequest  request, 
+	    					HttpServletResponse response,
+	    					RedirectAttributes redirectAttributes) {
+	        String user_id = request.getParameter("user_id"); 
+	        String password = request.getParameter("password");
 
-		IndividualVo vo = individualMapper.login(user_id, password);
-        System.out.println("vo=" + vo);
+	        IndividualVo individualVo = individualMapper.login(user_id, password); 
 
-        HttpSession session = request.getSession();
-        session.setAttribute("login", vo);
-        
-        System.out.println("user_id=" + user_id);
+	        HttpSession session = request.getSession();
 
-        if (vo != null) {
-       	 // 로그인 성공 처리
-       	session.setAttribute("login", vo);
-       	return "redirect:/Individual/Main?user_id=" + user_id;
-       } else {
-       	// 로그인 실패 처리
-       	 request.setAttribute("errorMessage", "아이디 또는 비밀번호를 확인하세요.");
-            //System.out.println("실패");        
-            return "/individual/login"; // 로그인 페이지로 돌아가기
-       }
-      
-    }
+	        if (individualVo != null) {
+	            session.setAttribute("login", individualVo);
+	            return "redirect:/Individual/Main"; 
+	        } else {
+	        	redirectAttributes.addFlashAttribute
+	        	("errorMessage", "로그인 또는 비밀번호가 일치하지 않습니다.");
+	            return "redirect:/Individual/Login"; 
+	        }
+		}
 	//---------------------- 로그아웃 -------------------------------//
 	
 	// Individual/Logout (로그아웃)
@@ -92,11 +88,9 @@ public class IndividualController {
 	// Individual/Main (메인 화면)
 	@RequestMapping("/Main")
 	public String main(Model model) {
-	    List<CompanyVo> postList = companyMapper.getSortedPostList();
-	    
-	    System.out.println("postList" + postList);
-	    model.addAttribute("PostList", postList); 
-	    return "individual/main"; 
+	    List<CompanyVo> postList = companyMapper.getPostList();
+	    model.addAttribute("postList", postList); 
+	    return "/individual/main"; 
 	}
 	// ------------------------------- 회원가입 -------------------------------//
 	// Individual/Signup (회원가입)

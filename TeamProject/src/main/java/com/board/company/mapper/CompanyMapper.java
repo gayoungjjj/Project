@@ -48,7 +48,7 @@ public interface CompanyMapper {
 	
 	List<CompanyVo> recommendList();
 
-	List<CompanyVo> getSortedPostList();
+	List<CompanyVo> getPostList();
 
 
 }

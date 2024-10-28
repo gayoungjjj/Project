@@ -1,5 +1,7 @@
 package com.board.company.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +17,8 @@ public class CompanyVo {
 	private String email;
 	private String phone_number;
 	private String j_date;
+	private MultipartFile logo; 
+    private String logoPath;
 	
 	private String ceo;
 	private String address;
@@ -34,8 +38,6 @@ public class CompanyVo {
 	private int    salary;
 	private String department;
 	private int    hit;
-	
-	
 	
 	private String title;
 	private String birth;

@@ -1,13 +1,18 @@
 package com.board.company.controller;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,38 +36,33 @@ public class CompanyController {
 	private IndividualMapper individualMapper;
 	
 	// ------------------------------- 로그인 -------------------------------//
-	// Company/Login (로그인)
-	@RequestMapping("/Login")
-	public String login(
-		HttpServletRequest  request,
-        HttpServletResponse response,
-        RedirectAttributes redirectAttributes
-	    ) {
-        String user_id    = request.getParameter("user_id");
-        String password  = request.getParameter("password");        
-        String uri       = request.getParameter("uri");
-		String menu_id   = request.getParameter("menu_id");
-		String nowpage   = request.getParameter("nowpage");
+	// /Company/Login (로그인)
+		@GetMapping("/Login")
+	    public String loginForm(Model model) {
+	        return "/company/login"; 
+	    }
+		
+		@PostMapping("/Login")
+	    public String login(HttpServletRequest  request, 
+	    					HttpServletResponse response,
+	    					RedirectAttributes redirectAttributes) {
+	        String user_id = request.getParameter("user_id"); 
+	        String password = request.getParameter("password");
 
-        CompanyVo vo = companyMapper.login(user_id, password);
-        System.out.println("vo=" + vo);
+	        CompanyVo companyVo = companyMapper.login(user_id, password); 
+	        System.out.println(companyVo);
 
-        HttpSession session = request.getSession();
-        session.setAttribute("login", vo);
+	        HttpSession session = request.getSession();
 
-        if (vo != null) {
-       	 // 로그인 성공 처리
-       	session.setAttribute("login", vo);
-       	return "redirect:/Company/Main?user_id=" + user_id;
-           			
-       } else {
-       	// 로그인 실패 처리
-    	   
-       	 request.setAttribute("errorMessage", "아이디 또는 비밀번호를 확인하세요.");
-            //System.out.println("실패");
-            return "company/login"; // 로그인 페이지로 돌아가기
-       }      
-    }
+	        if (companyVo != null) {
+	            session.setAttribute("login", companyVo);
+	            return "redirect:/Company/Main"; 
+	        } else {
+	        	redirectAttributes.addFlashAttribute
+	        	("errorMessage", "로그인 또는 비밀번호가 일치하지 않습니다.");
+	            return "redirect:/Company/Login"; 
+	        }
+		}
 	
 	// ------------------------------- 로그아웃 -------------------------------//
 	// Company/Logout (로그아웃)
@@ -91,10 +91,11 @@ public class CompanyController {
 	// ------------------------------- 메인 화면 -------------------------------//
 	// Company/Main (메인 화면)
 	@RequestMapping("/Main")
-	public String main() {
-		return "company/main" ;
+	public String main(Model model) {
+	    List<CompanyVo> postList = companyMapper.getPostList();
+	    model.addAttribute("postList", postList); 
+	    return "/company/main"; 
 	}
-	
 	// ------------------------------- 회원가입 -------------------------------//		   
     // Company/Signup (회원가입)
     @RequestMapping("/Signup")
@@ -121,14 +122,44 @@ public class CompanyController {
         return mv;
     }
  // Company/CompanySignupForm (기업등록)
-    @RequestMapping("/CompanySignupForm")
-    public ModelAndView companysignupForm(CompanyVo companyVo) {
-    	companyMapper.companysignup(companyVo);
+    @PostMapping("/CompanySignupForm")
+    public ModelAndView companysignupForm(
+            @RequestParam("logo") MultipartFile logo,
+            CompanyVo companyVo) {
+
+        // 프로젝트의 실제 경로
+        String img = "D:\\dev_2\\spring\\TeamProject\\src\\main\\resources\\static\\img"; 
+
+        // 파일 저장 경로 
+        String filePath = img + "/" + logo.getOriginalFilename();
+
+        try {
+            // 디렉토리가 존재하지 않으면 생성
+            File directory = new File(img);
+            if (!directory.exists()) {
+                directory.mkdirs(); // 디렉토리 생성
+            }
+
+            // 파일 저장
+            logo.transferTo(new File(filePath));
+
+            // 웹에서 접근할 수 있는 로고 경로 설정
+            companyVo.setLogoPath("/img/" + logo.getOriginalFilename()); // DB에 저장할 경로 설정
+
+            // 데이터베이스에 기업 정보 저장
+            companyMapper.companysignup(companyVo);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 파일 저장 실패 시 처리 로직 추가
+        }
+
         ModelAndView mv = new ModelAndView();
         System.out.println("Address: " + companyVo.getAddress());
-        mv.setViewName("redirect:/Company/Signup"); 
+        mv.setViewName("redirect:/Company/Signup");
         return mv;
     }
+    
 	// 아이디 중복확인
     @RequestMapping(
     		value   = "/IdDupCheck",

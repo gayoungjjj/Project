@@ -38,6 +38,7 @@
             padding: 10px;
         }
         input[type="text"],
+        input[type="file"],
         input[type="password"],
         input[type="email"] {
             width: 95%;
@@ -66,10 +67,10 @@
     </style>
 </head>
 <body>
-	<img src="/img/로고.png"  alt=회사로고/>
+	<img src="/img/로고.png"  alt=회사로고 onclick="location.href='/'"/>
 	<div class="container">
 	<h2>기업 등록</h2>
-	<form action="/Company/CompanySignupForm" method="POST">
+	<form action="/Company/CompanySignupForm" method="POST" enctype="multipart/form-data">
 		<table>
 			<tr>
             	<td colspan="2">
@@ -98,6 +99,11 @@
             	<input type="text" name="business_type" placeholder="업종"  />
             	</td>
             </tr>
+            <tr>
+    			<td colspan="2">
+        		<input type="file" name="logo" accept="image/*" required />
+    			</td>
+			</tr>
             <tr>
             	<td colspan="2">
                 <input type="submit" value="등록하기" />

@@ -60,7 +60,6 @@
             background-color: #405DAB; 
         }
     </style>
-    
 </head>
 <body>
     <img src="/img/로고.png"  alt=회사로고 onclick="location.href='/'"/>
@@ -91,9 +90,16 @@
                 </tr>
             </table>
         </form>
-            <c:if test="${not empty errorMessage}">
-            <div class="error">${errorMessage}</div>
-        </c:if>
     </div>
+        <script>
+        $(document).ready(function() {
+        	var errorMessage = 
+            "<%= request.getAttribute("errorMessage") != null ? 
+            	 request.getAttribute("errorMessage") : "" %>";
+            if (errorMessage) {
+                alert(errorMessage);
+            }
+        });
+        </script>
 </body>
 </html>
