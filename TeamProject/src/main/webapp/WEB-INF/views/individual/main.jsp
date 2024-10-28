@@ -26,7 +26,19 @@
    background-color: #F7F7F7;
    padding-bottom: 20px;
   }
+.div2 img{
+    border: 1px solid #e0e0e0; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    box-sizing: border-box; 
+    background-color: #ffffff; 
+    transition: transform 0.3s, box-shadow 0.3s;
+}
 
+.div2 img:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
 .job-card {
     border: 1px solid #e0e0e0; 
     border-radius: 10px; 
@@ -34,7 +46,6 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
     box-sizing: border-box; 
     background-color: #ffffff; 
-    height: 220px; 
     transition: transform 0.3s, box-shadow 0.3s; 
 }
 

@@ -28,16 +28,22 @@
             margin:  10px; 
             padding: 10px; 
             border: none;
-            border-radius: 4px;
+            border-radius: 10px;
             color: white;
             cursor: pointer;
             font-size: 25px; 
             transition: background-color 0.3s;
-            background-color: #2759FF
+            background-color: #2759FF;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    		box-sizing: border-box;
         } 
         .button:hover {
-            background-color: #405DAB; 
+            background-color: #405DAB;
+            transform: translateY(-5px);
+    		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); 
         }
+
     </style>
 </head>
 <body>

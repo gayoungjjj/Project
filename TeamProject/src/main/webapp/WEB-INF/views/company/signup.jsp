@@ -109,7 +109,7 @@
                 </tr>
                 <tr>
 					<td colspan="2">
-                    <input type="email" name="email" placeholder="이메일" />
+                    <input type="email" name="email" placeholder="*이메일" />
                     <span id="dupResultEmail"></span>
                     </td>
                 </tr>
