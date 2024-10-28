@@ -65,7 +65,6 @@
 /* readonly */
 .main input[readonly] {
   background-color: #e9e9e9;
-  color: #999;
 }
 
 /* 버튼 스타일 */
@@ -96,13 +95,6 @@
   background-color: #5a6268;
 }
 
-#goDelete {
-  background-color: #dc3545;
-}
-
-#goDelete:hover {
-  background-color: #c82333;
-}
 
 </style>
 
@@ -126,7 +118,7 @@
       		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
       		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>               
+               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>
                <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>     
           </ul> 
               
@@ -139,51 +131,56 @@
         </nav> 	   
  	  </header>
     </div>
+    
+    <div class= "div2">
+<a href="/Individual/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
+</div>
 
      <!--메인화면 -->
      <div class= "div3">
        <main class ="main">
-         <form action="/Company/Update"  method="POST">
+         <form action="/Company/Csupdate?csp_id=${vo.csp_id}&user_id=${param.user_id}"  method="POST">
          <table>
-           <h2 style=text-align:center;>기업회원정보 수정</h2>
+           <h2 style=text-align:center;>문의글 수정${vo.csp_id}</h2>
      	   <tr>
-      		 <td>사용자 아이디</td>
-      	     <td><input type="text" name="user_id"  value="${vo.user_id}" readonly /></td>
+     	     <td>문의 구분</td>
+     	     <td>
+      	      <select name="type" value="${vo.type }" >
+      	       <option value="로그인">로그인</option>
+      	       <option value="회원정보">회원정보</option>
+      	       <option value="이력서">이력서</option>
+      	       <option value="입사지원">입사지원</option>
+      	       <option value="채용정보">채용정보</option>
+      	       <option value="기타">기타</option>
+      	      </select>
+      	     </td>
+     	   </tr>
+     	   <tr>
+      		 <td>제목</td>
+      		 <td><input type="text" name="csp_title" value="${vo.csp_title }" /></td>
      	   </tr>
      	   <tr>
       		 <td>비밀번호</td>
-      		 <td><input type="password" name="password" id="passwd1" required /></td>
-     	   </tr>
-     	   <tr>
-      		 <td>비밀번호 확인</td>
-      		 <td><input type="password" id="passwd2" /></td>
+      		 <td><input type= "text" name="csp_pw" id="csp_pw" readonly /></td>
+      		 <td><input type="checkbox" id="goEdit" /><label for="goEdit">비밀글</label></td>
      	   </tr> 
      	   <tr>
-       		 <td>사용자 이름</td>
-      		 <td><input type="text" name="username" value="${vo.username}" /></td>
+       		 <td>내용</td>
+      		 <td><input type="text" name="content" value="${vo.content }" /></td>
      	   </tr>
      	   <tr>
-      		 <td>기업명</td>
-      		 <td><input type="text" name="compname" id="compname" value="${vo.compname}" readonly /></td>
+      		 <td>문의 파일</td>
+      		 <td><input type="text" name="csp_file" value="${vo.csp_file }" /></td>
      	   </tr>
      	   <tr>
-      		 <td>이메일</td>
-      		 <td><input type="text" name="email" value="${vo.email}" /></td>
-     	   </tr>
-     	   <tr>
-      		 <td>전화번호</td>
-      		 <td><input type="text" name="phone_number" value="${vo.phone_number}" /></td>
-     	   </tr>
-     	   <tr>
-      		 <td>가입일</td>
-      		 <td><input type="text" name="j_date" value="${vo.j_date}" readonly /></td>
+      		 <td>답변받을 이메일</td>
+      		 <td><input type="text" name="email" value="${vo.email }" /></td>
      	   </tr>
 
      	   <tr>
-      		 <td colspan="2">
+      		 <td colspan="3">
       		   <input type="button" value="이전" id="goMain" />
       		   <input type="submit" value="수정" />
-      		   <input type="button" value="회원탈퇴" id="goDelete" />
       		 </td>
      	   </tr>
 
@@ -191,31 +188,24 @@
      	 </table>    
      	 </form>
   
-         <script>
-        	const goMain      = document.getElementById('goMain')
+      <script>
+         const goMain      = document.getElementById('goMain')
   			goMain.onclick    = function() {
-  				location.href = '/Company/Main'
-  			}
-  		 	const  goDelete   = document.getElementById('goDelete')
-  			goDelete.onclick  = function() {
-  		 		const confirmed = confirm("정말로 회원 탈퇴를 하시겠습니까?")
-  		 		if(confirmed) {
-        			location.href = '/Company/Delete?user_id=${vo.user_id}'
-  		 		}
-    		}    
-  		 	
-  		 	const form = document.querySelector("form");
-  		    form.onsubmit = function(event) {
-  		        const password = form.password.value;
-  		        const confirmPassword = form.passwd2.value;
+  				location.href = '/Company/Cslist'
+  			}  
 
-  		        if (password !== confirmPassword) {
-  		            event.preventDefault(); // 폼 제출 방지
-  		            alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요."); // 오류 메시지
-  		        }
-  		    }
-         </script>  
-
+         const csp_pw = document.getElementById('csp_pw')
+         const goEdit = document.getElementById('goEdit')
+         
+         goEdit.onchange = function() {
+         	if (goEdit.checked) {
+    	    	csp_pw.removeAttribute('readonly'); // Enable editing
+            } else {
+    	      	csp_pw.setAttribute('readonly', 'readonly'); // Disable editing
+              }
+        	 
+         }
+</script> 
        </main>  
       
      </div>

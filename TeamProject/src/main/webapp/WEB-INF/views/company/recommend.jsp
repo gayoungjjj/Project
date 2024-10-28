@@ -20,19 +20,33 @@
 
  /*임시-----------*/
  main{
-  h2    {margin-left : 16%;}
+  h2    {margin-left : 11%;
+         padding:20px;}
   table {
          border : 1px solid #DCDBDB;
          text-align : center;
          border-collapse: collapse;
-         margin-left : 16%;
+         margin-left : 11%;
          width : 78%;
          font-weight : bold;
          height: auto;
+         
+         background-color: #ffffff;
+		 box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+		 margin: 20px auto;
+		 width: 90%;
+		 border-radius: 10px;
+ 
+   	     margin-top:10px;
+	     display: flex;
+	     justify-content: center;		  
+	     padding: 20px;
          }
-   td {border : 1px solid #DCDBDB;
-       padding : 10px;}
-   tr {padding : 10px;}
+   td {padding : 10px;
+        padding-left : 60px;
+        padding-right : 60px;}
+   tr {padding : 10px;
+       border-bottom: 1px solid #ddd;}
    
    a { text-decoration:none; color : black;}
    a:hover{color : blue;}
@@ -117,8 +131,8 @@
       		   <li><a href="/Company/ListManagement?user_id=${param.user_id }&compname=카카오">등록 공고 관리</a></li>
       		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=카카오">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=카카오">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>
-               <li><a href="cs">고객센터</a></li>   
+               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>               
+               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>  
           </ul> 
               
             <div class="rightmenu" >   
@@ -133,6 +147,7 @@
  
  <main>
    <h2>인재 추천</h2>
+   <!-- <input type="text" id="search"/> -->
      <table>
        <tr>
         <td>이름</td>
@@ -140,8 +155,6 @@
         <td>전화번호</td>
         <td>생년월일</td>
         <td>자격증</td>
-        <td>공고제목</td>
-        <td>이력서번호</td>
         <td>북마크</td>
        </tr>
        
@@ -156,8 +169,6 @@
         <td>${vo.phone_number}</td>
         <td>${vo.birth}</td>
         <td>${vo.licenses}</td>
-        <td>${vo.post_id}</td>
-        <td>${vo.app_id}</td>
         <td><button id = "off" onclick="bookmark_off()">북마크</button>
         </td>
        </tr>

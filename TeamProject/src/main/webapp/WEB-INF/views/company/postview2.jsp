@@ -41,25 +41,18 @@
          }
    td {padding : 10px;
         padding-left : 80px;
-        padding-right : 80px;
-        white-space: nowrap;}
+        padding-right : 80px;}
    tr {padding : 10px;
        border-bottom: 1px solid #ddd;}
    
    a { text-decoration:none; color : black;}
    a:hover{color : blue;}
    }
-   
   td:nth-of-type(1){background : #E7E7E7; }
   td:nth-of-type(3){background : #E7E7E7; }
-  table tr:last-of-type {
+  table tr:last-of-type td {
     background-color: white; 
-}
-
-table tr:last-of-type td {
-    background-color: white; 
-    border: none; 
-}
+    border: none; }
 </style>
 
 </head>
@@ -149,18 +142,18 @@ table tr:last-of-type td {
      <tr>
       <td colspan="4"> 	
        <a class="btn btn-outline-primary" 
-         href="/Company/WriteForm?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">새로운 공고 쓰기</a>
+         href="/Company/WriteForm2?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">새로운 공고 쓰기</a>
       
       <!-- login이 완성되면 c:if -user_id를 compname로 변경 -->
       <c:if test="${login.user_id eq vo.user_id}">
        <a class="btn btn-outline-warning" 
-          href="/Company/PostupdateForm?&aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">수정</a>
+          href="/Company/PostupdateForm2?&aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">수정</a>
        <a class="btn btn-outline-danger" 
-          href="/Company/Postdelete?&aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">삭제</a>
+          href="/Company/Postdelete2?&aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">삭제</a>
        </c:if>
 
        <a class="btn btn-outline-success" 
-          href="/Company/Postlist?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">목록</a>
+          href="/Company/ListManagement?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">목록</a>
       </td>
      </tr>
     

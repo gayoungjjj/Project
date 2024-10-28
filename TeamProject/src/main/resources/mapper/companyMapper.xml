@@ -104,12 +104,14 @@
   <!-- 채용공고_등록 -->
   <insert id="insertposting">
     INSERT INTO jobposting (APLNUM ,POST_ID 
+                          ,user_id,compname
                          ,RECRUITNUM,DEADLINE 
                          ,DUTY,WORKSPACE 
                          ,SALARY,DEPARTMENT
                          ,CAREER,EDU
                          ,SKILLS,LICENSES) 
     VALUES ( (SELECT NVL(MAX(APLNUM),0)+1 FROM JOBPOSTING ) ,#{post_id} 
+            ,#{user_id},#{compname}
             ,#{recruitnum} ,#{deadline} 
             ,#{duty} ,#{workspace} 
             ,#{salary} ,#{department}
@@ -161,7 +163,6 @@
 	ORDER BY APLNUM ASC
   </select>
   
-  <!-- 인재추천 리스트 -->
   <select id="recommendList">
   SELECT *
 	FROM RESUMES RE 
@@ -174,6 +175,7 @@
 	    OR INSTR(JP.LICENSES, RE.LICENSES2) > 0
 	    OR INSTR(JP.LICENSES, RE.LICENSES3) > 0
 	)
+  
   </select>
   
   <!-- 받은 이력서_목록 --> 
@@ -185,13 +187,64 @@
   
   <!-- 이력서_상세페이지 -->
   <select id="getresumeList">
-   SELECT REPLACE(TITLE, ' ', '') AS TITLE, USER_ID, USERNAME, EMAIL, PHONE_NUMBER, ADDRESS, BIRTH, GENDER, NUMBER2, CAREER,
+   SELECT TITLE, USER_ID, USERNAME, EMAIL, PHONE_NUMBER, ADDRESS, BIRTH, GENDER, NUMBER2, CAREER,
           CAREERS, EDUWHEN, EDUWHER, EDU, MAJOR, LICENSES1, LICENSES2, LICENSES3, PUBLISHER1,
           PUBLISHER2, PUBLISHER3, PASSDATE1, PASSDATE2, PASSDATE3, SKILLS1, SKILLS2, SKILLS3,
           SKILLS4, SKILLS5, PORTFOLIO, SELFINTRO
     FROM  RESUMES
     WHERE REPLACE(TITLE, ' ', '')= #{title}
   </select>
+  <!-- 이력서_수정 -->
+  <update id="updateresume">
+	UPDATE APPLICATIONS
+	SET    RESULT = #{param2}
+	WHERE  REPLACE(TITLE, ' ', '') = #{param1} AND POST_ID = #{param3}
+  </update>
+  
+  <!-- 고객센터_FAQ_목록 -->
+  <select id="getfaqList">
+   SELECT CSP_ID, TYPE, CSP_TITLE, USER_ID, CSP_PW, CONTENT, RESULT
+    FROM  CS
+    WHERE USER_ID = 'admin'
+  </select>
+  
+  <!-- 고객센터_FAQ제외_목록 -->
+  <select id="getcsList">
+   SELECT CSP_ID, TYPE, CSP_TITLE, USER_ID, CSP_PW, CONTENT, RESULT
+    FROM  CS
+    WHERE NOT USER_ID IN 'admin'
+  </select>
+  
+  <!-- 고객센터_목록 -->
+  <select id="getcs">
+   SELECT *
+    FROM  CS
+    WHERE CSP_TITLE = #{csp_title, jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 문의글_등록 -->
+  <insert id="insertcs">
+    INSERT INTO CS (CSP_ID ,TYPE 
+                         ,CSP_TITLE,USER_ID 
+                         ,CSP_PW,CONTENT 
+                         ,CSP_FILE,EMAIL) 
+    VALUES ( (SELECT NVL(MAX(csp_id),0)+1 FROM CS ) ,#{type, jdbcType=VARCHAR} 
+            ,#{csp_title, jdbcType=VARCHAR} ,#{user_id, jdbcType=VARCHAR} 
+            ,#{csp_pw, jdbcType=VARCHAR} ,#{content, jdbcType=VARCHAR} 
+            ,#{csp_file, jdbcType=VARCHAR} ,#{email, jdbcType=VARCHAR}) 
+  </insert>
+  
+  <!-- 문의글_수정 -->
+  <update id="updatecs">
+    UPDATE CS
+     SET   TYPE      = #{type}
+          ,CSP_TITLE = #{csp_title}
+          ,CSP_PW    = #{csp_pw} 
+          ,CONTENT   = #{content}
+          ,CSP_FILE  = #{csp_file}
+          ,EMAIL     = #{email}
+    WHERE  CSP_ID    = #{csp_id}
+  </update>
   
 </mapper>
 

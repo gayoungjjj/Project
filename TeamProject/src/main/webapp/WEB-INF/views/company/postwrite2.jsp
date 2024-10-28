@@ -12,7 +12,6 @@
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 
 <style>
-
   main{
   h2    {margin-left : 16%;}
   table {
@@ -52,7 +51,7 @@
   table tr:last-of-type td {
     background-color: white; 
     border: none; }
-  
+    
   select{margin-left : 16%;}
   
   .textarea1{
@@ -79,8 +78,6 @@
    .deadline{height : 40px;
       width  : 100%;
       }
-      
-      
       
   input[type=submit] {padding : 8px;
                       background : white;
@@ -162,7 +159,7 @@
 
   <!--채용공고 목록_등록 -->
 <main>  
-    <form action="/Company/Postwrite?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오 "  method="POST">
+    <form action="/Company/Postwrite2?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오 "  method="POST">
     <h2>공고 등록</h2>
     
     <tr>
@@ -185,8 +182,7 @@
      <tr>
        <td>공고명</td>
        <!--<input type="text"  class="name" name="post_id"   id="post_id"  />  --> 
-       <td colspan="3"><textarea name="post_id" id = "post_id" class="textarea1" maxlength="40"></textarea>
-       </td>
+       <td colspan="3"><textarea name="post_id" id = "post_id" class="textarea1" maxlength="40"></textarea></td>
      </tr>
      <tr>
        <td>모집부서</td>
@@ -195,7 +191,7 @@
        </td>
        <td>마감기한</td>
        <td>
-       <input type="date"     name="deadline"   id="deadline" class="deadline" /> 
+       <input type="date"     name="deadline"   id="deadline"  /> 
        </td>
      </tr>
      <tr>
@@ -208,7 +204,7 @@
        <input type="number"     name="salary"   id="salary"  /> 
        </td>
      <tr>
-     <td>모집인원</td>
+       <td>모집인원</td>
        <td>
        <input type="number"     name="recruitnum"   id="recruitnum"   /> 
        </td>
@@ -223,7 +219,7 @@
        <input type="text"     name="skills"   id="skills" value="${vo.skills}" />
        <!-- <textarea name="text" id = "skills" class="textarea3" maxlength="50"></textarea> -->
        </td>
-       </tr>
+     </tr>
      <tr>
       <td>직무내용</td>
       <td colspan="3"><textarea name="duty" id = "duty" maxlength="1300" class="textarea2"></textarea></td>
@@ -242,7 +238,7 @@
         
        const  goListEl = document.getElementById('goList')
        goListEl.onclick = function() {
-          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오' 
+          location.href = '/Company/ListManagement?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오' 
        }    
        
        const  formEl       = document.querySelector('form');

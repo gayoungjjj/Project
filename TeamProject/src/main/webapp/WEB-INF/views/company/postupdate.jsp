@@ -15,25 +15,70 @@
 
 <style>
   main{
-  h2    {margin-left : 9%;}
+  h2    {margin-left : 16%;}
   table {
          border : 1px solid #DCDBDB;
          text-align : center;
          border-collapse: collapse;
-         margin-left : 11%;
+         margin-left : 16%;
          width : 78%;
          font-weight : bold;
          height: auto;
+         
+         background-color: #ffffff;
+		 box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+		 margin: 20px auto;
+		 width: 90%;
+	     max-width: 1100px;
+		 border-radius: 10px;
+ 
+   	     margin-top:20px;
+	     display: flex;
+	     justify-content: center;		  
+	     padding: 20px;
          }
-   td {border : 1px solid #DCDBDB;
-       padding : 10px;}
-   tr {padding : 10px;}
+   td {padding : 10px;
+        padding-left : 80px;
+        padding-right : 80px;
+        white-space: nowrap;}
+   tr {padding : 10px;
+       border-bottom: 1px solid #ddd;}
    
    a { text-decoration:none; color : black;}
    a:hover{color : blue;}
    }
-  tr:first-child{background : #E7E7E7; }
+  td:nth-of-type(1){background : #E7E7E7; }
+  td:nth-of-type(3){background : #E7E7E7; }
+  table tr:last-of-type td {
+    background-color: white; 
+    border: none; }
+    
   select{margin-left : 16%;}
+  
+  .textarea1{
+      height : 50px;
+      width  : 80%;
+      resize: none;}
+      
+  .textarea2{
+      height : 200px;
+      width  : 100%;
+      resize: none;}
+      
+  .textarea3{
+      height : 30px;
+      width  : 100%;
+      resize: none;}
+   
+   input[type=number]{height : 40px;
+      width  : 100%;
+      }
+   input[type=text]{height : 40px;
+      width  : 100%;
+      }
+   .deadline{height : 40px;
+      width  : 100%;
+      }
   
   input[type=submit] {padding : 8px;
                       background : white;
@@ -54,7 +99,22 @@
                       
   input[type=button]:hover {background: #308752;
                             color : white;}
-  
+                            
+  .select1
+   {width: 100px; /* 너비 설정 */
+    padding: 10px; /* 패딩 추가 */
+    font-size: 16px; /* 폰트 크기 조정 */
+    border: 1px solid #ccc; /* 테두리 설정 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    background-color: #E7E7E7; /* 배경색 설정 */}
+    
+  .select2
+   {width: 100px; 
+    padding: 10px; 
+    font-size: 16px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    background-color: #E7E7E7;}
 </style>
 
 
@@ -77,7 +137,8 @@
       		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
       		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
-               <li><a href="cs">고객센터</a></li>   
+               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>               
+               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>    
           </ul> 
               
             <div class="rightmenu" >   
@@ -101,13 +162,13 @@
     <form action="/Company/Postupdate?aplnum=${param.aplnum}&user_id=${param.user_id}&compname=카카오"  method="POST">
     <h2>공고 수정(${param.aplnum})</h2>
     <tr>
-       <select 	name="career" value="${vo.career }">
+       <select 	name="career" value="${vo.career }" class="select1">
          <option value="">경력</option>
          <option value="신입">신입</option>
          <option value="경력">경력</option>
          <option value="무관">무관</option>
        </select>
-       <select name="edu" value="${vo.edu}">
+       <select name="edu" value="${vo.edu}" class="select2">
          <option value="">학력</option>
          <option value="고졸">고졸</option>
          <option value="대졸">대졸</option>
@@ -119,12 +180,8 @@
      
      <tr>
        <td>공고명</td>
-       <td>
-       <input type="text"     name="post_id"   id="post_id" value="${vo.post_id}" /> 
-       </td>
-       <td>모집인원</td>
-       <td>
-       <input type="number"     name="recruitnum"   id="recruitnum" value="${vo.recruitnum}"   /> 
+       <!--<input type="text"  class="name" name="post_id"   id="post_id"  />  --> 
+       <td colspan="3"><textarea name="post_id" id = "post_id" class="textarea1" maxlength="40" >${vo.post_id}</textarea>
        </td>
      </tr>
      <tr>
@@ -147,9 +204,9 @@
        <input type="number"     name="salary"   id="salary" value="${vo.salary}"  /> 
        </td>
      <tr>
-       <td>보유기술</td>
+       <td>모집인원</td>
        <td>
-       <input type="text"     name="skills"   id="skills" value="${vo.skills}"  /> 
+       <input type="number"     name="recruitnum"   id="recruitnum" value="${vo.recruitnum}"   /> 
        </td>
        <td>자격증</td>
        <td>
@@ -157,8 +214,16 @@
        </td>
      </tr>
      <tr>
+       <td>보유기술</td>
+       <td colspan="3">
+       <input type="text"     name="skills"   id="skills" value="${vo.skills}" />
+       <!-- <textarea name="text" id = "skills" class="textarea3" maxlength="50" >${vo.skills}</textarea> -->
+       </td>
+     </tr>
+     <tr>
       <td>직무내용</td>
-      <td colspan="3"><textarea name="duty" id ="duty" maxlength="1300" >${vo.duty}</textarea></td>
+      <td colspan="3">
+      <textarea name="duty" id ="duty" maxlength="1300" class="textarea2">${vo.duty}</textarea></td>
      </tr>
      <tr>
       <td colspan="4">

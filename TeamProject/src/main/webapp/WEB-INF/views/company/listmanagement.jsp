@@ -12,27 +12,47 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <style>
 
+
+
  /*임시-----------*/
  main{
-  h2    {margin-left : 9%;}
-  
+  h2    {margin-left : 16%;}
   table {
          border : 1px solid #DCDBDB;
          text-align : center;
          border-collapse: collapse;
-         margin-left : 11%;
+         margin-left : 16%;
          width : 78%;
          font-weight : bold;
          height: auto;
+         
+         background-color: #ffffff;
+		 box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+		 margin: 20px auto;
+		 width: 90%;
+		 max-width: 1100px;
+		 border-radius: 10px;
+
+		 margin-top:20px;
+		 display: flex;
+		 justify-content: center;
+		 padding: 20px;
+
          }
-   td {border : 1px solid #DCDBDB;
-       padding : 10px;}
-   tr {padding : 10px;}
+   td { padding : 10px;
+        padding-left : 80px;
+        padding-right : 80px;  }
+   tr {padding : 10px;
+       border-bottom: 1px solid #ddd;}
    
    a { text-decoration:none; color : black;}
    a:hover{color : blue;}
    }
-  tr:first-child{background : #E7E7E7; }
+  tr:nth-of-type(2){background : #E7E7E7; }
+  tr:nth-of-type(1){text-align:left;}
+  
+ 
+
 /*----------------*/
   .legnav {
    margin-top:20px;
@@ -101,7 +121,7 @@
       		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
                <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>
-               <li><a href="cs">고객센터</a></li>   
+               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>   
           </ul> 
               
             <div class="rightmenu" >   
@@ -117,12 +137,16 @@
 <div class= "div2">
 <a href="/Individual/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
 </div>
- 
+
+
  <main>
-   <h2>등록 공고 게시판</h2>
-    <a class="btn btn-outline-secondary" 
-         href="/Company/WriteForm?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">새로운 공고 쓰기</a>
     <table>
+    <h2>등록 공고 게시판</h2>
+    <tr>
+      <td colspan="4">
+       <a class="btn btn-outline-secondary" 
+            href="/Company/WriteForm2?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=카카오">새로운 공고 쓰기</a></td>
+     </tr>
      <tr>
       <td>공고 번호</td>
       <td>공고명</td>
@@ -134,7 +158,7 @@
       <tr>
        <td>${ main.aplnum   }</td>
        <td>
-       <a href="/Company/Postview?aplnum=${main.aplnum}&user_id=${param.user_id}&compname=카카오">
+       <a href="/Company/Postview2?aplnum=${main.aplnum}&user_id=${param.user_id}&compname=카카오">
        ${ main.post_id  }</a>
        </td>
        <td>${ main.hit }</td>
@@ -144,7 +168,7 @@
     </table>
  
  </main>
- 
+
  <footer>
   <div class="footer1">
    <p><small>&copy; 2024 All rights reserved 기업명</small></p>

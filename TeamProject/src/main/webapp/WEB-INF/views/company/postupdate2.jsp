@@ -10,9 +10,10 @@
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
+<script src="https://cdn.jsdelivr.net/npm/browser-scss@1.0.3/dist/browser-scss.min.js"></script>
+<script src="https://code.jquery.com/jquery.min.js"></script>
 
 <style>
-
   main{
   h2    {margin-left : 16%;}
   table {
@@ -52,7 +53,7 @@
   table tr:last-of-type td {
     background-color: white; 
     border: none; }
-  
+    
   select{margin-left : 16%;}
   
   .textarea1{
@@ -79,9 +80,7 @@
    .deadline{height : 40px;
       width  : 100%;
       }
-      
-      
-      
+  
   input[type=submit] {padding : 8px;
                       background : white;
                       border-radius: 8px;
@@ -102,7 +101,7 @@
   input[type=button]:hover {background: #308752;
                             color : white;}
                             
-  .select1
+   .select1
    {width: 100px; /* 너비 설정 */
     padding: 10px; /* 패딩 추가 */
     font-size: 16px; /* 폰트 크기 조정 */
@@ -116,7 +115,7 @@
     font-size: 16px; 
     border: 1px solid #ccc; 
     border-radius: 5px; 
-    background-color: #E7E7E7;}
+    background-color: #E7E7E7;}                         
 </style>
 
 
@@ -131,8 +130,7 @@
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
   		<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" >
 	</div>
-
-   
+ 
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
@@ -141,7 +139,7 @@
       		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
                <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>               
-               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>
+               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>    
           </ul> 
               
             <div class="rightmenu" >   
@@ -160,19 +158,18 @@
 </div>
 
 
-  <!--채용공고 목록_등록 -->
-<main>  
-    <form action="/Company/Postwrite?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오 "  method="POST">
-    <h2>공고 등록</h2>
-    
+  <!--채용공고 목록_수정 -->
+<main>   
+    <form action="/Company/Postupdate2?aplnum=${param.aplnum}&user_id=${param.user_id}&compname=카카오"  method="POST">
+    <h2>공고 수정(${param.aplnum})</h2>
     <tr>
-       <select 	name="career" id="career" class="select1">
+       <select 	name="career" value="${vo.career }" class="select1">
          <option value="">경력</option>
          <option value="신입">신입</option>
          <option value="경력">경력</option>
          <option value="무관">무관</option>
        </select>
-       <select name="edu" id="edu" class="select2">
+       <select name="edu" value="${vo.edu}" class="select2">
          <option value="">학력</option>
          <option value="고졸">고졸</option>
          <option value="대졸">대졸</option>
@@ -185,70 +182,69 @@
      <tr>
        <td>공고명</td>
        <!--<input type="text"  class="name" name="post_id"   id="post_id"  />  --> 
-       <td colspan="3"><textarea name="post_id" id = "post_id" class="textarea1" maxlength="40"></textarea>
+       <td colspan="3"><textarea name="post_id" id = "post_id" class="textarea1" maxlength="40">${vo.post_id}</textarea>
        </td>
      </tr>
      <tr>
        <td>모집부서</td>
        <td>
-       <input type="text"     name="department"   id="department"  /> 
+       <input type="text"     name="department"   id="department" value="${vo.department}"  /> 
        </td>
        <td>마감기한</td>
        <td>
-       <input type="date"     name="deadline"   id="deadline" class="deadline" /> 
+       <input type="date"     name="deadline"   id="deadline" value="${vo.deadline}"  /> 
        </td>
      </tr>
      <tr>
        <td>근무지역</td>
        <td>
-       <input type="text"     name="workspace"   id="workspace"  /> 
+       <input type="text"     name="workspace"   id="workspace" value="${vo.workspace}"  /> 
        </td>
        <td>급여</td>
        <td>
-       <input type="number"     name="salary"   id="salary"  /> 
+       <input type="number"     name="salary"   id="salary" value="${vo.salary}"  /> 
        </td>
      <tr>
-     <td>모집인원</td>
+       <td>모집인원</td>
        <td>
-       <input type="number"     name="recruitnum"   id="recruitnum"   /> 
+       <input type="number"     name="recruitnum"   id="recruitnum" value="${vo.recruitnum}"   /> 
        </td>
        <td>자격증</td>
        <td>
-       <input type="text"     name="licenses"   id="licenses"  /> 
+       <input type="text"     name="licenses"   id="licenses" value="${vo.licenses}"  /> 
        </td>
      </tr>
      <tr>
        <td>보유기술</td>
        <td colspan="3">
        <input type="text"     name="skills"   id="skills" value="${vo.skills}" />
-       <!-- <textarea name="text" id = "skills" class="textarea3" maxlength="50"></textarea> -->
+       <!-- <textarea name="text" id = "skills" class="textarea3" maxlength="50">${vo.skills}</textarea> -->
        </td>
-       </tr>
+     </tr>
      <tr>
       <td>직무내용</td>
-      <td colspan="3"><textarea name="duty" id = "duty" maxlength="1300" class="textarea2"></textarea></td>
+      <td colspan="3"><textarea name="duty" id ="duty" maxlength="1300" class="textarea2">${vo.duty}</textarea></td>
      </tr>
      <tr>
       <td colspan="4">
-       <input type="submit" value="글 저장" />
+       <input type="submit" value="수정" />
        <input type="button" value="목록" id="goList" />
       </td>
      </tr>
     
     </table>    
     </form>
-  
+    
     <script>
         
        const  goListEl = document.getElementById('goList')
        goListEl.onclick = function() {
-          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오' 
+          location.href = '/Company/ListManagement?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오'
        }    
        
        const  formEl       = document.querySelector('form');
-       const  post_idEl    = document.querySelector('#post_id');
+       const  post_idEl      = document.querySelector('#post_id');
        const  dutyEl      = document.querySelector('#duty');
-      
        
        
        formEl.onsubmit   = function () {           
@@ -257,18 +253,16 @@
                post_idEl.focus()
            	   return  false;
 		   } 
-		   
 		   if(  dutyEl.value.trim() == ''  ) {
                alert('내용을 입력하세요')
                dutyEl.focus()
            	   return  false;
 		   } 
-		  
-
+		   
 		   return  true;
 	   }
     </script> 
-   
+  
   </main>
   
  

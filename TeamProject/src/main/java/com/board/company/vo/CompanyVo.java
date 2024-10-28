@@ -21,7 +21,7 @@ public class CompanyVo {
 	private int    create_date;
 	private String business_type;
 	
-	private Integer    aplnum;
+	private Integer aplnum;
 	private String post_id;
 	private int    recruitnum;
 	private String deadline;
@@ -35,7 +35,14 @@ public class CompanyVo {
 	private String department;
 	private int    hit;
 	
-	
+	private int    csp_id;
+	private String type;
+	private String csp_title;
+    private String csp_pw;
+    private String content;
+    private String csp_file;
+    private String result;
+	private String c_date;
 	
 	private String title;
 	private int    app_id;
@@ -62,6 +69,6 @@ public class CompanyVo {
 	private String skills5;
 	private String portfolio;
 	private String selfintro;
-	private String c_date;
 	private String u_date;
+
 }

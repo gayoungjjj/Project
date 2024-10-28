@@ -61,14 +61,14 @@
     </style>
 </head>
 <body>
-    <img src="/img/로고.png"  alt=회사로고/>
+    <img src="/img/로고.png"  alt=회사로고 onclick="location.href='/'"/>
     <div class="container">
         <h2>개인 로그인</h2>
-        <form action="/Individual/Login" method="post">
+        <form action="/Individual/Login" method="POST">
             <table>
                 <tr>
                     <td>
-                    <input type="text" name="userid" placeholder="아이디" required />
+                    <input type="text" name="user_id" placeholder="아이디" required />
                     </td>
                 </tr>
                 <tr>
@@ -78,7 +78,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="submit" value="로그인" />
+                        <input type="submit" id="submit" value="로그인" />
                     </td>
                 </tr>
                 <tr>
@@ -88,7 +88,9 @@
                 </tr>
             </table>
         </form>
-            <a href="/">홈으로</a>
+        <c:if test="${not empty errorMessage}">
+          <div class="error">${errorMessage}</div>
+        </c:if>
     </div>
 </body>
 </html>

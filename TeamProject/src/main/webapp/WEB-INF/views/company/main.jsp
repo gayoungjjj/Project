@@ -81,7 +81,7 @@
       		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
                <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>
-               <li><a href="cs">고객센터</a></li>  
+               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>   
           </ul> 
               
             <div class="rightmenu" >   

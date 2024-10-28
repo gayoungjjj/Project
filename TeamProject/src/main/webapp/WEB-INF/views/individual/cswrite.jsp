@@ -11,6 +11,7 @@
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 
 <style>
+
 .div3 {
    margin-top:20px;
    display: flex;
@@ -64,7 +65,6 @@
 /* readonly */
 .main input[readonly] {
   background-color: #e9e9e9;
-  color: #999;
 }
 
 /* 버튼 스타일 */
@@ -95,13 +95,6 @@
   background-color: #5a6268;
 }
 
-#goDelete {
-  background-color: #dc3545;
-}
-
-#goDelete:hover {
-  background-color: #c82333;
-}
 
 </style>
 
@@ -109,14 +102,14 @@
 </head>
 <body>
 
-    <div class = "div1">
- 	  <h1 class ="logo">
+ <div class = "div1">
+ 	 <h1 class ="logo">
   		<a href="/Individual/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
- 	  </h1>
-      <div class="search">
-  		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
+ 	 </h1>
+     <div class="search">
+  		<input type="text" placeholder="#픽미 는 당신의 취업을 응원합니다!! ">
   		<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" >
-	  </div>
+	</div>
    
   	  <header>
  	    <nav class ="headernav">
@@ -125,7 +118,7 @@
    			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
     		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
     		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
-            <li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>  
+            <li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>    
           </ul> 
               
           <div class="rightmenu" >   
@@ -133,55 +126,61 @@
   			   <li><a href="/Individual/Logout">로그아웃</a></li>
      		   <li><a href="/Individual/Mypage?user_id=${param.user_id}">마이페이지</a></li>
     		</ul>  	
-          </div>
+    		</div>
         </nav> 	   
  	  </header>
     </div>
+    
+    <div class= "div2">
+<a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
+</div>
+    
 
      <!--메인화면 -->
      <div class= "div3">
        <main class ="main">
-         <form action="/Individual/Update"  method="POST">
+         <form action="/Individual/Cswrite?user_id=${param.user_id}"  method="POST">
          <table>
-           <h2 style=text-align:center;>개인회원정보 수정</h2>
+           <h2 style=text-align:center;>문의글 작성</h2>
      	   <tr>
-      		 <td>사용자 아이디</td>
-      	     <td><input type="text" name="user_id"  value="${vo.user_id}" readonly /></td>
+     	     <td>문의 구분</td>
+     	     <td>
+      	      <select name="type" >
+      	       <option value="로그인">로그인</option>
+      	       <option value="회원정보">회원정보</option>
+      	       <option value="이력서">이력서</option>
+      	       <option value="입사지원">입사지원</option>
+      	       <option value="채용정보">채용정보</option>
+      	       <option value="기타">기타</option>
+      	      </select>
+      	     </td>
+     	   </tr>
+     	   <tr>
+      		 <td>제목</td>
+      		 <td><input type="text" name="csp_title" /></td>
      	   </tr>
      	   <tr>
       		 <td>비밀번호</td>
-      		 <td><input type="password" name="password" id="passwd1" required /></td>
-     	   </tr>
-     	   <tr>
-      		 <td>비밀번호 확인</td>
-      		 <td><input type="password" id="passwd2" /></td>
+      		 <td><input type= "text" name="csp_pw" id="csp_pw" readonly /></td>
+      		 <td><input type="checkbox" id="goEdit" /><label for="goEdit">비밀글</label></td>
      	   </tr> 
      	   <tr>
-       		 <td>사용자 이름</td>
-      		 <td><input type="text" name="username" value="${vo.username}" /></td>
+       		 <td>내용</td>
+      		 <td><input type="text" name="content" /></td>
      	   </tr>
      	   <tr>
-      		 <td>이메일</td>
-      		 <td><input type="text" name="email" value="${vo.email}" /></td>
+      		 <td>문의 파일</td>
+      		 <td><input type="text" name="csp_file" /></td>
      	   </tr>
      	   <tr>
-      		 <td>전화번호</td>
-      		 <td><input type="text" name="phone_number" value="${vo.phone_number}" /></td>
-     	   </tr>
-     	   <tr>
-      		 <td>주소</td>
-      		 <td><input type="text" name="address" value="${vo.address}" /></td>
-     	   </tr>
-     	   <tr>
-      		 <td>가입일</td>
-      		 <td><input type="text" name="j_date" value="${vo.j_date}" readonly /></td>
+      		 <td>답변받을 이메일</td>
+      		 <td><input type="text" name="email" /></td>
      	   </tr>
 
      	   <tr>
-      		 <td colspan="2">
+      		 <td colspan="3">
       		   <input type="button" value="이전" id="goMain" />
-      		   <input type="submit" value="수정" />
-      		   <input type="button" value="회원탈퇴" id="goDelete" />
+      		   <input type="submit" value="작성" />
       		 </td>
      	   </tr>
 
@@ -189,30 +188,24 @@
      	 </table>    
      	 </form>
   
-         <script>
-        	const goMain      = document.getElementById('goMain')
+      <script>
+         const goMain      = document.getElementById('goMain')
   			goMain.onclick    = function() {
-  				location.href = '/Individual/Main'
-  			}
-  		 	const  goDelete   = document.getElementById('goDelete')
-  			goDelete.onclick  = function() {
-  		 		const confirmed = confirm("정말로 회원 탈퇴를 하시겠습니까?")
-  		 		if(confirmed) {
-        			location.href = '/Individual/Delete?user_id=${vo.user_id}'
-  		 		}
-    		}    
-  		 	
-  		 	const form = document.querySelector("form");
-  		    form.onsubmit = function(event) {
-  		        const password = form.password.value;
-  		        const confirmPassword = form.passwd2.value;
+  				location.href = '/Individual/Cslist'
+  			}  
 
-  		        if (password !== confirmPassword) {
-  		            event.preventDefault(); // 폼 제출 방지
-  		            alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요."); // 오류 메시지
-  		        }
-  		    }
-         </script>   
+         const csp_pw = document.getElementById('csp_pw')
+         const goEdit = document.getElementById('goEdit')
+         
+         goEdit.onchange = function() {
+         	if (goEdit.checked) {
+    	    	csp_pw.removeAttribute('readonly'); // Enable editing
+            } else {
+    	      	csp_pw.setAttribute('readonly', 'readonly'); // Disable editing
+              }
+        	 
+         }
+</script> 
        </main>  
       
      </div>

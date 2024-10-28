@@ -9,7 +9,9 @@ import com.board.individual.vo.IndividualVo;
 @Mapper
 public interface IndividualMapper {
 
-	IndividualVo login(String userid, String password);
+	IndividualVo login(String user_id, String password);
+	
+	IndividualVo emailDupCheck(String email);
 
 	IndividualVo getUserById(String user_id);
 
@@ -25,6 +27,22 @@ public interface IndividualMapper {
 	List<IndividualVo> recommendList();
 
 	void insert(IndividualVo individualVo);
+	
+	List<IndividualVo> getappList(IndividualVo vo);
+	
+	List<String> getTitlesByUSerId(String user_id);
+
+	void insert2(IndividualVo individualVo);
+
+	IndividualVo getResum(String userid);
+
+	List<IndividualVo> getreList(IndividualVo vo);
+
+	IndividualVo getresumeList(IndividualVo individualVo);
+
+	void update2(IndividualVo individualVo);
+
+	void deleteres(IndividualVo individualVo);
 
 
 

@@ -10,6 +10,8 @@
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
+<script src="https://cdn.jsdelivr.net/npm/browser-scss@1.0.3/dist/browser-scss.min.js"></script>
+<script src="https://code.jquery.com/jquery.min.js"></script>
 
 <style>
   main{
@@ -22,15 +24,18 @@
          width : 78%;
          font-weight : bold;
          height: auto;
+         border-collapse: collapse;
          }
    td {border : 1px solid #DCDBDB;
        padding : 10px;}
-   tr {padding : 10px;}
+   tr {padding : 10px;
+   border-bottom: 1px solid #ddd;}
    
    a { text-decoration:none; color : black;}
    a:hover{color : blue;}
    }
   tr:first-child{background : #E7E7E7; }
+   
 </style>
 
 
@@ -50,12 +55,11 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-
-          	   <li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
-      		   <li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
-      		   <li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>
-               <li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
-               <li><a href="cs">고객센터</a></li>   
+			<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+   			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
+    		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
+    		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
+            <li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>  
           </ul> 
               
             <div class="rightmenu" >   
@@ -89,7 +93,7 @@
       <tr>
        <td>${ main.aplnum   }</td>
        <td>
-       <a href="/Individual/Postview?aplnum=${main.aplnum}">
+       <a href="/Individual/Postview?aplnum=${main.aplnum}&user_id=${param.user_id}">
        ${ main.post_id  }</a>
        </td>
        <td>${ main.compname }</td>

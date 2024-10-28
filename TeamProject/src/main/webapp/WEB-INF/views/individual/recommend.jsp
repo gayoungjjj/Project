@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +9,8 @@
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
 
 <style>
@@ -88,7 +87,7 @@
 <body>
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Company/Main"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Individual/Main"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
@@ -99,24 +98,17 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-   <!-- 기능 구현 
-    1. 채용공고, 고객센터는 개인이랑 똑같음-->
-    
-   <!-- 기능 구현
-    1. 로그아웃 기능 구현
-    2. 마이페이지 이동 구현 -->
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=카카오">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id }&compname=카카오">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=카카오">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=카카오">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>
-               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>  
+          	<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+   			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
+    		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
+    		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
+            <li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>      
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
-  			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage">마이페이지</a></li>
+  			   <li><a href="/Individual/Logout">로그아웃</a></li>
+     		   <li><a href="/Individual/Mypage">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -124,37 +116,29 @@
  </div>
  
  <main>
-   <h2>인재 추천</h2>
+   <h2>기업 추천</h2>
      <table>
        <tr>
-        <td>이름</td>
-        <td>이력서 제목</td>
-        <td>전화번호</td>
-        <td>생년월일</td>
-        <td>자격증</td>
-        <td>공고제목</td>
-        <td>이력서번호</td>
+        <td>기업명</td>
+        <td>채용공고</td>
+        <td>경력</td>
+        <td>급여</td>
+        <td>필수 자격증</td>
+        <td>등록 마감일</td>
        </tr>
        
        <c:forEach var="vo" items="${recommendList}">
        <tr>
-        <td>${vo.username}</td>
-        <td>
-         <a href="/Company/Resumeview?title=${fn:replace(vo.title, ' ', '')}">
-                ${vo.title}
-            </a>
-         </td>
-        <td>${vo.phone_number}</td>
-        <td>${vo.birth}</td>
+        <td>${vo.compname}</td>
+        <td><a href="/Individual/Postview?aplnum=${ vo.aplnum }" />${vo.post_id}</td>
+        <td>${vo.career}</td>
+        <td>${vo.salary}</td>
         <td>${vo.licenses}</td>
-        <td>${vo.post_id}</td>
-        <td>${vo.app_id}</td>
+        <td>${vo.deadline}</td>
        </tr>
        </c:forEach>
        
-       
      </table>
-      
  
  </main>
  
