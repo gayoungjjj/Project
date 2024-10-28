@@ -3,6 +3,8 @@ package com.board.company.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import com.board.company.vo.CompanyVo;
 import com.board.individual.vo.IndividualVo;
@@ -63,6 +65,13 @@ public interface CompanyMapper {
 	List<CompanyVo> recommendList();
 	
 	List<CompanyVo> getSortedPostList();
+
+	void saveBookmark(CompanyVo companyVo);
+
+	void toggleBookmark(String user_id, String title);
+
+	List<CompanyVo> getBookmark(String userId, String title);
+
 
 
 }

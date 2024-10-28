@@ -229,6 +229,65 @@
     WHERE  CSP_ID    = #{csp_id}
   </update>
   
+  <!-- 북마크 -->
+  
+  <insert id="saveBookmark">
+  
+INSERT INTO COMBOOKMARK (
+    CBOOK_ID,
+    USER_ID,
+    USERNAME,
+    COMPNAME,
+    BIRTH,
+    PHONE_NUMBER,
+    TITLE         
+) VALUES (
+   ( (SELECT NVL(MAX(CBOOK_ID),0)+1 FROM COMBOOKMARK )),
+   #{user_id},
+   #{username},
+   #{compname},
+   #{birth},
+   #{phone_number},
+   #{title}
+)
+  
+  </insert>
+  
+
+  
+  <update id="toggleBookmark">
+  
+    UPDATE COMBOOKMARK  
+    SET  BOOKMARK = CASE
+         WHEN BOOKMARK = 'OFF' THEN 'ON'  
+         ELSE 'OFF' END  
+         WHERE USER_ID = #{arg0} 
+         AND TITLE = #{arg1}
+  
+  
+  </update>
+  
+  <select id="getBookmark">
+  
+  SELECT
+    CBOOK_ID,
+    USER_ID,
+    COMPNAME,
+    USERNAME,
+    BIRTH,
+    PHONE_NUMBER,
+    TITLE,
+    BOOKMARK,
+    S_DATE
+FROM
+    COMBOOKMARK
+WHERE
+    USER_ID = #{arg0} 
+    AND TITLE = #{arg1}
+  
+  </select>
+  
+  
 </mapper>
 
 

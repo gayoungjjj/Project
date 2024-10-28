@@ -145,24 +145,40 @@
         <td>북마크</td>
        </tr>
        
-       <c:forEach var="vo" items="${recommendList}">
-       <tr>
-        <td>${vo.username}</td>
-        <td>
-         <a href="/Company/Resumeview?title=${fn:replace(vo.title, ' ', '')}">
-                ${vo.title}
-            </a>
-         </td>
-        <td>${vo.phone_number}</td>
-        <td>${vo.birth}</td>
-        <td>${vo.licenses}</td>
-        <td>${vo.post_id}</td>
-        <td>${vo.app_id}</td>
-        <td><button id = "off" onclick="bookmark_off()">북마크</button>
-        </td>
-       </tr>
-       </c:forEach>
-     </table>
+    
+ 
+        <c:forEach var="vo" items="${recommendList}">
+        <form action="/Company/Bookmarking" method="post">
+        <input type="hidden" name="user_id" value="${param.user_id}">
+            <tr>
+            
+                <td>${vo.username}</td>
+                <td>
+                    <a href="/Company/Resumeview?title=${fn:replace(vo.title, ' ', '')}">
+                        ${vo.title}
+                    </a>
+                </td>
+                <td>${vo.phone_number}</td>
+                <td>${vo.birth}</td>
+                <td>${vo.licenses}</td>
+                <td>${vo.post_id}</td>
+                <td>${vo.app_id}</td>
+                <td>
+                   <input type="hidden" name="username" value="${vo.username}">
+                   <input type="hidden" name="title" value="${vo.title}">
+				   <input type="hidden" name="compname" value="${param.compname}">
+                   <input type="hidden" name="phone_number" value="${vo.phone_number}">
+                   <input type="hidden" name="birth" value="${vo.birth}">
+                   <input type="submit" value="북마크" onclick="disableButton(this)">
+                </td>
+            </tr>
+            
+               </form>  
+            
+        </c:forEach>
+        
+    </table>
+
       
 
     
@@ -174,6 +190,22 @@
    <p><small>&copy; 2024 All rights reserved 기업명</small></p>
   </div>
  </footer>
+
+
+
+
+
+<script>
+function disableButton(button) {
+    button.disabled = true; // 버튼 비활성화
+    button.form.submit(); // 폼 제출
+}
+</script>
+
+
+
+
+
 
 </body>
 </html>

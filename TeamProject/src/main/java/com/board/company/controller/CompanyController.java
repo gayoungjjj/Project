@@ -4,10 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -383,19 +387,42 @@ public class CompanyController {
 	//-----------------------------------북마크--------------------------------------//
 	//http://localhost:9090/Company/Bookmark?user_id=user3&compname=%EC%82%BC%EC%84%B1
 	//북마크
-	@RequestMapping("/Bookmark")
-	public ModelAndView bookmark() {
-		
-		
-		List<CompanyVo> recommendList = companyMapper.recommendList();
-		System.out.println("recommendList"+recommendList);
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("recommendList", recommendList);
-		
-		mv.setViewName("company/bookmark");
-		return mv;		
-	}
+	
+	//북마크 
+		@SuppressWarnings("null")
+		@RequestMapping("/Bookmarking")
+		public ModelAndView bookmarkomg(CompanyVo companyVo, String user_id ,String username) {
+			  String userId = companyVo.getUser_id(); // user_id 가져오기
+			  String title = companyVo.getTitle(); // title 가져오기
+			
+			List<CompanyVo> existingBookmark = companyMapper.getBookmark(userId, title);
+		    
+		    if (existingBookmark != null && !existingBookmark.isEmpty()) {
+		        // 북마크가 존재할경우, 북마크 상태를 토글한다.
+		        companyMapper.toggleBookmark(userId, title);
+		        System.out.println("북마크 상태를 토글했습니다: User ID = " + userId + ", Title = " + title);
+
+		    } else {
+		     // 존재하지않는경우  
+			 // 1. 먼저 북마크를 저장합니다.
+		    companyMapper.saveBookmark(companyVo); // 북마크 저장
+	        System.out.println("북마크 저장: " + companyVo);
+		     // 2. 북마크 상태를 토글합니다. (ON/OFF)
+		    companyMapper.toggleBookmark(userId, title);
+		    System.out.println("없는상태로 북마크 상태를 토글했습니다: User ID = " + userId + ", Title = " + title);
+	
+           }
+	         // 3. 모든 북마크 목록을 가져옵니다.
+		    List<CompanyVo> booklist = companyMapper.getBookmark(userId, title); // 북마크 목록 가져오기
+
+		    // 4. 뷰에 데이터 추가
+		    ModelAndView mv = new ModelAndView();
+		    mv.addObject("booklist", booklist); // 북마크 목록 추가
+		    mv.setViewName("company/bookmark");
+		    return mv;	
+		}
+
+
 	// ------------------------------- 고객센터 -------------------------------//
 	// Company/Cslist (고객센터)
 	@RequestMapping("/Cslist")
@@ -476,4 +503,6 @@ public class CompanyController {
 		return mv;
 	}
 	
+	
+
 }
