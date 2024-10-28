@@ -62,6 +62,10 @@ border: 1px solid #DBE0E9;
   border: 1px #DDDDDD solid; 
   border-radius: 20px;
 }
+
+.red{color:red;}
+
+
 /*이력서 css (끝)*/
 
 </style>
@@ -118,7 +122,7 @@ border: 1px solid #DBE0E9;
   	<tr>
   	   <td>
   	   
-         <h3 style="margin-top: -18px;">이력서 제목</h3>
+         <h3 style="margin-top: -18px;">이력서 제목 <span class="red" style="font-size: 11px;">* 이력서 제목은 작성후 수정이 불가합니다. </span></h3> 
  			<table class ="resumetable" >
   		  	<tr>
           		<td style="width:800px;">
@@ -128,7 +132,7 @@ border: 1px solid #DBE0E9;
 	</table>
  
  
-  <h3>인적사항</h3> 
+  <h3>인적사항<span class="red" style="font-size: 11px;"> * 필수 기재 사항을 확인해주세요 </span></h3> 
     <table class ="resumetable" >
     <tr>
         <td style="padding-top:10px; width:696px;"> 
@@ -151,7 +155,7 @@ border: 1px solid #DBE0E9;
     </tr>
 	</table>
 
-<h3>경력사항</h3> 
+<h3>경력사항<span class="red" style="font-size: 11px;"> * 필수 기재 사항을 확인해주세요 </span></h3> 
     <table class ="resumetable">
        <tr>
          <td style="width:800px;" >
@@ -170,7 +174,7 @@ border: 1px solid #DBE0E9;
 	</table>
 
 
-  <h3>학력사항</h3> 
+  <h3>학력사항<span class="red" style="font-size: 11px;"> * 필수 기재 사항을 확인해주세요 </span></h3> 
     <table class ="resumetable">
     <tr>
     

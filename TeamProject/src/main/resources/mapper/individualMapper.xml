@@ -153,6 +153,7 @@
     UPDATE        RESUMES
     SET           
     GENDER =       #{gender} ,
+    BIRTH  =       #{birth},
     NUMBER2 =      #{number2 } ,
     CAREER =       #{career } ,
     CAREERS =      #{careers },
@@ -187,6 +188,7 @@
 	
 	DELETE FROM RESUMES
 	WHERE   REPLACE(TITLE, ' ', '')= #{title}
+	AND         USER_ID=#{user_id} 
 	
 	
 </delete>

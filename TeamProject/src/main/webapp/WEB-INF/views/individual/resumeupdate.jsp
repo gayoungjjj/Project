@@ -62,6 +62,8 @@ border: 1px solid #DBE0E9;
   border: 1px #DDDDDD solid; 
   border-radius: 20px;
 }
+
+.red{color:red;}
 /*이력서 css (끝)*/
 
 </style>
@@ -85,7 +87,7 @@ border: 1px solid #DBE0E9;
     <ul class ="leftmenu"> 
    		<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
    		<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
-    	<li><a href="/Individual/ResumeManagement?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
+    	<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
     	<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
     	<li><a href="/cs">고객센터</a></li>  
      </ul>   
@@ -118,7 +120,7 @@ border: 1px solid #DBE0E9;
   	<tr>
   	   <td>
   	   
-         <h3 style="margin-top: -18px;">이력서 제목</h3>
+         <h3 style="margin-top: -18px;">이력서 제목<span class="red" style="font-size: 11px;"> * 이력서 제목은 수정이 불가합니다. </span></h3>
  			<table class ="resumetable" >
   		  	<tr>
           		<td style="width:800px;">
@@ -128,13 +130,13 @@ border: 1px solid #DBE0E9;
 	</table>
  
  
-  <h3>인적사항</h3> 
+  <h3>인적사항<span class="red" style="font-size: 11px;"> * 생년월일,성별,비상연락처를 제외한 인적사항은 마이페이지 회원정보수정을 통해 변경해주십시오.</span></h3> 
     <table class ="resumetable" >
     <tr>
         <td style="padding-top:10px; width:696px;"> 
         <input type="hidden" name="user_id" value="${param.user_id}">
             <input class="resumeinput1" type="text" name="username" value="${vo.username}" readonly>
-        	<input class="resumeinput1" type="text" name="birth"  value="${vo.birth}" readonly>
+        	<input class="resumeinput1" type="text" name="birth"  value="${vo.birth}" >
             <select class="resumeinput1" name="gender"> 
                 <option>${vo.gender}</option>
             	<option>성별(선택)</option>
