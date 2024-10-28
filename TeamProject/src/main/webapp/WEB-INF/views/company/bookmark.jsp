@@ -124,32 +124,36 @@
  </div>
  
  <main>
-   <h2>인재 추천</h2>
+   <h2>북마크한 인재 목록</h2>
      <table>
        <tr>
         <td>이름</td>
+        <td>생년월일</td>
         <td>이력서 제목</td>
         <td>전화번호</td>
-        <td>생년월일</td>
-        <td>자격증</td>
-        <td>공고제목</td>
-        <td>이력서번호</td>
+         <td>북마크</td>
        </tr>
        
-       <c:forEach var="vo" items="${recommendList}">
+       <c:forEach var="book" items="${bookmarkList}">
+         <form action="/Company/Bookmarking" method="post">
+         <input type="hidden" name="user_id" value="${param.user_id}">
        <tr>
-        <td>${vo.username}</td>
+        <td>${book.username}</td>
+        <td>${book.birth}</td>
         <td>
-         <a href="/Company/Resumeview?title=${fn:replace(vo.title, ' ', '')}">
-                ${vo.title}
+         <a href="/Company/Resumeview?title=${fn:replace(book.title, ' ', '')}">
+                ${book.title}
             </a>
          </td>
-        <td>${vo.phone_number}</td>
-        <td>${vo.birth}</td>
-        <td>${vo.licenses}</td>
-        <td>${vo.post_id}</td>
-        <td>${vo.app_id}</td>
+        <td>${book.phone_number}</td>
+        <td>
+            
+            <input type="hidden" name="username" value="${book.username}">
+            <input type="hidden" name="title" value="${book.title}">
+        	<input type="submit" value="북마크" onclick="disableButton(this)">
+        </td>
        </tr>
+       </form>  
        </c:forEach>
        
        

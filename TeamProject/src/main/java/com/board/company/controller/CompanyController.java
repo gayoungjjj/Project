@@ -386,42 +386,67 @@ public class CompanyController {
 	
 	//-----------------------------------북마크--------------------------------------//
 	//http://localhost:9090/Company/Bookmark?user_id=user3&compname=%EC%82%BC%EC%84%B1
-	//북마크
 	
-	//북마크 
+	//북마크기능 
 		@SuppressWarnings("null")
-		@RequestMapping("/Bookmarking")
-		public ModelAndView bookmarkomg(CompanyVo companyVo, String user_id ,String username) {
+		@RequestMapping(value = "/Bookmarking", method = RequestMethod.POST)
+		public String bookmarkomg(CompanyVo companyVo, @RequestParam String user_id, @RequestParam String username, RedirectAttributes redirectAttributes) {
+		    // ... (기존 코드 유지)
 			  String userId = companyVo.getUser_id(); // user_id 가져오기
 			  String title = companyVo.getTitle(); // title 가져오기
 			
 			List<CompanyVo> existingBookmark = companyMapper.getBookmark(userId, title);
-		    
+			
+			 ModelAndView mv = new ModelAndView();
+			 String alertMessage = "";
+			
 		    if (existingBookmark != null && !existingBookmark.isEmpty()) {
-		        // 북마크가 존재할경우, 북마크 상태를 토글한다.
-		        companyMapper.toggleBookmark(userId, title);
-		        System.out.println("북마크 상태를 토글했습니다: User ID = " + userId + ", Title = " + title);
+		        // 북마크가 존재할경우, 북마크 상태 변경 ON/OFF.
 
+		    	 String  isBookmarked =  companyMapper.isBookmark(userId, title);
+		         if ("ON".equals(isBookmarked)){
+		        companyMapper.toggleBookmark(userId, title);  // DB의 BOOKMARK 값이 ON일경우 
+		        alertMessage = "북마크가 해제되었습니다.";
+		         } else if ("OFF".equals(isBookmarked)){      // DB의 BOOKMARK 값이 OFF일경우 
+		        companyMapper.toggleBookmark(userId, title);
+		        alertMessage = "북마크가 등록되었습니다.";
+		         }
+		        	 System.out.println("북마크 상태를 토글했습니다: User ID = " + userId + ", Title = " + title);
 		    } else {
 		     // 존재하지않는경우  
-			 // 1. 먼저 북마크를 저장합니다.
-		    companyMapper.saveBookmark(companyVo); // 북마크 저장
+
+		    companyMapper.saveBookmark(companyVo); // 북마크 저장(기본값 OFF)
 	        System.out.println("북마크 저장: " + companyVo);
-		     // 2. 북마크 상태를 토글합니다. (ON/OFF)
-		    companyMapper.toggleBookmark(userId, title);
-		    System.out.println("없는상태로 북마크 상태를 토글했습니다: User ID = " + userId + ", Title = " + title);
-	
+		 
+		    companyMapper.toggleBookmark(userId, title); // 북마크 값 변경(OFF -> ON)
+		    alertMessage = "북마크가 등록되었습니다.";
+		    System.out.println("없는상태로 북마크 상태를 토글했습니다: User ID = " + userId + ", Title = " + title);	
            }
-	         // 3. 모든 북마크 목록을 가져옵니다.
+	       
 		    List<CompanyVo> booklist = companyMapper.getBookmark(userId, title); // 북마크 목록 가져오기
 
-		    // 4. 뷰에 데이터 추가
-		    ModelAndView mv = new ModelAndView();
-		    mv.addObject("booklist", booklist); // 북마크 목록 추가
-		    mv.setViewName("company/bookmark");
-		    return mv;	
+		    // 뷰에 데이터 추가
+		    mv.addObject("booklist", booklist);
+		    mv.addObject("alertMessage", alertMessage);
+		    redirectAttributes.addFlashAttribute("alertMessage", alertMessage);
+		    return "redirect:/Company/Recommend?user_id=" + userId; 
 		}
 
+		//북마크확인
+		
+		
+		@RequestMapping("Bookmark")
+		   public ModelAndView bookmark(CompanyVo companyVo,String user_id ,String username) {
+			 String userId = companyVo.getUser_id(); // user_id 가져오기
+			 String title = companyVo.getTitle();
+			List<CompanyVo> bookmarkList = companyMapper.bookmarkList(userId,title);
+			System.out.println("bookmark"+bookmarkList);
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("bookmarkList", bookmarkList);
+
+	        mv.setViewName("/company/bookmark");
+	        return mv;
+		}
 
 	// ------------------------------- 고객센터 -------------------------------//
 	// Company/Cslist (고객센터)

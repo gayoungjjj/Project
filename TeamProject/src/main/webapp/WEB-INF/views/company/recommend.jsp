@@ -3,7 +3,6 @@
 <%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -169,17 +168,19 @@
 				   <input type="hidden" name="compname" value="${param.compname}">
                    <input type="hidden" name="phone_number" value="${vo.phone_number}">
                    <input type="hidden" name="birth" value="${vo.birth}">
-                   <input type="submit" value="북마크" onclick="disableButton(this)">
+                   <input type="submit"  value="북마크" onclick="disableButton(this)">
                 </td>
             </tr>
             
+                  
+
+
                </form>  
             
         </c:forEach>
         
     </table>
 
-      
 
     
  
@@ -200,12 +201,15 @@ function disableButton(button) {
     button.disabled = true; // 버튼 비활성화
     button.form.submit(); // 폼 제출
 }
+
+
 </script>
 
-
-
-
-
+<c:if test="${not empty alertMessage}">
+    <script type="text/javascript">
+        alert("${alertMessage}");
+    </script>
+</c:if>
 
 </body>
 </html>

@@ -260,7 +260,9 @@ INSERT INTO COMBOOKMARK (
     UPDATE COMBOOKMARK  
     SET  BOOKMARK = CASE
          WHEN BOOKMARK = 'OFF' THEN 'ON'  
-         ELSE 'OFF' END  
+         ELSE 'OFF' END  ,
+         S_DATE = SYSDATE
+       
          WHERE USER_ID = #{arg0} 
          AND TITLE = #{arg1}
   
@@ -286,6 +288,43 @@ WHERE
     AND TITLE = #{arg1}
   
   </select>
+  
+  <select id="bookmarkList">
+  
+  SELECT
+    CBOOK_ID,
+    USER_ID,
+    COMPNAME,
+    USERNAME,
+    BIRTH,
+    PHONE_NUMBER,
+    TITLE,
+    BOOKMARK,
+    S_DATE
+FROM
+    COMBOOKMARK
+WHERE
+    USER_ID = #{arg0} 
+    AND BOOKMARK = 'ON'
+  
+  </select>
+  
+  
+  
+ <select id="isBookmark">
+  
+SELECT
+    BOOKMARK
+FROM
+    COMBOOKMARK
+WHERE
+    USER_ID = #{arg0} 
+     AND TITLE = #{arg1}
+  
+  </select>
+  
+  
+  
   
   
 </mapper>

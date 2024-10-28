@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.board.company.vo.CompanyVo;
 import com.board.individual.vo.IndividualVo;
 
 @Mapper
@@ -43,6 +44,7 @@ public interface IndividualMapper {
 	void update2(IndividualVo individualVo);
 
 	void deleteres(IndividualVo individualVo);
+
 
 
 

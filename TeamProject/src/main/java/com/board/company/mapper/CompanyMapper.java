@@ -72,6 +72,10 @@ public interface CompanyMapper {
 
 	List<CompanyVo> getBookmark(String userId, String title);
 
+	List<CompanyVo> bookmarkList(String userId, String title);
+
+	String isBookmark(String userId, String title);
+
 
 
 }
