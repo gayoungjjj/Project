@@ -101,12 +101,16 @@
             </tr>
             <tr>
     			<td colspan="2">
-        		<input type="file" name="logo" accept="image/*" required />
+        		<input type="file" id="logo" name="logo" accept="image/*" required />
+        		<small style="color: gray;">* 로고 이미지 등록(최대 2MB, JPG, PNG 형식만 가능)</small>
     			</td>
 			</tr>
             <tr>
-            	<td colspan="2">
+            	<td>
                 <input type="submit" value="등록하기" />
+                </td>
+                <td>
+                <input type="button" value="돌아가기" id="goLogin" />
             	</td>
             </tr>
 		</table>
@@ -114,6 +118,11 @@
  </div>
  <script>
  	let   dupCheck2Clicked = false;
+ 	
+ 	document.getElementById('goLogin').onclick = function() {
+        location.href = '/Company/Signup';
+    };
+    
  	const  formEl          = document.querySelector('form');
  	const  compnameEl      = document.querySelector('[name=compname]');
  	const  dupCheck2El     = document.querySelector('#dupCheck2');
