@@ -254,14 +254,9 @@ border: 1px solid #DBE0E9;
     <table class ="resumetable">
       <tr>
         <td style="width:800px;">
-		   <textarea class = "resumeinput2" rows="10" cols="50" name="selfintro"  placeholder="자기소개서를 작성하세요(최대 500자)"></textarea></td>	
-		  
+		   <textarea class = "resumeinput2" rows="10" cols="50" name="selfintro"  placeholder="자기소개서를 작성하세요(최대 500자)"></textarea></td>			  
 		 
       </tr>
-      
-      
-      
-      
 	</table>
 	
     <!--  수정됨  --> 
@@ -294,16 +289,16 @@ border: 1px solid #DBE0E9;
   </div>
  </footer>
 
+
 <script>
+
 const  goList = document.getElementById('goList')
 goList.onclick = function() {
    location.href = '/Individual/Main?user_id=${param.user_id}'
-} 
-
-</script>
+};
 
 
-<script>
+
 document.getElementById('checkForm').onclick = function(event) {
     event.preventDefault(); // 기본 제출 동작 방지
 
@@ -320,7 +315,7 @@ document.getElementById('checkForm').onclick = function(event) {
         return false;
     }
     if (birth.value.length !== 8) {
-        alert("생년월일을 다시 확인해 주세요 (예시) 20241029 ");
+        alert("생년월일을 다시 확인해 주세요.\n (예시) 20241029 ");
         birth.focus();
         return false;
     }
@@ -343,6 +338,7 @@ document.getElementById('checkForm').onclick = function(event) {
     // 모든 검증 통과 후 폼 제출
     document.getElementById('WriteForm').submit();
 };
+
 </script>
 
 </body>

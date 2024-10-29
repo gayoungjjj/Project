@@ -41,17 +41,17 @@ padding: 10px 10px;
 border: 1px solid #DBE0E9;
 }
 
-#aside {
-    position:fixed;
-    width: 300px;
-    height:60px;
-    bottom:90px;
-    left:1400px;
-    background-color:transparnet;
+/*수정됨*/
+.button-container {             
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    padding-top: 20px;
 }
 
+/*수정됨*/
 .asidesubmit{
-  margin-left:22px;
+
   background-color:#4c5cc5;
   font-weight:bolder;
   font-size:15px;
@@ -61,6 +61,10 @@ border: 1px solid #DBE0E9;
   height:40px;
   border: 1px #DDDDDD solid; 
   border-radius: 20px;
+}
+
+.red{
+color: red;
 }
 /*이력서 css (끝)*/
 
@@ -109,13 +113,7 @@ border: 1px solid #DBE0E9;
  <form action="/Individual/Updating"   method="POST">
   <h2 style="margin-top: -5px;text-align: center;">이력서수정</h2>
 
- <table  id="aside">
-  <tr>
-   <td>
-   <input  class ="asidesubmit"type="submit" value="수정완료" >
-   <input  class ="asidesubmit"type="button" value="목록으로" id="goList" style="background-color: white; color:black"></td>
-  </tr>
- </table>
+
  
   <table class= "totaltable" style="border: 1px #DDDDDD solid; padding: 30px; background-color: #E8ECEF ">
   	<tr>
@@ -134,7 +132,7 @@ border: 1px solid #DBE0E9;
   <h3>인적사항<span class="red" style="font-size: 11px;"> * 생년월일,성별,비상연락처를 제외한 인적사항은 마이페이지 회원정보수정을 통해 변경해주십시오.</span></h3>  
     <table class ="resumetable" >
     <tr>
-        <td style="padding-top:10px; width:696px;"> 
+        <td style="padding-top:10px; width:800px;"> 
         <input type="hidden" name="user_id" value="${param.user_id}">
             <input class="resumeinput1" type="text" name="username" value="${vo.username}" readonly>
         	<input class="resumeinput1" type="text" name="birth"  value="${vo.birth}" readonly>
@@ -144,13 +142,11 @@ border: 1px solid #DBE0E9;
             	<option>남자</option>
            		<option>여자</option>
            	</select>
-           	<input class="resumeinput1" type="text"     name="email"  value="${vo.email}" style="width:222px;" readonly>
+           	<input class="resumeinput1" type="text"     name="email"  value="${vo.email}" style="width:321px;" readonly>
                 <br><p>
-            	<input class="resumeinput1" type="text" name="number2"    value="${vo.number2}">
-            	<input class="resumeinput1" type="text" name="phone_number"  value="${vo.phone_number}" readonly>
+            	<input class="resumeinput1" type="text" name="number2"    value="${vo.number2}"  style="width:200px;">
+            	<input class="resumeinput1" type="text" name="phone_number"  value="${vo.phone_number}"  style="width:200px;" readonly>
             	<input class="resumeinput1" type="text" name="address"  value="${vo.address}" style="width:377px;height: 50px;border: 1px #DDDDDD solid ;" readonly>            
-           		<td rowspan="2"> 
-           		<input class="resumeinput1" type="text" value="사진"  style="width:103px; height:120px; margin-left: -50 px; margin-bottom:5px; text-align:center;">
          </td>
     </tr>
 	</table>
@@ -264,9 +260,23 @@ border: 1px solid #DBE0E9;
 		   <textarea class = "resumeinput2" rows="10" cols="50" name="selfintro"  >${vo.selfintro}</textarea></td>		
       </tr>
 	</table>
+	
+	
+	   <!--  수정됨  --> 
+	<div class="button-container">
+    <table>
+        <tr>
+            <td class="endbutton">
+                <button class="asidesubmit"  type="submit"  id="checkForm">수정완료</button>   
+                <input class="asidesubmit" type="button" value="이전으로" id="goList" style="background-color: white; color: black">
+            </td> 
+        </tr>
+    </table>
+</div>
+	
+	
     </td>
-    </tr>
-  
+    </tr>  
      </table>
       </form>
 </div>
@@ -283,7 +293,7 @@ border: 1px solid #DBE0E9;
 const  goList = document.getElementById('goList')
 goList.onclick = function() {
    location.href = '/Individual/ResumeList?user_id=${param.user_id}'
-} 
+} ;
 </script>
 
 </body>

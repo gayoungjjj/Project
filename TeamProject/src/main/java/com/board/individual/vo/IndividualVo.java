@@ -71,6 +71,8 @@ public class IndividualVo {
     private String csp_pw;
     private String content;
     private String csp_file;
-	
+    
+    
+
 
 }

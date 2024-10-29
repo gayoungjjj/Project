@@ -1,16 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"   %>
+    <%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
+<script src="https://cdn.jsdelivr.net/npm/browser-scss@1.0.3/dist/browser-scss.min.js"></script>
+<script src="https://code.jquery.com/jquery.min.js"></script>
 
+<!-- main style 넣어주세욤 -->
 <style>
 .div3 {
    margin-top:20px;
@@ -68,8 +70,45 @@ table td a {
 table td a:hover {
   text-decoration: underline;
 }
-</style>
 
+/* 버튼 스타일 */
+main input[type="button"] {
+  padding: 10px 15px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007BFF;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+/* 합격 버튼 색상 */
+#goPass {
+  background-color: #007BFF;
+}
+
+#goPass:hover {
+  background-color: #0056b3;
+}
+
+/* 불합격 버튼 색상 */
+#goFail {
+  background-color: #dc3545;
+}
+
+#goFail:hover {
+  background-color: #c82333;
+}
+
+/* 보류 버튼 색상 */
+#goPending {
+  background-color: #6c757d;
+}
+
+#goPending:hover {
+  background-color: #5a6268;
+}
+</style>
 
 </head>
 <body>
@@ -87,7 +126,7 @@ table td a:hover {
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-			<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+          	<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
    			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
     		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
     		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
@@ -104,71 +143,69 @@ table td a:hover {
  	</header>
  </div>
 
+
 <div class= "div2">
-<a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
+<a href="/Individual/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
 </div>
-  
+
+
+  <!--이력서_상세페이지 -->
+
 <div class= "div3">
- <main>
-    <table>
-    <h2 style="text-align:center;">등록된 이력서 내역</h2>
+  <main>    
+    <h2 style=text-align:center;>이력서 내용보기 </h2>
+    <table id="table">
      <tr>
-      <th>등록자명</th>
-      <th>이력서제목</th>
-      <th>최근 작성/수정일</th>
+      <td>지원자명</td>
+      <td>${  vo.username      }</td>
+      <td>생년월일</td>
+      <td>${  vo.birth      }</td>
+     </tr>
+     <tr>
+      <td>연락처</td>
+      <td>${  vo.phone_number    }</td>
+      <td>비상연락처</td>
+      <td>${  vo.number2   }</td>
+     </tr>
+     <tr>
+      <td>주소</td>
+      <td colspan="3">${  vo.address    }</td>
+     </tr>
+     <tr>
+      <td>경력</td>
+      <td>${  vo.career    }</td>
+      <td>학력</td>
+      <td>${  vo.edu  }</td>
+     </tr>
+     <tr>
+      <td>보유기술</td>
+      <td>${  vo.skills1    }</td>
+      <td>자격증</td>
+      <td>${  vo.licenses1  }</td>
+     </tr>    
+     <tr>
+      <td>포트폴리오</td>
+      <td colspan="3">${  vo.portfolio    }</td>
+     </tr>
+     <tr>
+      <td>자기소개서</td>
+      <td colspan="3">${  vo.selfintro    }</td>
      </tr>
      
-     <c:forEach var="ree" items="${reList}">
-      <tr>
-       <td>${ ree.username }</td>
-       <td>
-       <a href="/Individual/Resumeview?title=${ree.title}&user_id=${param.user_id }" >
-           ${ ree.title }</a>
-       </td>
-       <td>${ ree.u_date}</td>
-      </tr>
-     </c:forEach>
-    </table>
- 
- 
- <table>
-    <h2 style=text-align:center;>제출한 이력서 내역</h2>
-     <tr>
-     <th>지원번호</th>
-      <th>지원자명</th>
-      <th>지원공고명</th>
-      <th>이력서제목</th>
-      <th>희망 근무 지역</th>
-      <th>지원일</th>
-      <th>합격여부</th>
-      <th>지원취소</th>
-     </tr>
      
-     <c:forEach var="app" items="${appList}">
-      <tr>
-      <td>${ app.app_id}</td>
-       <td>${ app.user_id }</td>
-       <td>${ app.post_id }</td>
-       <td>
-       <a href="/Individual/Resumejustview?title=${app.title}&user_id=${param.user_id }" >
-           ${ app.title }</a>
-       </td>
-       <td>${ app.location }</td>
-       <td>${ app.app_date }</td>
-       <td>${ app.result }</td>    
-       
-       <td>   
-         <form action="/Individual/Delapplist" method="POST"> <!-- POST 요청을 위한 form -->
-         <input type="hidden" name="app_id" value="${app.app_id}" />
-         <input type="hidden" name="user_id" value="${app.user_id}" />
-          <input  type="button" value="지원 취소" id="goDel" />
-         </form>
-	  </td>
-      </tr>
-     </c:forEach>
-    </table>
- </main>
+     <tr>
+      <td colspan="4"> 	
+       <input type="button" value="이전으로" id="goList" />
+
+      </td>
+     </tr>
+    
+    </table>    
+
+  </main>
 </div>  
+
+
  
  <footer>
   <div class="footer1">
@@ -177,21 +214,23 @@ table td a:hover {
  </footer>
 
 
-<script>
 
 
-const goDelButtons = document.querySelectorAll('#goDel'); 
 
-goDelButtons.forEach(button => {
-    button.onclick = function() {
-        const form = this.closest('form'); 
-        const confirmed = confirm("정말로 해당 지원 취소 하시겠습니까?\n 취소후 발생한 불이익에 대하여 “회사”는 책임지지 않습니다.");
-        if (confirmed) {
-            form.submit(); 
-        }
-    };
-});
-</script>
+	<script>
+    const goListEl    = document.getElementById('goList');
+
+    
+
+    goList.onclick = function() {
+    	 window.history.back();  
+    	 };
+
+ 
+	</script>
+
+
+
 
 
 </body>

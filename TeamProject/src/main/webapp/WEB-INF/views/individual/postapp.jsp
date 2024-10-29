@@ -34,7 +34,7 @@
    }
   tr:first-child{background : #E7E7E7; }
   
-  .submitbtn{
+  #submitbtn{
     margin-left:22px;
   background-color:#4c5cc5;
   font-weight:bolder;
@@ -137,7 +137,7 @@
   
   
       <h2>입사 지원서  ${param.user_id} </h2>
- <form action="/Individual/Write2?aplnum=${vo.aplnum}&user_id2=${param.user_id}" method="POST" >
+ <form id="applicationForm" action="/Individual/Write2?aplnum=${vo.aplnum}&user_id2=${param.user_id}"method="POST" >
    <input type="hidden" name="aplnum" value="${vo.aplnum}" />
    <input type="hidden" name="post_id" value="${vo.post_id}" />
    <input type="hidden" name="user_id" value="${ param.user_id }" />
@@ -165,7 +165,7 @@
      <!-- 이력서 작성(이력서 불러오기 등)해서 이력서 보내기로 넘어가는 기능 구현하면 어떨까요? -->
      <tr>
       <td colspan="4"> 	
-       <input class ="submitbtn"type="submit" value="지원하기">
+        <button type="submit" id="submitBtn">제출</button>
       </td>
       
  
@@ -185,7 +185,36 @@
   </div>
  </footer>
 <script>
+document.getElementById('applicationForm').onsubmit = function(event) {
+    event.preventDefault(); // 기본 제출 방지
 
+    const userId = '${param.user_id}';
+    const aplnum = '${vo.aplnum}';
+    const title = $('select[name="title"]').val();
+
+    // 중복 지원 여부 확인
+    $.ajax({
+        url: '/Individual/CheckDuplicateApplication',
+        type: 'GET',
+        data: {
+            user_id: userId,
+            aplnum: aplnum,
+            title: title
+        },
+        success: function(response) {
+            if (response.submitted) {
+                alert("이미 해당 공고에 지원하셨습니다. 중복 제출이 불가능합니다.");
+            } else {
+                // 중복이 없으면 폼 제출
+                alert("해당 공고에 지원하셨습니다.");
+                document.getElementById('applicationForm').submit();
+            }
+        },
+        error: function() {
+            alert("중복 지원 여부를 확인하는 데 실패했습니다.");
+        }
+    });
+};
 
 </script>
 </body>

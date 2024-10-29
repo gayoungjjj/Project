@@ -72,17 +72,7 @@ table td a:hover {
 }
 
 /* 버튼 스타일 */
-main input[type="button"] {
-  padding: 10px 15px;
-  margin-right: 5px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007BFF;
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
-}
-main input[type="submit"] {
+.purplebutton {
   padding: 10px 15px;
   margin-right: 5px;
   border: none;
@@ -94,7 +84,29 @@ main input[type="submit"] {
 }
 
 
+/*수정됨*/
 
+.bluebutton {
+  padding: 10px 15px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007BFF;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.redbutton{
+ padding: 10px 15px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px; 
+  background-color:red;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
 
 </style>
 
@@ -183,33 +195,14 @@ main input[type="submit"] {
      
      <tr>
       <td colspan="4"> 	
-       <input type="submit" value="수정하기" id="goUpdate" />
-       <input type="button" value="목록으로" id="goList" />
-	   <input  type="button" value="삭제하기" id="goDel" />
+       <input class="purplebutton" type="button"  value="수정하기" id="goUpdate" />
+       <input class= "bluebutton"  type="button" value="목록으로" id="goList" />
+	   <input class="redbutton"    type="button" value="삭제하기" id="goDel" />
       </td>
      </tr>
     
     </table>    
-	<script>
 
-		const  goListEl    = document.getElementById('goList')
-		
-	
-        goListEl.onclick = function() {
-        const user_id = '${param.user_id}'; 
-        window.location.href = '/Individual/ResumeList?user_id=${param.user_id}'
-        };
-
-        
-        const  goDel   = document.getElementById('goDel')
-			goDel.onclick  = function() {
-		 		const confirmed = confirm("정말로 선택한 이력서를 삭제 하시겠습니까?")
-		 		if(confirmed) {
-    			location.href = '/Individual/Deleteres?title=${vo.title}&user_id=${param.user_id}'
-		 		}
-		}    
-  
-	</script>
  </form>
   </main>
 </div>  
@@ -222,5 +215,76 @@ main input[type="submit"] {
   </div>
  </footer>
 
+	<script>
+		const  goListEl    = document.getElementById('goList')
+        goListEl.onclick = function() {
+        const user_id = '${param.user_id}'; 
+        window.location.href = '/Individual/ResumeList?user_id=${param.user_id}'
+        };
+
+        const goUpdate = document.getElementById('goUpdate');
+        goUpdate.onclick = function() {
+            // AJAX 요청을 통해 이력서의 제출 여부를 확인
+            $.ajax({
+                url: '/Individual/CheckSubmittedResume', // 서버의 URL
+                type: 'GET',
+                data: {
+                    title: '${vo.title}', // 이력서 제목
+                    user_id: '${param.user_id}' // 사용자 ID
+                },
+                success: function(response) {
+                    // 서버에서 반환된 응답을 기반으로 제출 여부 설정
+                    const submittedResumeExists = response.submitted; // 서버 응답에서 제출 여부 확인
+
+                    if (submittedResumeExists) {
+                        alert("수정할 수 없습니다. 현재 제출 상태의 이력서 입니다. \n수정을 원하신다면 취소 후 수정해주십시오 ");
+                        return; // 삭제를 진행하지 않음
+                    }
+
+                        location.href = '/Individual/Resumeupdate?title=${vo.title}&user_id=${param.user_id}';
+
+                },
+                error: function() {
+                    alert("이력서 제출 여부를 확인하는 데 실패했습니다.");
+                }
+            });
+        };
+       
+       
+        
+        const goDel = document.getElementById('goDel');
+        goDel.onclick = function() {
+            // AJAX 요청을 통해 이력서의 제출 여부를 확인
+            $.ajax({
+                url: '/Individual/CheckSubmittedResume', // 서버의 URL
+                type: 'GET',
+                data: {
+                    title: '${vo.title}', // 이력서 제목
+                    user_id: '${param.user_id}' // 사용자 ID
+                },
+                success: function(response) {
+                    // 서버에서 반환된 응답을 기반으로 제출 여부 설정
+                    const submittedResumeExists = response.submitted; // 서버 응답에서 제출 여부 확인
+
+                    if (submittedResumeExists) {
+                        alert("삭제할 수 없습니다. 현재 제출 상태의 이력서 입니다. \n삭제를 원하신다면 취소 후 삭제해주십시오 ");
+                        return; // 삭제를 진행하지 않음
+                    }
+
+                    const confirmed = confirm("정말로 선택한 이력서를 삭제 하시겠습니까?\n기업의 북마크에 담긴 이력서도 사라집니다.");
+                    if (confirmed) {
+                        location.href = '/Individual/Deleteres?title=${vo.title}&user_id=${param.user_id}';
+                    }
+                },
+                error: function() {
+                    alert("이력서 제출 여부를 확인하는 데 실패했습니다.");
+                }
+            });
+        };
+        
+
+
+
+</script>
 </body>
 </html>

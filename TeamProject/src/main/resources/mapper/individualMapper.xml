@@ -119,13 +119,25 @@
     LOCATION
 	) VALUES (
  	(SELECT NVL(MAX(app_id),0)+1 FROM applications ),
-    #{user_id2},
+    #{user_id},
     #{aplnum},
     #{post_id},
     #{title},
     #{location}     
 	)
   	</insert>
+  	
+  	
+  	<!-- 입사 지원서 제출 확인  수정됨-->
+  	<select id="checkappex">
+		SELECT * FROM APPLICATIONS
+		WHERE USER_ID = #{arg0}
+		AND  APLNUM=#{arg1}
+		
+
+	</select>
+  	
+  	
   
   	<!-- 제출한 이력서_목록 --> 
   	<select id="getappList" >
@@ -154,7 +166,7 @@
     WHERE REPLACE(TITLE, ' ', '')= #{title}
   	</select>
 
-  	<!-- 등록 이력서 수정  -->
+  	<!-- 등록 이력서 수정 수정됨  -->
 	<update id="update2">
     UPDATE        RESUMES
     SET           
@@ -164,8 +176,8 @@
     CAREERS =      #{careers },
     EDUWHEN =      #{eduwhen} ,
     EDUWHER =      #{eduwher} ,
-    EDU =   	   #{edu },
-    MAJOR =        #{major },
+    EDU =   	   #{edu},
+    MAJOR =        #{major},
     LICENSES1 =    #{licenses1},
     LICENSES2 =    #{licenses2}, 
     LICENSES3 =    #{licenses3},
@@ -182,16 +194,35 @@
     SKILLS5 =      #{skills5} ,
     PORTFOLIO =    #{portfolio} ,
     SELFINTRO =    #{selfintro}
-    WHERE        TITLE= #{title}
-     AND         USER_ID=#{user_id}             
+    WHERE    REPLACE(TITLE, ' ', '')= #{title}
+     AND     USER_ID=#{user_id}             
   </update>
 
- <!-- 등록 이력서 삭제 -->
+<!-- 북마크 삭제 수정됨 -->
+	<delete id="delbookmark">
+    DELETE FROM COMBOOKMARK
+    WHERE REPLACE(TITLE, ' ', '')= #{title}
+	</delete>
+
+
+<!-- 이력서 제출여부 확인 수정됨-->
+<select id="getsubres">
+	SELECT * FROM APPLICATIONS
+	WHERE REPLACE(TITLE, ' ', '')= #{arg1} 
+        	AND   USER_ID=#{arg0}
+</select>
+
+	
+ <!-- 등록 이력서 삭제  수정됨 -->
 	<delete id="deleteres">	
 	DELETE FROM RESUMES
-	WHERE   TITLE= #{title}
+	WHERE  REPLACE(TITLE, ' ', '')= #{title}
 	</delete>  
- <!--제출한 이력서 삭제  -->
+	
+	
+	
+	
+ <!--제출한 이력서 삭제 수정됨 -->
 	<delete id="delapplist">	
 	DELETE FROM APPLICATIONS
 	WHERE   APP_ID= #{app_id}

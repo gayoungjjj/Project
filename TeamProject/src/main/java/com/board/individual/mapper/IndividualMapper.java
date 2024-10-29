@@ -1,6 +1,7 @@
 package com.board.individual.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -45,6 +46,13 @@ public interface IndividualMapper {
 	void deleteres(IndividualVo individualVo);
 
 	void delapplist(IndividualVo individualVo);
+
+	void delbookmark(IndividualVo individualVo);
+
+
+	List<IndividualVo> getsubres(String user_id, String title);
+
+	List<IndividualVo> checkappex(String user_id, String aplnum);
 
 
 

@@ -1,8 +1,11 @@
 package com.board.individual.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -233,6 +236,25 @@ public class IndividualController {
 		return mv;
     	}
 	
+	//채용공고 지원내역 확인  수정됨 
+	
+	@RequestMapping(value = "/CheckDuplicateApplication", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> checkDuplicateApplication(IndividualVo individualVo, String user_id , String aplnum) {
+		List<IndividualVo> isDuplicate = individualMapper.checkappex(user_id, aplnum);
+	     System.err.println("2"+isDuplicate);
+	     boolean submitted = (isDuplicate != null && !isDuplicate.isEmpty());
+		    
+		    Map<String, Object> response = new HashMap<>();
+		    response.put("submitted", submitted);
+		    
+		    return response;
+	}
+	
+	
+	
+	
+	
 	//채용공고 등록 //
 	@RequestMapping("/WriteForm2")
     public ModelAndView writeForm2() {    
@@ -276,8 +298,10 @@ public class IndividualController {
     @RequestMapping("/Write")
     public ModelAndView signupForm(IndividualVo individualVo ) {  	
         individualMapper.insert(individualVo);
+        String user_id = individualVo.getUser_id();
+        IndividualVo vo = individualMapper.getUserById(user_id);		
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("redirect:/Individual/Main"); 
+        mv.setViewName("redirect:/Individual/ResumeList?user_id="+user_id); 
         return mv;
     }
 
@@ -312,30 +336,33 @@ public class IndividualController {
 		
 	} 
 	
-	/*
-	 * @RequestMapping("/Delapplist") public ModelAndView delappList(IndividualVo
-	 * individualVo, HttpServletRequest request, String user_id, String app_id) {
-	 * HttpSession session = request.getSession(); System.out.println("user_id=" +
-	 * user_id); System.out.println("compname=" + compname);
-	 * 
-	 * IndividualVo login = (IndividualVo) session.getAttribute("login");
-	 * 
-	 * String userid = login.getUser_id(); IndividualVo vo =
-	 * individualMapper.getUserById(userid);
-	 * 
-	 * List<IndividualVo> appList = individualMapper.getappList(vo);
-	 * List<IndividualVo> reList = individualMapper.getreList(vo);
-	 * 
-	 * System.out.println("appdellist=" + appList); System.out.println("redellist="+
-	 * reList);
-	 * 
-	 * individualMapper.delapplist(individualVo);
-	 * 
-	 * ModelAndView mv = new ModelAndView(); System.out.println(user_id);
-	 * mv.addObject("appList", appList); mv.addObject("title", title);
-	 * mv.setViewName("individual/resumeview"); // 이력서 목록 페이지로 리다이렉트 return
-	 * "redirect:/Individual/ResumeList?user_id="; }
-	 */
+	      //------------------------- 제출한 이력서 삭제 ----------------------------------   수정됨  //
+	  @RequestMapping("/Delapplist")
+	  public ModelAndView delappList(IndividualVo individualVo, HttpServletRequest request, String user_id, String app_id) {
+		  HttpSession session = request.getSession(); 
+		  System.out.println("user_id=" +  user_id);
+		  IndividualVo login = (IndividualVo) session.getAttribute("login");
+	 
+	      String userid = login.getUser_id(); 
+	      IndividualVo vo =  individualMapper.getUserById(userid);
+	  
+	      List<IndividualVo> appList = individualMapper.getappList(vo);
+	      List<IndividualVo> reList = individualMapper.getreList(vo);
+	  
+	      System.out.println("appdellist=" + appList); 
+	      System.out.println("redellist="+	 reList);
+	      
+	      
+	      individualMapper.delapplist(individualVo);
+	  
+	       ModelAndView mv = new ModelAndView(); System.out.println(user_id);
+	       mv.addObject("appList", appList); 
+	       mv.setViewName("redirect:/Individual/ResumeList?user_id=" + user_id); // 리다이렉션 URL 수정
+	       
+	       return mv;
+	  
+	  }
+	 
 	
 	
 	
@@ -361,6 +388,27 @@ public class IndividualController {
 		return mv;
 	}
 	
+	//이력서 상세보기(보는것만) 수정됨
+	
+		@RequestMapping("/Resumejustview")
+		public ModelAndView resumejustview(IndividualVo individualVo, String title, String user_id) {				
+			//이력서 조회
+			IndividualVo vo = individualMapper.getresumeList(individualVo);
+			System.out.println("vo"+vo);
+			
+			// System.out.println("Title without spaces: " + title);
+			
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("vo", vo);
+			mv.addObject("title", title);
+			mv.addObject("user_id", user_id);
+			mv.setViewName("individual/resumejustview");
+			return mv;
+		
+		}
+		
+		
+		
 	// 이력서 수정하기 
 	@RequestMapping("/Resumeupdate")
 	public ModelAndView resumeupdate(IndividualVo individualVo, String title) {				
@@ -381,6 +429,13 @@ public class IndividualController {
 		return mv;
 		}
 
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping("/UpdatingForm")
 	public ModelAndView updatingForm() {    
    
@@ -402,10 +457,30 @@ public class IndividualController {
 		mv.setViewName("redirect:/Individual/ResumeList?user_id=" + user_id); 
 		return mv;
 		}
+	
+	
+	//제출된 이력서 확인 수정됨 
+	@RequestMapping(value = "/CheckSubmittedResume", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> checkSubmittedResume(IndividualVo individualVo, String title, String user_id) {
+	    List<IndividualVo> userResumes = individualMapper.getsubres(user_id, title);
+	    
+	    boolean submitted = (userResumes != null && !userResumes.isEmpty());
+	    
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("submitted", submitted);
+	    
+	    return response;
+	}
+	
+
+	
+	
 	// 삭제 
 	@RequestMapping("/Deleteres")
 		public String deleteres(IndividualVo individualVo, RedirectAttributes redirectAttributes) {
 		System.out.println("IndividualVo는" + individualVo );
+	    individualMapper.delbookmark(individualVo);
 		individualMapper.deleteres(individualVo);
 	
 	
