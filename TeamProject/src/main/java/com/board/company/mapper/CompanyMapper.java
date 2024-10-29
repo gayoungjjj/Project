@@ -3,8 +3,6 @@ package com.board.company.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import com.board.company.vo.CompanyVo;
 import com.board.individual.vo.IndividualVo;
@@ -33,10 +31,10 @@ public interface CompanyMapper {
 	void deleteposting(CompanyVo companyVo);
 
 	void updateposting(CompanyVo companyVo);
-
-	List<IndividualVo> getappList();
-
-	List<CompanyVo> getCompanyList();
+	
+	List<String> getPostIdsByUserId(String user_id);
+	
+	List<IndividualVo> getApplicationsByPostIds(List<String> postIds);
 
 	IndividualVo getresumeList(IndividualVo individualVo);
 
@@ -47,8 +45,6 @@ public interface CompanyMapper {
 	CompanyVo compDupCheck(String compname);
 	
 	CompanyVo emailDupCheck(String email);
-
-	void updateresume(IndividualVo vo);
 
 	void updateresume(String title, String result, String post_id);
 
@@ -66,16 +62,21 @@ public interface CompanyMapper {
 	
 	List<CompanyVo> getSortedPostList();
 
-	void saveBookmark(CompanyVo companyVo);
+	String compnameByUserId(String user_id);
 
-	void toggleBookmark(String user_id, String title);
+	List<CompanyVo> getCompanyList(String compname);
 
-	List<CompanyVo> getBookmark(String userId, String title);
+	void updateresume(IndividualVo vo);
 
-	List<CompanyVo> bookmarkList(String userId, String title);
+	List<CompanyVo> getBookmark(String userId, String title, String compname);
 
 	String isBookmark(String userId, String title);
 
+	void toggleBookmark(String userId, String title);
+
+	void saveBookmark(CompanyVo companyVo);
+
+	List<CompanyVo> bookmarkList(String userId, String title);
 
 
 }

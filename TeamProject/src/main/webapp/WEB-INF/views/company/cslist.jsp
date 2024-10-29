@@ -87,18 +87,18 @@ table td a:hover {
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=삼성">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>
-               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>  
+          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=${param.compname}">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=${param.compname}">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=${param.compname}">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=${param.compname}">인재 추천</a></li>
+               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=${param.compname}">북마크한 인재</a></li>
+               <li><a href="/Company/Cslist?user_id=${param.user_id}&compname=${param.compname}">고객센터</a></li>  
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage?user_id=${param.user_id}">마이페이지</a></li>
+     		   <li><a href="/Company/Mypage?user_id=${param.user_id}&compname=${param.compname}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -124,11 +124,11 @@ table td a:hover {
      <c:forEach var="faq" items="${faqList}">
       <tr>
        <td>[ ${faq.type} ] 
-         <a href="#" class="faqtitle" data-content="${faq.content }">${faq.csp_title}</a> 
+         <a href="#" class="faqtitle">${faq.csp_title}</a> 
        </td>
       </tr>
-      <tr style="display:none;">
-       <td class="content" >${ faq.content}</td>
+      <tr>
+       <td class="faqcontent" style="display:none;">${ faq.content}</td>
       </tr> 
      </c:forEach>
     </table>
@@ -149,52 +149,29 @@ table td a:hover {
       <tr>
        <td>${ cs.csp_id    }</td>
        <td>
-         <a href="/Company/Csview?user_id=${param.user_id}&csp_title=${cs.csp_title}">
+         <a href="/Company/Csview?user_id=${param.user_id}&csp_title=${cs.csp_title}&compname=${compname}">
            ${ cs.csp_title }</td>
        <td>${ cs.result    }</td>
       </tr>
      </c:forEach>
     </table>
  
- <script>
-
- document.addEventListener("DOMContentLoaded", function() {
-     const faqTitles = document.querySelectorAll('.faqtitle');
-
-     faqTitles.forEach(title => {
+ <script>    
+     document.querySelectorAll('.faqtitle').forEach((title, index) => {
          title.addEventListener('click', function(event) {
-             event.preventDefault();
-             console.log('Clicked FAQ title:', this.innerText);
-             const parentRow = this.closest('tr'); // Get the parent row of the clicked title
-             const contentRow = parentRow.nextElementSibling; // Get the corresponding content row
-             console.log(contentRow);
-
-             if (contentRow) {
-                 const contentCell = contentRow.querySelector('td');
-                 const faqContent  = this.dataset.content; // Access data-content correctly
-                 console.log('FAQ content:', faqContent);
-
-                 // Set the content into the cell
-                     contentCell.innerHTML = `문의내용 : ${faqContent }`;
-                     console.log('Content Cell:', contentCell.innerHTML);
-          
-                 // Toggle visibility based on current state
-                 const currentDisplay = window.getComputedStyle(contentRow).display;
-                 if (currentDisplay === 'none') {
-                     contentRow.style.display = 'table-row'; // Show the row
-                     console.log('Content row is now visible.');
-                 } else {
-                     contentRow.style.display = 'none'; // Hide the row
-                     console.log('Content row is now hidden.');
-                 }
+             event.preventDefault(); // Prevent default link behavior
+             const content = document.querySelectorAll('.faqcontent')[index];
+             if (content.style.display === 'none' || content.style.display === '') {
+                 content.style.display = 'block';
+             } else {
+                 content.style.display = 'none';
              }
          });
      });
 
- });
      const goWrite = document.getElementById('goWrite');
      goWrite.onclick = function() {
-         location.href = '/Company/CswriteForm?user_id=${param.user_id}';
+         location.href = '/Company/CswriteForm?user_id=${param.user_id}&compname=${compname}';        
      };
 </script>
  

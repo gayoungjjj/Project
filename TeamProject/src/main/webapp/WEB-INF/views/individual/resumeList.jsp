@@ -140,9 +140,9 @@ table td a:hover {
  
  
  <table>
-    <h2 style=text-align:center;>지원한 이력서 내역</h2>
+    <h2 style=text-align:center;>지원 내역</h2>
      <tr>
-      <th>지원번호</th>
+      <th>지원자명</th>
       <th>지원공고명</th>
       <th>이력서제목</th>
       <th>희망 근무 지역</th>
@@ -153,7 +153,7 @@ table td a:hover {
      <c:forEach var="app" items="${appList}">
       <tr>
 
-       <td>${ app.app_id  }</td>
+       <td>${ app.user_id }</td>
        <td>${ app.post_id }</td>
        <td>
        <a href="/Individual/Resumeview?title=${app.title}&user_id=${param.user_id }" >

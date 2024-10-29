@@ -76,7 +76,7 @@
   LICENSES2,   LICENSES3,  PUBLISHER1,    PUBLISHER2,   PUBLISHER3,  PASSDATE1,  PASSDATE2,  PASSDATE3,  SKILLS1,  SKILLS2, SKILLS3,  SKILLS4,  SKILLS5,  PORTFOLIO,  SELFINTRO
  ) VALUES ( 
   #{title } ,  #{user_id  },  #{username },  #{email  } ,  #{phone_number },  #{address  },   #{birth  },   #{gender   } ,   #{number2 } ,   #{career  } ,   #{careers  },  #{eduwhen } , 
-  #{eduwher} ,  #{edu },  #{major },  #{licenses1},   #{licenses2},   #{licenses3},  #{publisher1} ,    #{publisher2} ,    #{publisher3} ,   #{passdate1} ,    #{passdate2} ,   #{passdate3} ,  
+  #{eduwhere} ,  #{edu },  #{major },  #{licenses1},   #{licenses2},   #{licenses3},  #{publisher1} ,    #{publisher2} ,    #{publisher3} ,   #{passdate1} ,    #{passdate2} ,   #{passdate3} ,  
   #{skills1}  ,    #{skills2}  ,  #{skills3} ,    #{skills4} ,    #{skills5} ,      #{portfolio} ,    #{selfintro}     )
   </insert>
   
@@ -147,7 +147,6 @@
     UPDATE        RESUMES
     SET           
     GENDER =       #{gender} ,
-    BIRTH  =       #{birth},
     NUMBER2 =      #{number2 } ,
     CAREER =       #{career } ,
     CAREERS =      #{careers },
@@ -171,16 +170,13 @@
     SKILLS5 =      #{skills5} ,
     PORTFOLIO =    #{portfolio} ,
     SELFINTRO =    #{selfintro}
-  WHERE        REPLACE(TITLE, ' ', '')= #{title}
-     AND         USER_ID=#{user_id}              
+    WHERE        TITLE= #{title}
+     AND         USER_ID=#{user_id}             
   </update>
 
 	<delete id="deleteres">	
 	DELETE FROM RESUMES
-	WHERE   REPLACE(TITLE, ' ', '')= #{title}
-     AND         USER_ID=#{user_id} 
-	
- 
+	WHERE   TITLE= #{title}
 	</delete>  
 </mapper>
 

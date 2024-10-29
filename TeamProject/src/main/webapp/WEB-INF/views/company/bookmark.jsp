@@ -99,24 +99,18 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-   <!-- 기능 구현 
-    1. 채용공고, 고객센터는 개인이랑 똑같음-->
-    
-   <!-- 기능 구현
-    1. 로그아웃 기능 구현
-    2. 마이페이지 이동 구현 -->
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=카카오">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id }&compname=카카오">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=카카오">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=카카오">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>
-               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>  
+          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=${param.compname}">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${param.user_id }&compname=${param.compname}">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=${param.compname}">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=${param.compname}">인재 추천</a></li>
+               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=${param.compname}">북마크한 인재</a></li>               
+               <li><a href="/Company/Cslist?user_id=${param.user_id}&compname=${param.compname}">고객센터</a></li>  
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage">마이페이지</a></li>
+     		   <li><a href="/Company/Mypage?user_id=${param.user_id}&compname=${param.compname}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -137,11 +131,12 @@
        <c:forEach var="book" items="${bookmarkList}">
          <form action="/Company/Bookmarking" method="post">
          <input type="hidden" name="user_id" value="${param.user_id}">
+         <input type="hidden" name="compname" value="${param.compname}">   <!-- 수정 -->
        <tr>
         <td>${book.username}</td>
         <td>${book.birth}</td>
         <td>
-         <a href="/Company/Resumeview?title=${fn:replace(book.title, ' ', '')}">
+          <a href="/Company/Resumejustview?title=${book.title}&user_id=${param.user_id}&compname=${param.compname}">  <!-- 수정 -->
                 ${book.title}
             </a>
          </td>

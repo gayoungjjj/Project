@@ -77,7 +77,7 @@ public class IndividualController {
 		session.invalidate();
 
 		//return "redirect:" + (String) url;
-		return "redirect:/";
+		return "/individual/login";
 		}
 	
 	// ------------------------------- 홈 화면 -------------------------------//
@@ -269,9 +269,8 @@ public class IndividualController {
     @RequestMapping("/Write")
     public ModelAndView signupForm(IndividualVo individualVo) {
         individualMapper.insert(individualVo);
-        String user_id = individualVo.getUser_id();
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("redirect:/Individual/Main?user_id=" + user_id); 
+        mv.setViewName("redirect:/Individual/Main"); 
         return mv;
     }
 

@@ -71,8 +71,4 @@ public class CompanyVo {
 	private String selfintro;
 	private String u_date;
 
-	}
-
-	
-
-
+}

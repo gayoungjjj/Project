@@ -126,18 +126,18 @@ main input[type="button"] {
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=삼성">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=삼성">북마크한 인재</a></li>
-               <li><a href="/Company/Cslist?user_id=${param.user_id}">고객센터</a></li>
+          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=${compname}">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=${compname}">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=${compname}">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=${compname}">인재 추천</a></li>
+               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=${compname}">북마크한 인재</a></li>
+               <li><a href="/Company/Cslist?user_id=${param.user_id}&compname=${compname}">고객센터</a></li>
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage?user_id=${param.user_id}">마이페이지</a></li>
+     		   <li><a href="/Company/Mypage?user_id=${param.user_id}&compname=${compname}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -204,24 +204,24 @@ main input[type="button"] {
     
     </table>    
 	<script>
-		const  goPassEl    = document.getElementById('goPass')
-		const  goFailEl    = document.getElementById('goFail')
-		const  goPendingEl = document.getElementById('goPending')
-	
-	    goPassEl.onclick = function() {
-        const title = '${vo.title}'; // title을 가지고 가야함
-        window.location.href = `/Company/updateresume?title=${title}&result=합격&post_id=${post_id}`;
-        };
+    const goPassEl    = document.getElementById('goPass');
+    const goFailEl    = document.getElementById('goFail');
+    const goPendingEl = document.getElementById('goPending');
+    
+    goPassEl.onclick = function() {
+        const title = '${vo.title}';
+        window.location.href = `/Company/updateresume?title=${title}&result=합격&post_id=${post_id}&user_id=${param.user_id}&compname=${param.compname}`;
+    };
 
-        goFailEl.onclick = function() {
-        const title = '${vo.title}'; 
-        window.location.href = `/Company/updateresume?title=${title}&result=불합격&post_id=${post_id}`;
-        };
+    goFailEl.onclick = function() {
+        const title = '${vo.title}';
+        window.location.href = `/Company/updateresume?title=${title}&result=불합격&post_id=${post_id}&user_id=${param.user_id}&compname=${param.compname}`;
+    };
 
-        goPendingEl.onclick = function() {
-        const title = '${vo.title}'; 
-        window.location.href = `/Company/updateresume?title=${title}&result=대기&post_id=${post_id}`;
-        };
+    goPendingEl.onclick = function() {
+        const title = '${vo.title}';
+        window.location.href = `/Company/updateresume?title=${title}&result=대기&post_id=${post_id}&user_id=${param.user_id}&compname=${param.compname}`;
+    };
 	</script>
 
   </main>

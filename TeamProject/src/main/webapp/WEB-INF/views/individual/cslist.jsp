@@ -124,11 +124,11 @@ table td a:hover {
      <c:forEach var="faq" items="${faqList}">
       <tr>
        <td>[ ${faq.type} ] 
-         <a href="#" class="faqtitle" data-content="${faq.content }">${faq.csp_title}</a> 
+         <a href="#" class="faqtitle">${faq.csp_title}</a> 
        </td>
       </tr>
-      <tr style="display:none;">
-       <td class="content" >${ faq.content}</td>
+      <tr>
+       <td class="faqcontent" style="display:none;">${ faq.content}</td>
       </tr> 
      </c:forEach>
     </table>
@@ -157,40 +157,16 @@ table td a:hover {
     </table>
  
  <script>
-
- document.addEventListener("DOMContentLoaded", function() {
-     const faqTitles = document.querySelectorAll('.faqtitle');
-
-     faqTitles.forEach(title => {
-         title.addEventListener('click', function(event) {
-             event.preventDefault();
-             console.log('Clicked FAQ title:', this.innerText);
-             const parentRow = this.closest('tr'); // Get the parent row of the clicked title
-             const contentRow = parentRow.nextElementSibling; // Get the corresponding content row
-             console.log(contentRow);
-
-             if (contentRow) {
-                 const contentCell = contentRow.querySelector('td');
-                 const faqContent  = this.dataset.content; // Access data-content correctly
-                 console.log('FAQ content:', faqContent);
-
-                 // Set the content into the cell
-                     contentCell.innerHTML = `문의내용 : ${faqContent }`;
-                     console.log('Content Cell:', contentCell.innerHTML);
-          
-                 // Toggle visibility based on current state
-                 const currentDisplay = window.getComputedStyle(contentRow).display;
-                 if (currentDisplay === 'none') {
-                     contentRow.style.display = 'table-row'; // Show the row
-                     console.log('Content row is now visible.');
-                 } else {
-                     contentRow.style.display = 'none'; // Hide the row
-                     console.log('Content row is now hidden.');
-                 }
-             }
-         });
+ document.querySelectorAll('.faqtitle').forEach((title, index) => {
+     title.addEventListener('click', function(event) {
+         event.preventDefault(); // Prevent default link behavior
+         const content = document.querySelectorAll('.faqcontent')[index];
+         if (content.style.display === 'none' || content.style.display === '') {
+             content.style.display = 'block';
+         } else {
+             content.style.display = 'none';
+         }
      });
-
  });
      const goWrite = document.getElementById('goWrite');
      goWrite.onclick = function() {
