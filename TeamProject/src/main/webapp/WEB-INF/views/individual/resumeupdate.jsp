@@ -110,7 +110,7 @@ color: red;
 
  <body>
 <div class="div3">
- <form action="/Individual/Updating"   method="POST">
+ <form id="UpdateForm" action="/Individual/Updating"   method="POST">
   <h2 style="margin-top: -5px;text-align: center;">이력서수정</h2>
 
 
@@ -137,10 +137,10 @@ color: red;
             <input class="resumeinput1" type="text" name="username" value="${vo.username}" readonly>
         	<input class="resumeinput1" type="text" name="birth"  value="${vo.birth}" readonly>
             <select class="resumeinput1" name="gender"> 
-                <option>${vo.gender}</option>
-            	<option>성별(선택)</option>
-            	<option>남자</option>
-           		<option>여자</option>
+                <option value="${vo.gender}">${vo.gender}</option>
+                <option value="">성별(필수)</option> 
+                <option value="남자">남자</option>
+                <option value="여자">여자</option>
            	</select>
            	<input class="resumeinput1" type="text"     name="email"  value="${vo.email}" style="width:321px;" readonly>
                 <br><p>
@@ -157,11 +157,11 @@ color: red;
          <td style="width:800px;" >
                   
            <select class="resumeinput1" name="career" > 
-        		<option>${vo.career}</option>
-        		<option>경력(필수)</option>
-        		<option>신입</option>
-        		<option>경력(1년 이상)</option>
-        		<option>경력(3년 이상)</option>
+        		<option value="${vo.career}">${vo.career}</option>
+     		    <option value="">경력(필수)</option>
+        		<option value="신입">신입</option>
+        		<option value="경력(1년 이상)">경력(1년 이상)</option>
+        		<option value="경력(3년 이상)">경력(3년 이상)</option>
         		        		
           </select>
        	   <input class="resumeinput1" type="text"  name ="careers"  value="${vo.careers}" style="width:640px;" >
@@ -183,13 +183,13 @@ color: red;
 
 
         <select class="resumeinput1" name="edu" style="width:220px;"> 
-        		<option>${vo.edu }</option>
-        		<option>최종학력(필수)</option>
-        		<option>학위(석사,박사)/(취득/예정)</option>
-        		<option>대학교(4년)/(졸업/예정)</option>
-        		<option>대학(2년)/(졸업/예정) </option>
-        		<option>고등학교/(졸업/예정) </option>
-        		<option>기타 </option>
+        		<option value="${vo.edu }">${vo.edu }</option>
+        		<option value="">최종학력(필수)</option>
+        		<option value="학위(석사,박사)/(취득/예정)">학위(석사,박사)/(취득/예정)</option>
+        		<option value="대학교(4년)/(졸업/예정)">대학교(4년)/(졸업/예정)</option>
+        		<option value="대학(2년)/(졸업/예정)">대학(2년)/(졸업/예정) </option>
+        		<option value="고등학교/(졸업/예정)">고등학교/(졸업/예정) </option>
+        		<option value="기타">기타 </option>
 
         </select>
     
@@ -294,6 +294,47 @@ const  goList = document.getElementById('goList')
 goList.onclick = function() {
    location.href = '/Individual/ResumeList?user_id=${param.user_id}'
 } ;
+
+
+document.getElementById('checkForm').onclick = function(event) {
+    event.preventDefault(); // 기본 제출 동작 방지
+
+    const title = document.querySelector('input[name="title"]');
+    const birth = document.querySelector('input[name="birth"]');
+    const gender = document.querySelector('select[name="gender"]');
+    const career = document.querySelector('select[name="career"]');
+    const edu = document.querySelector('select[name="edu"]');
+
+    // 필수 입력란 검증
+    if (!title.value ) {
+        alert("제목을 입력해 주세요.");
+        title.focus();
+        return false;
+    }
+    if (birth.value.length !== 8) {
+        alert("생년월일을 다시 확인해 주세요.\n (예시) 20241029 ");
+        birth.focus();
+        return false;
+    }
+    if (gender.value === "") {
+        alert("성별을 선택해 주세요.");
+        gender.focus();
+        return false;
+    }
+    if (career.value === "") {
+        alert("경력을 선택해 주세요.");
+        career.focus();
+        return false;
+    }
+    if (edu.value === "") {
+        alert("최종 학력을 선택해 주세요.");
+        edu.focus();
+        return false;
+    }
+
+    // 모든 검증 통과 후 폼 제출
+    document.getElementById('UpdateForm').submit();
+};
 </script>
 
 </body>
