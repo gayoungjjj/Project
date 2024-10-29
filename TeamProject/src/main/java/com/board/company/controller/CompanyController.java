@@ -1,13 +1,13 @@
 package com.board.company.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -17,7 +17,6 @@ import com.board.company.vo.CompanyVo;
 import com.board.individual.mapper.IndividualMapper;
 import com.board.individual.vo.IndividualVo;
 
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -41,7 +40,7 @@ public class CompanyController {
 	        RedirectAttributes redirectAttributes
 		    ) {
 	        String user_id   = request.getParameter("user_id");
-	        String password  = request.getParameter("password");        
+	        String password  = request.getParameter("password");                
 	        String uri       = request.getParameter("uri");
 			String menu_id   = request.getParameter("menu_id");
 			String nowpage   = request.getParameter("nowpage");
@@ -93,8 +92,14 @@ public class CompanyController {
 	// ------------------------------- 메인 화면 -------------------------------//
 	// Company/Main (메인 화면)
 	@RequestMapping("/Main")
-	public String main() {
-		return "company/main" ;
+	public ModelAndView main(String user_id) {
+		String compname = companyMapper.compnameByUserId(user_id);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("user_id", user_id);
+		mv.addObject("compname", compname);
+		mv.setViewName("/company/main");
+		return mv ;
 	}
 	
 	// ------------------------------- 회원가입 -------------------------------//		   
@@ -201,16 +206,17 @@ public class CompanyController {
     // ------------------------------- 채용공고 -------------------------------//
 	//Company/Postlist (채용공고 목록)
 	@RequestMapping("/Postlist")
-	public ModelAndView postlist(String user_id) {
-		
-		List<CompanyVo> mainList = companyMapper.getmainList();
-		System.out.println("mainlist"+mainList);
-		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("mainList", mainList);
-		mv.addObject("user_id", user_id);
-		mv.setViewName("company/postlist");
-		return mv ;
+	public ModelAndView postlist(@RequestParam String user_id, @RequestParam String compname) {
+	    System.out.println("User ID: " + user_id);
+	    System.out.println("Company Name: " + compname);
+	    
+	    List<CompanyVo> mainList = companyMapper.getmainList();
+	    ModelAndView mv = new ModelAndView();
+	    mv.addObject("mainList", mainList);
+	    mv.addObject("user_id", user_id);
+	    mv.addObject("compname", compname);
+	    mv.setViewName("company/postlist");
+	    return mv;
 	}
 	
 	//Company/Postview (채용공고 상세페이지)
@@ -240,23 +246,22 @@ public class CompanyController {
 	// http://localhost:9090/Company/WriteForm?aplnum=1
 	
 	@RequestMapping("/WriteForm")
-	public ModelAndView writeform(CompanyVo companyVo,String user_id) {
+	public ModelAndView writeform(CompanyVo companyVo,String user_id, String compname) {
 		
 		ModelAndView mv = new ModelAndView();
 		System.out.println("writeformVo"+companyVo);
 		mv.addObject("companyVo", companyVo);
 		mv.addObject("user_id", user_id);
+		mv.addObject("compname", compname);
 		mv.setViewName("company/postwrite");
 		return mv;
 	}
 	
 	@RequestMapping("/Postwrite")
-	public ModelAndView postwrite(CompanyVo companyVo,String user_id) {
-		
-		companyMapper.insertposting(companyVo);
-		
-		System.out.println("writeVo"+companyVo);
-		ModelAndView mv = new ModelAndView();
+	public ModelAndView postwrite(CompanyVo companyVo, String user_id, String compname) {
+	    companyMapper.insertposting(companyVo);
+	    
+	    ModelAndView mv = new ModelAndView();
 		mv.addObject("user_id", user_id);
 		mv.setViewName("redirect:/Company/Postlist");
 		return mv;
@@ -266,7 +271,7 @@ public class CompanyController {
 	// /Company/Postdelete (채용공고 삭제)
 	// http://localhost:9090/Company/Postdelete?&aplnum=11
 	@RequestMapping("/Postdelete")
-	public ModelAndView postdelete(CompanyVo companyVo,String user_id) {
+	public ModelAndView postdelete(CompanyVo companyVo,String user_id, String compname) {
 		
 		companyMapper.deleteposting(companyVo);
 		System.out.println("delete"+companyVo);
@@ -281,7 +286,7 @@ public class CompanyController {
 	// /Company/PostupdateForm (채용공고 수정)
 	//http://localhost:9090/Company/PostupdateForm?&aplnum=8
 	@RequestMapping("/PostupdateForm")
-	public ModelAndView postupdateForm(CompanyVo companyVo,String user_id) {
+	public ModelAndView postupdateForm(CompanyVo companyVo,String user_id, String compname) {
 		
 		ModelAndView mv = new ModelAndView();
 		CompanyVo vo = companyMapper.getmain(companyVo);
@@ -294,14 +299,14 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/Postupdate")
-	public ModelAndView postupdate(CompanyVo companyVo) {
+	public ModelAndView postupdate(CompanyVo companyVo, String user_id, String compname) {
 		
 		System.out.println("Postupdate"+companyVo);
 		
 		companyMapper.updateposting(companyVo);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/Company/Postlist");
+		mv.setViewName("redirect:/Company/Postlist?user_id=" + user_id + "&compname=" + compname);
 		return mv;
 	}
 	
@@ -309,14 +314,17 @@ public class CompanyController {
 	// http://localhost:9090/Company/ListManagement
 	// 기업별 등록 공고리스트
 	@RequestMapping("/ListManagement")
-	public ModelAndView listmanagment(String user_id) {
+	public ModelAndView listmanagment(String user_id, String compname) {
+		 System.out.println("Received user_id: " + user_id);
+		    System.out.println("Received compname: " + compname); 
 			
-			List<CompanyVo> CompanyList = companyMapper.getCompanyList();
+			List<CompanyVo> CompanyList = companyMapper.getCompanyList(compname);
 			System.out.println("CompanyList"+CompanyList);
 			
 			ModelAndView mv = new ModelAndView();
 			mv.addObject("CompanyList",CompanyList);
 			mv.addObject("user_id", user_id);
+			mv.addObject("compname", compname);
 			mv.setViewName("company/listmanagement");
 			return mv;
 		}
@@ -324,67 +332,65 @@ public class CompanyController {
     // ------------------------------- 이력서 -------------------------------//
 	//Company/ResumeList (이력서 목록)
 	@RequestMapping("/ResumeList")
-	public ModelAndView resumeList(IndividualVo individualVo, String user_id, String compname) {
-		
-		List<IndividualVo> appList = companyMapper.getappList();
-		System.out.println("applist=" + appList);
-				
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("appList", appList);
-		mv.addObject("user_id", user_id);
-		mv.addObject("compname", compname);
-		mv.setViewName("company/resumeList");
-		return mv;
+	public ModelAndView resumeList(String user_id, String compname) {
+		System.out.println("user_id=" + user_id);
+	    System.out.println("compname=" + compname);
+	    
+	    // Step 1: Get list of post IDs for the given user_id
+	    List<String> postIds = companyMapper.getPostIdsByUserId(user_id);
+	    System.out.println("Retrieved post IDs: " + postIds);
+
+	    // Step 2: Get applications based on post IDs
+	    List<IndividualVo> appList = companyMapper.getApplicationsByPostIds(postIds);
+	    System.out.println("Retrieved app list: " + appList);
+
+	    ModelAndView mv = new ModelAndView();
+	    mv.addObject("appList", appList);
+	    mv.addObject("user_id", user_id);
+	    mv.addObject("compname", compname);
+	    mv.setViewName("company/resumeList");
+	    return mv;
 	}
 	
 	//Company/Resumeview (이력서 상세페이지)
 	// http://localhost:9090/Company/Resumview?title=usera이력서
 	@RequestMapping("/Resumeview")
-	public ModelAndView resumeview(IndividualVo individualVo, String title, String post_id) {				
+	public ModelAndView resumeview(IndividualVo individualVo, String title, String post_id, String user_id) {				
 		//이력서 조회
 		IndividualVo vo = companyMapper.getresumeList(individualVo);
 		System.out.println("vo"+vo);
 		System.out.println("post_id"+post_id);
 		
-		title = title.replaceAll(" ", "");
 		// System.out.println("Title without spaces: " + title);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("vo", vo);
 		mv.addObject("title", title);
 		mv.addObject("post_id", post_id);
+		mv.addObject("user_id", user_id);
 		mv.setViewName("company/resumeview");
 		return mv;
 	}
 	// 이력서 결과 수정
 	@RequestMapping(value = "/updateresume", method = RequestMethod.GET)
-	public String updateresume(String title, String result, String post_id) {
-		System.out.println("title=" +title);
-		System.out.println("result=" +result);
-		System.out.println("post_id=" +post_id);
-		companyMapper.updateresume(title, result, post_id);
-		return "redirect:/Company/ResumeList" ;
+	public String updateresume(String title, String result, String post_id, String user_id) {
+	    System.out.println("title=" + title);
+	    System.out.println("result=" + result);
+	    System.out.println("post_id=" + post_id);
+	    System.out.println("user_id=" + user_id);
+	    
+	    // 이력서 결과 업데이트
+	    companyMapper.updateresume(title, result, post_id);
+	    
+	    // user_id와 compname을 포함한 리다이렉트
+	    return "redirect:/Company/ResumeList?user_id=" + user_id;
 	}
 	
 	// ------------------------------- 인재 추천 -------------------------------//
 	// http://localhost:9090/Company/Recommend?user_id=user3&compname=카카오
 	//인재 추천
 	@RequestMapping("/Recommend")
-	public ModelAndView recommend() {
-		
-		List<IndividualVo> recommendList = individualMapper.recommendList();
-		System.out.println("recommend"+recommendList);
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("recommendList", recommendList);
-		mv.setViewName("company/recommend");
-		return mv;
-	}
-	
-	//-----------------------------------북마크--------------------------------------//
-	//http://localhost:9090/Company/Bookmark?user_id=user3&compname=%EC%82%BC%EC%84%B1
-	//북마크
-	@RequestMapping("/Bookmark")
-	public ModelAndView bookmark() {
+	public ModelAndView recommend(String user_id, String compname) {
 		
 		
 		List<CompanyVo> recommendList = companyMapper.recommendList();
@@ -392,14 +398,76 @@ public class CompanyController {
 		ModelAndView mv = new ModelAndView();
 		
 		mv.addObject("recommendList", recommendList);
+		mv.setViewName("company/recommend");
+		return mv;
+	}
+	
+	//-----------------------------------북마크--------------------------------------//
+	//http://localhost:9090/Company/Bookmark?user_id=user3&compname=%EC%82%BC%EC%84%B1
+	
+	//북마크기능 
+	@SuppressWarnings("null")
+	@RequestMapping(value = "/Bookmarking", method = RequestMethod.POST)
+	public String bookmarkomg(CompanyVo companyVo, @RequestParam String user_id, @RequestParam String username, RedirectAttributes redirectAttributes) {
+	    // ... (기존 코드 유지)
+	    String userId = companyVo.getUser_id(); // user_id 가져오기
+		String title = companyVo.getTitle(); // title 가져오기
 		
-		mv.setViewName("company/bookmark");
-		return mv;		
+    	List<CompanyVo> existingBookmark = companyMapper.getBookmark(userId, title);
+		
+		ModelAndView mv = new ModelAndView();
+		String alertMessage = "";	
+		
+			if (existingBookmark != null && !existingBookmark.isEmpty()) {
+		    // 북마크가 존재할경우, 북마크 상태 변경 ON/OFF.
+
+				String  isBookmarked =  companyMapper.isBookmark(userId, title);
+				if ("ON".equals(isBookmarked)){
+			        companyMapper.toggleBookmark(userId, title);  // DB의 BOOKMARK 값이 ON일경우 
+			        alertMessage = "북마크가 해제되었습니다.";
+			         } else if ("OFF".equals(isBookmarked)){      // DB의 BOOKMARK 값이 OFF일경우 
+			        companyMapper.toggleBookmark(userId, title);
+			        alertMessage = "북마크가 등록되었습니다.";
+			         }
+			        	 System.out.println("북마크 상태를 토글했습니다: User ID = " + userId + ", Title = " + title);
+				} else {
+				
+		    // 존재하지않는경우  
+			companyMapper.saveBookmark(companyVo); // 북마크 저장(기본값 OFF)
+			System.out.println("북마크 저장: " + companyVo);
+			 
+			companyMapper.toggleBookmark(userId, title); // 북마크 값 변경(OFF -> ON)
+			alertMessage = "북마크가 등록되었습니다.";
+			System.out.println("없는상태로 북마크 상태를 토글했습니다: User ID = " + userId + ", Title = " + title);	
+	        }
+		       
+			List<CompanyVo> booklist = companyMapper.getBookmark(userId, title); // 북마크 목록 가져오기
+
+			// 뷰에 데이터 추가
+			mv.addObject("booklist", booklist);
+			mv.addObject("alertMessage", alertMessage);
+			redirectAttributes.addFlashAttribute("alertMessage", alertMessage);
+			return "redirect:/Company/Recommend?user_id=" + userId; 
+		}
+
+	//북마크확인
+
+	@RequestMapping("Bookmark")
+	public ModelAndView bookmark(CompanyVo companyVo,String user_id ,String username) {
+		String userId = companyVo.getUser_id(); // user_id 가져오기
+		String title = companyVo.getTitle();
+		List<CompanyVo> bookmarkList = companyMapper.bookmarkList(userId,title);
+		System.out.println("bookmark"+bookmarkList);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("bookmarkList", bookmarkList);
+
+		mv.setViewName("/company/bookmark");
+		return mv;
 	}
 	// ------------------------------- 고객센터 -------------------------------//
 	// Company/Cslist (고객센터)
 	@RequestMapping("/Cslist")
-	public ModelAndView cslist(String user_id, String title) {
+	public ModelAndView cslist(String user_id, String title, String compname) {
 		List<CompanyVo> faqList = companyMapper.getfaqList();
 		System.out.println("faqList=" +faqList);
 		
@@ -415,7 +483,7 @@ public class CompanyController {
 	}
 	// Company/Csview (문의글 상세페이지)
 	@RequestMapping("/Csview")
-	public ModelAndView csview(CompanyVo companyVo, String csp_title) {
+	public ModelAndView csview(CompanyVo companyVo, String csp_title, String compname) {
 		CompanyVo vo = companyMapper.getcs(companyVo);
 		
 		// csp_title = csp_title.replaceAll(" ", "");
@@ -429,7 +497,7 @@ public class CompanyController {
 	}
 	// Company/CswriteForm (문의글 작성)
 	@RequestMapping("/CswriteForm")
-	public ModelAndView cswriteForm(CompanyVo companyVo,String user_id) {
+	public ModelAndView cswriteForm(CompanyVo companyVo,String user_id, String compname) {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("companyVo", companyVo);
@@ -439,7 +507,7 @@ public class CompanyController {
 	}
 	// Company/Cswrite (문의글 작성)
 	@RequestMapping("/Cswrite")
-	public ModelAndView cswrite(CompanyVo companyVo,String user_id) {
+	public ModelAndView cswrite(CompanyVo companyVo,String user_id, String compname) {
 	    if (user_id != null && !user_id.trim().isEmpty()) {
 	        companyVo.setUser_id(user_id);
 	    } else {
@@ -456,7 +524,7 @@ public class CompanyController {
 	}
 	// Company/CsupdateForm (문의글 수정)
 	@RequestMapping("/CsupdateForm")
-	public ModelAndView csupdateForm(CompanyVo companyVo, String csp_id, String csp_title) {
+	public ModelAndView csupdateForm(CompanyVo companyVo, String csp_id, String csp_title, String compname) {
 		CompanyVo vo = companyMapper.getcs(companyVo);
 		System.out.println("updatevo=" +vo );
 		ModelAndView mv = new ModelAndView();

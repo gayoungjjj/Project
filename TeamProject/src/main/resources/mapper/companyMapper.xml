@@ -92,6 +92,13 @@
 	ORDER BY APLNUM DESC 
   </select>
   
+  <!-- 기업명 가지고 오기 -->
+  <select id="compnameByUserId">
+    SELECT COMPNAME 
+    FROM   COMPANY_USERS 
+    WHERE  USER_ID = #{user_id}
+  </select>
+  
   <!-- 채용공고_상세페이지 -->
   <select id="getmain" >
     SELECT APLNUM, POST_ID,	USER_ID, COMPNAME, RECRUITNUM,
@@ -103,18 +110,20 @@
   
   <!-- 채용공고_등록 -->
   <insert id="insertposting">
-    INSERT INTO jobposting (APLNUM ,POST_ID 
+    INSERT INTO jobposting (APLNUM ,POST_ID
+                         ,USER_ID, COMPNAME
                          ,RECRUITNUM,DEADLINE 
                          ,DUTY,WORKSPACE 
                          ,SALARY,DEPARTMENT
                          ,CAREER,EDU
                          ,SKILLS,LICENSES) 
-    VALUES ( (SELECT NVL(MAX(APLNUM),0)+1 FROM JOBPOSTING ) ,#{post_id} 
-            ,#{recruitnum} ,#{deadline} 
-            ,#{duty} ,#{workspace} 
-            ,#{salary} ,#{department}
-            ,#{edu},#{career}
-            ,#{skills},#{licenses})
+    VALUES ( (SELECT NVL(MAX(APLNUM),0)+1 FROM JOBPOSTING ) ,#{post_id, jdbcType=VARCHAR}
+            ,#{user_id}, #{compname}
+            ,#{recruitnum, jdbcType=VARCHAR} ,#{deadline, jdbcType=VARCHAR} 
+            ,#{duty, jdbcType=VARCHAR} ,#{workspace, jdbcType=VARCHAR} 
+            ,#{salary, jdbcType=VARCHAR} ,#{department, jdbcType=VARCHAR}
+            ,#{edu, jdbcType=VARCHAR},#{career, jdbcType=VARCHAR}
+            ,#{skills, jdbcType=VARCHAR},#{licenses, jdbcType=VARCHAR})
   
   </insert>
   
@@ -157,15 +166,31 @@
 	      TO_CHAR(DEADLINE,'YYYY-MM-DD') DEADLINE,
 	      DUTY, CAREER, EDU, SKILLS, LICENSES, WORKSPACE, SALARY, DEPARTMENT, HIT
     FROM  JOBPOSTING 
-    WHERE COMPNAME = '삼성'
+    WHERE COMPNAME = #{compname, jdbcType=VARCHAR}
 	ORDER BY APLNUM ASC
   </select>
   
-  <!-- 받은 이력서_목록 --> 
-  <select id="getappList" >
-   SELECT APP_ID, USER_ID, APLNUM, POST_ID, REPLACE(TITLE, ' ', '') AS TITLE, APP_DATE, PICTURE, LOCATION, RESULT
-	FROM  APPLICATIONS 
-	ORDER BY APP_ID ASC 
+  <!-- 이력서_목록_user_id로 post_id찾기 -->
+  <select id="getPostIdsByUserId"  parameterType="String" resultType="string">
+    SELECT POST_ID 
+    FROM JOBPOSTING 
+    WHERE USER_ID = #{user_id, jdbcType=VARCHAR}
+  </select>
+
+  <!-- 이력서_목록_post_id로 지원서 목록 가져오기 -->
+  <select id="getApplicationsByPostIds" parameterType="list" resultType="com.board.individual.vo.IndividualVo">
+    SELECT APP_ID, USER_ID, APLNUM, POST_ID, TITLE, APP_DATE, PICTURE, LOCATION, RESULT
+    FROM APPLICATIONS
+    WHERE POST_ID IN
+    <foreach item="postId" index="index" collection="list" open="(" separator="," close=")">
+        #{postId, jdbcType=VARCHAR}
+    </foreach>
+    <!-- Add this condition to avoid empty IN clause -->
+    AND (SELECT COUNT(*) FROM APPLICATIONS WHERE POST_ID IN
+    <foreach item="postId" index="index" collection="list" open="(" separator="," close=")">
+        #{postId, jdbcType=VARCHAR}
+    </foreach>) > 0
+    ORDER BY APP_ID ASC
   </select>
   
   <!-- 이력서_상세페이지 -->
@@ -175,14 +200,88 @@
           PUBLISHER2, PUBLISHER3, PASSDATE1, PASSDATE2, PASSDATE3, SKILLS1, SKILLS2, SKILLS3,
           SKILLS4, SKILLS5, PORTFOLIO, SELFINTRO
     FROM  RESUMES
-    WHERE REPLACE(TITLE, ' ', '')= #{title}
+    WHERE TITLE= #{title}
   </select>
+  
   <!-- 이력서_수정 -->
   <update id="updateresume">
 	UPDATE APPLICATIONS
 	SET    RESULT = #{param2}
-	WHERE  REPLACE(TITLE, ' ', '') = #{param1} AND POST_ID = #{param3}
+	WHERE  TITLE = #{param1} AND POST_ID = #{param3}
   </update>
+  
+  <!-- 인재추천 리스트 -->
+  <select id="recommendList">
+  SELECT *
+	FROM RESUMES RE 
+	FULL JOIN APPLICATIONS AP ON RE.TITLE = AP.TITLE
+	FULL JOIN JOBPOSTING JP ON AP.APLNUM = JP.APLNUM
+	WHERE JP.COMPNAME = '삼성'
+	AND (
+	    JP.LICENSES IN (RE.LICENSES1, RE.LICENSES2, RE.LICENSES3)
+	    OR INSTR(JP.LICENSES, RE.LICENSES1) > 0
+	    OR INSTR(JP.LICENSES, RE.LICENSES2) > 0
+	    OR INSTR(JP.LICENSES, RE.LICENSES3) > 0
+	)
+  </select>
+  
+    <!-- 북마크 --> 
+  <insert id="saveBookmark"> 
+INSERT INTO COMBOOKMARK (
+    CBOOK_ID,
+    USER_ID,
+    USERNAME,
+    COMPNAME,
+    BIRTH,
+    PHONE_NUMBER,
+    TITLE         
+) VALUES (
+   ( (SELECT NVL(MAX(CBOOK_ID),0)+1 FROM COMBOOKMARK )),
+   #{user_id},
+   #{username},
+   #{compname},
+   #{birth},
+   #{phone_number},
+   #{title}
+)
+  </insert>
+  
+   <!-- 북마크 --> 
+  <update id="toggleBookmark">
+    UPDATE COMBOOKMARK  
+    SET  BOOKMARK = CASE
+         WHEN BOOKMARK = 'OFF' THEN 'ON'  
+         ELSE 'OFF' END  ,
+         S_DATE = SYSDATE  
+         WHERE USER_ID = #{arg0} 
+         AND TITLE = #{arg1}  
+  </update>
+  
+  <!-- 북마크 --> 
+  <select id="getBookmark">
+  SELECT CBOOK_ID, USER_ID, COMPNAME, USERNAME, BIRTH, PHONE_NUMBER, TITLE,
+         BOOKMARK, S_DATE
+  FROM   COMBOOKMARK
+  WHERE  USER_ID = #{arg0} 
+  AND    TITLE = #{arg1}
+  </select>
+  
+  <!-- 북마크 --> 
+  <select id="bookmarkList">
+  SELECT CBOOK_ID, USER_ID, COMPNAME, USERNAME, BIRTH, PHONE_NUMBER, TITLE,
+         BOOKMARK, S_DATE
+  FROM   COMBOOKMARK
+  WHERE  USER_ID = #{arg0} 
+  AND    BOOKMARK = 'ON'
+  </select>
+
+  <!-- 북마크 --> 
+ <select id="isBookmark">
+  SELECT BOOKMARK
+  FROM   COMBOOKMARK
+  WHERE  USER_ID = #{arg0} 
+  AND    TITLE = #{arg1}
+  </select>
   
   <!-- 고객센터_FAQ_목록 -->
   <select id="getfaqList">

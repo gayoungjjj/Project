@@ -31,10 +31,10 @@ public interface CompanyMapper {
 	void deleteposting(CompanyVo companyVo);
 
 	void updateposting(CompanyVo companyVo);
-
-	List<IndividualVo> getappList();
-
-	List<CompanyVo> getCompanyList();
+	
+	List<String> getPostIdsByUserId(String user_id);
+	
+	List<IndividualVo> getApplicationsByPostIds(List<String> postIds);
 
 	IndividualVo getresumeList(IndividualVo individualVo);
 
@@ -45,8 +45,6 @@ public interface CompanyMapper {
 	CompanyVo compDupCheck(String compname);
 	
 	CompanyVo emailDupCheck(String email);
-
-	void updateresume(IndividualVo vo);
 
 	void updateresume(String title, String result, String post_id);
 
@@ -63,6 +61,22 @@ public interface CompanyMapper {
 	List<CompanyVo> recommendList();
 	
 	List<CompanyVo> getSortedPostList();
+
+	String compnameByUserId(String user_id);
+
+	List<CompanyVo> getCompanyList(String compname);
+
+	void updateresume(IndividualVo vo);
+
+	List<CompanyVo> getBookmark(String userId, String title);
+
+	String isBookmark(String userId, String title);
+
+	void toggleBookmark(String userId, String title);
+
+	void saveBookmark(CompanyVo companyVo);
+
+	List<CompanyVo> bookmarkList(String userId, String title);
 
 
 }
