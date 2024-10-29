@@ -34,6 +34,26 @@
    }
   tr:first-child{background : #E7E7E7; }
   select{margin-left : 16%;}
+  
+  input[type=submit] {padding : 8px;
+                      background : white;
+                      border-radius: 8px;
+                      border:1px solid #2F70FF;
+                      color : #2F70FF;
+                      font-weight : bold;  }
+                      
+  input[type=submit]:hover {background: #2F70FF;
+                            color : white;}
+                            
+  input[type=button] {padding : 8px;
+                      background : white;
+                      border-radius: 8px;
+                      border:1px solid #308752;
+                      color : #308752;
+                      font-weight : bold;}
+                      
+  input[type=button]:hover {background: #308752;
+                            color : white;}
 </style>
 
 
@@ -52,17 +72,18 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=삼성">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=삼성">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=삼성">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=삼성">인재 추천</a></li>
-               <li><a href="cs">고객센터</a></li>   
+          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=${compname}">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=${compname}">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=${compname}">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=${compname}">인재 추천</a></li>
+               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=${compname}">북마크한 인재</a></li>               
+               <li><a href="/Company/Cslist?user_id=${param.user_id}&compname=${compname}">고객센터</a></li>    
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage?user_id=${param.user_id}">마이페이지</a></li>
+     		   <li><a href="/Company/Mypage?user_id=${param.user_id}&compname=${compname}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -77,7 +98,7 @@
 
   <!--채용공고 목록_수정 -->
 <main>   
-    <form action="/Company/Postupdate?aplnum=${param.aplnum}&user_id=${param.user_id}&compname=카카오"  method="POST">
+    <form action="/Company/Postupdate?aplnum=${param.aplnum}&user_id=${param.user_id}&compname=${param.compname}"  method="POST">
     <h2>공고 수정(${param.aplnum})</h2>
     <tr>
        <select 	name="career" value="${vo.career }">
@@ -153,7 +174,7 @@
         
        const  goListEl = document.getElementById('goList')
        goListEl.onclick = function() {
-          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${param.user_id}&compname=카카오'
+          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${param.user_id}&compname=${compname}'
        }    
        
        const  formEl       = document.querySelector('form');

@@ -129,17 +129,22 @@
         if (postList != null) {
             for (CompanyVo main : postList) {
     %>
-        <div class="job-card" onclick="location.href='/Company/Postview?aplnum=<%= main.getAplnum() %>'">
+        <div class="job-card" onclick="location.href='/Individual/Postview?aplnum=<%= main.getAplnum() %>'">
             <img src="<%= main.getLogoPath() != null ? 
             			  main.getLogoPath() : "/img/ex.PNG" %> 
             			  					  " alt="회사 로고">
             <div class="company-name"><%= main.getCompname() %></div>
-            <div class="description"><%= main.getDuty() %></div> 
+            <div class="description"><%= main.getDuty() %></div>
+            <div class="hit-count">조회수: <%= main.getHit() %></div> 
         </div>
     <%
             }
+        }else {
+            %>
+            <div class="no-posts">등록된 채용공고가 없습니다.</div> 
+        <%
         }
-    %>
+        %>
     </nav>
 </div>
   

@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +38,12 @@
    a:hover{color : blue;}
    }
   tr:first-child{background : #E7E7E7; }
+  
+  
+  #bookmark{ width:30px;
+             height: auto; 
+             cursor: pointer;}
+  
 /*----------------*/
   .legnav {
    margin-top:20px;
@@ -97,31 +106,26 @@
    
   	<header>
  	  <nav class ="headernav">
-    	<ul class ="leftmenu"> 
-   <!-- 기능 구현 
-    1. 채용공고, 고객센터는 개인이랑 똑같음-->
-    
-   <!-- 기능 구현
-    1. 로그아웃 기능 구현
-    2. 마이페이지 이동 구현 -->
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=카카오">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id }&compname=카카오">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=카카오">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=카카오">인재 추천</a></li>
-               <li><a href="cs">고객센터</a></li>   
+    	<ul class ="leftmenu"> s
+          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=${param.compname}">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${param.user_id }&compname=${param.compname}">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=${param.compname}">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=${param.compname}">인재 추천</a></li>
+               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=${param.compname}">북마크한 인재</a></li>               
+               <li><a href="/Company/Cslist?user_id=${param.user_id}&compname=${param.compname}">고객센터</a></li>  
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage">마이페이지</a></li>
+     		   <li><a href="/Company/Mypage?user_id=${param.user_id}&compname=${param.compname}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
  	</header>
  </div>
  
- <main>
+  <main>
    <h2>인재 추천</h2>
      <table>
        <tr>
@@ -131,20 +135,45 @@
         <td>생년월일</td>
         <td>자격증</td>
         <td>공고제목</td>
+        <td>이력서번호</td>
+        <td>북마크</td>
        </tr>
        
-       <c:forEach var="vo" items="${recommendList}">
-       <tr>
-        <td>${vo.username}</td>
-        <td>${vo.title}</td>
-        <td>${vo.phone_number}</td>
-        <td>${vo.birth}</td>
-        <td>${vo.licenses1}</td>
-        <td>${vo.post_id}</td>
-       </tr>
-       </c:forEach>
-       
-     </table>
+    
+ 
+        <c:forEach var="vo" items="${recommendList}">
+        <form action="/Company/Bookmarking" method="post">
+        <input type="hidden" name="user_id" value="${param.user_id}">
+            <tr>
+            
+                <td>${vo.username}</td>
+                <td>
+                    <a href="/Company/Resumeview?title=${vo.title}&post_id=${vo.post_id}&user_id=${param.user_id}&compname=${param.compname}">
+                        ${vo.title}
+                    </a>
+                </td>
+                <td>${vo.phone_number}</td>
+                <td>${vo.birth}</td>
+                <td>${vo.licenses}</td>
+                <td>${vo.post_id}</td>
+                <td>${vo.app_id}</td>
+                <td>
+                   <input type="hidden" name="username" value="${vo.username}">
+                   <input type="hidden" name="title" value="${vo.title}">
+				   <input type="hidden" name="compname" value="${param.compname}">
+                   <input type="hidden" name="phone_number" value="${vo.phone_number}">
+                   <input type="hidden" name="birth" value="${vo.birth}">
+                   <input type="submit"  value="북마크" onclick="disableButton(this)">
+                </td>
+            </tr>
+               </form>  
+            
+        </c:forEach>
+        
+    </table>
+
+
+    
  
  </main>
  
@@ -153,6 +182,25 @@
    <p><small>&copy; 2024 All rights reserved 기업명</small></p>
   </div>
  </footer>
+
+
+
+
+
+<script>
+function disableButton(button) {
+    button.disabled = true; // 버튼 비활성화
+    button.form.submit(); // 폼 제출
+}
+
+
+</script>
+
+<c:if test="${not empty alertMessage}">
+    <script type="text/javascript">
+        alert("${alertMessage}");
+    </script>
+</c:if>
 
 </body>
 </html>

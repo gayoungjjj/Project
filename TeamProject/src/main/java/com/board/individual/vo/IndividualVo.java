@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class IndividualVo {
 	private String user_id;
+	private String user_id2;
 	private String username;
 	private String email;
 	private String password;
@@ -31,7 +32,7 @@ public class IndividualVo {
 	private String career;
 	private String careers;
 	private String eduwhen;
-	private String eduwhere;
+	private String eduwher;
 	private String edu;
 	private String major;
 	private String licenses1;
@@ -63,4 +64,13 @@ public class IndividualVo {
 	private String department;
 	private String compname;
 	private int    hit;
+	
+	private int    csp_id;
+	private String type;
+	private String csp_title;
+    private String csp_pw;
+    private String content;
+    private String csp_file;
+	
+
 }

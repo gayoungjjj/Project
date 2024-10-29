@@ -39,7 +39,17 @@ public class CompanyVo {
 	private String department;
 	private int    hit;
 	
+	private int    csp_id;
+	private String type;
+	private String csp_title;
+    private String csp_pw;
+    private String content;
+    private String csp_file;
+    private String result;
+	private String c_date;
+	
 	private String title;
+	private int    app_id;
 	private String birth;
 	private String gender;
 	private String number2;
@@ -63,6 +73,6 @@ public class CompanyVo {
 	private String skills5;
 	private String portfolio;
 	private String selfintro;
-	private String c_date;
 	private String u_date;
+
 }

@@ -6,12 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Insert title here</title>
 <link rel="stylesheet"  href="/css/common.css" />
 <link rel="icon" type="image/png" href="/img/favicon.png" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/browser-scss@1.0.3/dist/browser-scss.min.js"></script>
 <script src="https://code.jquery.com/jquery.min.js"></script>
 
@@ -35,6 +33,19 @@
    a:hover{color : blue;}
    }
   tr:first-child{background : #E7E7E7; }
+  
+  .submitbtn{
+    margin-left:22px;
+  background-color:#4c5cc5;
+  font-weight:bolder;
+  font-size:15px;
+  color:white;
+  width:200px;
+  margin-bottom:10px;
+  height:40px;
+  border: 1px #DDDDDD solid; 
+  border-radius: 20px;
+  }
 </style>
 
 </head>
@@ -42,10 +53,10 @@
 
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Company/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Individual/Main"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
-  		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
+  		<input type="text" placeholder="#픽미 는 당신의 취업을 응원합니다!! ">
   		<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" >
 	</div>
 
@@ -53,18 +64,17 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=${compname}">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=${compname}">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=${compname}">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=${compname}">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=${compname}">북마크한 인재</a></li>               
-               <li><a href="/Company/Cslist?user_id=${param.user_id}&compname=${compname}">고객센터</a></li>     
+			<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+   			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
+    		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
+    		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
+            <li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>    
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
-  			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage?user_id=${param.user_id}&compname=${compname}">마이페이지</a></li>
+  			   <li><a href="/Individual/Logout">로그아웃</a></li>
+     		   <li><a href="/Individual/Mypage">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -72,15 +82,10 @@
  </div>
 
 
-<div class= "div2">
-<a href="/Individual/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
-</div>
-
-
   <!--채용공고 목록_상세페이지 -->
 <main>  
    
-    <h2>공고 내용보기</h2>
+    <h2>선택 공고  (${ vo.post_id })</h2>
     <input type="hidden" name="aplnum" value="${vo.aplnum}" />
     <table id="table">
      <tr>
@@ -117,26 +122,56 @@
       <td>직무 내용</td>
       <td colspan="3">${ vo.duty }</td>
      </tr>
+     
+     <!-- 이력서 작성(이력서 불러오기 등)해서 이력서 보내기로 넘어가는 기능 구현하면 어떨까요? -->
      <tr>
       <td colspan="4"> 	
-       <a class="btn btn-outline-primary" 
-         href="/Company/WriteForm?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=${compname}">새로운 공고 쓰기</a>
-      
-      <!-- login이 완성되면 c:if -user_id를 compname로 변경 -->
-      <c:if test="${login.user_id eq vo.user_id}">
-       <a class="btn btn-outline-warning" 
-          href="/Company/PostupdateForm?&aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=${compname}">수정</a>
-       <a class="btn btn-outline-danger" 
-          href="/Company/Postdelete?&aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=${compname}">삭제</a>
-       </c:if>
-
-       <a class="btn btn-outline-success" 
-          href="/Company/Postlist?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=${compname}">목록</a>
+       <a href="/Individual/Postlist?aplnum=${vo.aplnum}">목록</a>
       </td>
      </tr>
     
     </table>    
   
+  
+      <h2>입사 지원서  ${param.user_id} </h2>
+ <form action="/Individual/Write2?aplnum=${vo.aplnum}&user_id2=${param.user_id}" method="POST" >
+   <input type="hidden" name="aplnum" value="${vo.aplnum}" />
+   <input type="hidden" name="post_id" value="${vo.post_id}" />
+   <input type="hidden" name="user_id" value="${ param.user_id }" />
+    <table id="table">
+     <tr>
+      <td>지원 공고 번호</td>
+      <td>${  vo.aplnum  }</td>
+       <td>공고 이름</td>
+      <td>${ vo.post_id     }</td>
+     </tr> 
+     <tr>
+      <td>희망 근무지역 <span class="red"> *</span></td>
+      <td><input type="text"  name = "location" placeholder="  "></td>
+       <td>이력서 첨부</td>
+       <td>
+          <select name="title">
+             <c:forEach items="${titles}" var="title">
+                <option  value="${title}">${title}</option>
+             </c:forEach>
+          </select>
+       </td>
+
+     </tr>
+     
+     <!-- 이력서 작성(이력서 불러오기 등)해서 이력서 보내기로 넘어가는 기능 구현하면 어떨까요? -->
+     <tr>
+      <td colspan="4"> 	
+       <input class ="submitbtn"type="submit" value="지원하기">
+      </td>
+      
+ 
+     </tr>
+      </table>    
+  
+    
+  
+   </form>
   
   </main>
   
@@ -146,6 +181,9 @@
    <p><small>&copy; 2024 All rights reserved 픽미</small></p>
   </div>
  </footer>
+<script>
 
+
+</script>
 </body>
 </html>
