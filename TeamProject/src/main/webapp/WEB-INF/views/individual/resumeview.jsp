@@ -136,10 +136,6 @@ main input[type="submit"] {
 <a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
 </div>
 
-
-
-
-
   <!--이력서_상세페이지 -->
 
 <div class= "div3">

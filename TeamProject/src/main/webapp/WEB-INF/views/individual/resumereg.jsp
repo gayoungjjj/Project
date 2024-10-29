@@ -41,17 +41,18 @@ padding: 10px 10px;
 border: 1px solid #DBE0E9;
 }
 
-#aside {
-    position:fixed;
-    width: 300px;
-    height:60px;
-    bottom:90px;
-    left:1400px;
-    background-color:transparnet;
+/*수정됨*/
+.button-container {             
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    padding-top: 20px;
 }
 
+
+/*수정됨*/
 .asidesubmit{
-  margin-left:22px;
+
   background-color:#4c5cc5;
   font-weight:bolder;
   font-size:15px;
@@ -63,11 +64,7 @@ border: 1px solid #DBE0E9;
   border-radius: 20px;
 }
 
-
-/* <!-- 수정 -->*/
 .red{color:red;}
-
-
 /*이력서 css (끝)*/
 
 </style>
@@ -89,11 +86,11 @@ border: 1px solid #DBE0E9;
 
    <nav class ="headernav">
     <ul class ="leftmenu"> 
-   		<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
-   		<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
-    	<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
-    	<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
-    	<li><a href="/cs">고객센터</a></li>  
+   			<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+   			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
+    		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
+    		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
+            <li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>    
      </ul>   
      	 
     	 <div>
@@ -106,25 +103,22 @@ border: 1px solid #DBE0E9;
    	</div> 
   </header>
  
+<div class= "div2">
+<a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
+</div>
 
  <body>
- <div class="div3">
-  <form action="/Individual/Write" method="POST" >
+<div class="div3">
+  <form  id="WriteForm" action="/Individual/Write" method="POST" >
   <h2 style="margin-top: -5px;text-align: center;">이력서작성</h2>
 
- <table  id="aside">
-  <tr>
-   <td>
-   <input  class ="asidesubmit"type="submit" value="작성완료" >
-   <input  class ="asidesubmit"type="button" value="이전으로" id="goList" style="background-color: white; color:black"></td>
-  </tr>
- </table>
+
  
   <table class= "totaltable" style="border: 1px #DDDDDD solid; padding: 30px; background-color: #E8ECEF ">
   	<tr>
   	   <td>
   	   
-         <h3 style="margin-top: -18px;">이력서 제목 <span class="red" style="font-size: 11px;">* 이력서 제목은 작성후 수정이 불가합니다. </span></h3>   <!-- 수정 -->
+         <h3 style="margin-top: -18px;">이력서 제목 <span class="red" style="font-size: 11px;">* 이력서 제목은 작성후 수정이 불가합니다. </span></h3> 
  			<table class ="resumetable" >
   		  	<tr>
           		<td style="width:800px;">
@@ -134,39 +128,38 @@ border: 1px solid #DBE0E9;
 	</table>
  
  
-  <h3>인적사항<span class="red" style="font-size: 11px;"> * 필수 기재 사항을 확인해주세요 </span></h3>   <!-- 수정 -->
+  <h3>인적사항<span class="red" style="font-size: 11px;"> * 필수 기재 사항을 확인해주세요 </span></h3>   
     <table class ="resumetable" >
     <tr>
-        <td style="padding-top:10px; width:696px;"> 
+        <td style="padding-top:10px; width:800px;"> 
         <input type="hidden" name="user_id" value="${vo.user_id }">
             <input class="resumeinput1" type="text" name="username" value="${vo.username}" readonly>
-        	<input class="resumeinput1" type="text" name="birth" placeholder ="생년월일(필수)" >
-            <select class="resumeinput1" name="gender"> 
-                <option>성별(필수)</option>
-            	<option>남자</option>
-           		<option>여자</option>
+        	<input class="resumeinput1" type="text" name="birth" placeholder ="생년월일(필수)"  >
+            <select class="resumeinput1" name="gender" required> 
+                <option value="">성별(필수)</option> <!-- value를 빈 문자열로 설정 -->
+                <option value="남자">남자</option>
+                <option value="여자">여자</option>
            	</select>
-           	<input class="resumeinput1" type="text"     name="email"  value="${vo.email}" style="width:222px;" readonly>
+           	<input class="resumeinput1" type="text"     name="email"  value="${vo.email}" style="width:321px;" readonly>               <!-- 수정됨 -->
                 <br><p>
-            	<input class="resumeinput1" type="text" name="number2"   placeholder ="비상연락처" >
-            	<input class="resumeinput1" type="text" name="phone_number"  value="${vo.phone_number}" readonly>
+            	<input class="resumeinput1" type="text" name="number2"   placeholder ="비상연락처" style="width:200px;" >
+            	<input class="resumeinput1" type="text" name="phone_number"  value="${vo.phone_number}" style="width:200px;" readonly>   <!-- 수정됨 -->
             	<input class="resumeinput1" type="text" name="address"  value="${vo.address}" style="width:377px;height: 50px;border: 1px #DDDDDD solid ;" readonly>            
-           		<td rowspan="2"> 
-           		<input class="resumeinput1" type="text" value="사진"  style="width:103px; height:120px; margin-left: -50 px; margin-bottom:5px; text-align:center;">
+           		<!-- 수정됨  삭제함--> 
          </td>
     </tr>
 	</table>
 
-<h3>경력사항<span class="red" style="font-size: 11px;"> * 필수 기재 사항을 확인해주세요 </span></h3>  <!-- 수정 -->
+<h3>경력사항<span class="red" style="font-size: 11px;"> * 필수 기재 사항을 확인해주세요 </span></h3>  
     <table class ="resumetable">
        <tr>
          <td style="width:800px;" >
                   
            <select class="resumeinput1" name="career" > 
-        		<option>경력(필수)</option>
-        		<option>신입</option>
-        		<option>경력(1년 이상)</option>
-        		<option>경력(3년 이상)</option>
+        		<option value="">경력(필수)</option>
+        		<option value="신입">신입</option>
+        		<option value="경력(1년 이상)">경력(1년 이상)</option>
+        		<option value="경력(3년 이상)">경력(3년 이상)</option>
         		        		
           </select>
        	   <input class="resumeinput1" type="text"  name ="careers" placeholder="경력사항을 적어주십시오..   (ex) JAVA개발자 2년근무 " style="width:640px;">
@@ -176,24 +169,24 @@ border: 1px solid #DBE0E9;
 	</table>
 
 
-  <h3>학력사항<span class="red" style="font-size: 11px;"> * 필수 기재 사항을 확인해주세요 </span></h3>   <!-- 수정 -->
+  <h3>학력사항<span class="red" style="font-size: 11px;"> * 필수 기재 사항을 확인해주세요 </span></h3>   
     <table class ="resumetable">
     <tr>
     
        <td style="width:800px;">
 
     <input class="resumeinput1" type="text" name="eduwhen" placeholder="제학기간 2018-02 ~ 2022-03"  style="width:250px;"> 
-    <input class="resumeinput1" type="text" name="eduwhere" placeholder="학교명(필수)" >
+    <input class="resumeinput1" type="text" name="eduwher" placeholder="학교명" >                  <!-- 수정됨 -->
     
 
 
         <select class="resumeinput1" name="edu" style="width:220px;"> 
-        		<option>최종학력(필수)</option>
-        		<option>학위(석사,박사)/(취득/예정)</option>
-        		<option>대학교(4년)/(졸업/예정)</option>
-        		<option>대학(2년)/(졸업/예정) </option>
-        		<option>고등학교/(졸업/예정) </option>
-        		<option>기타 </option>
+        		<option value="">최종학력(필수)</option>
+        		<option value="학위(석사,박사)/(취득/예정)">학위(석사,박사)/(취득/예정)</option>
+        		<option value="대학교(4년)/(졸업/예정)">대학교(4년)/(졸업/예정)</option>
+        		<option value="대학(2년)/(졸업/예정)">대학(2년)/(졸업/예정) </option>
+        		<option value="고등학교/(졸업/예정)">고등학교/(졸업/예정) </option>
+        		<option value="기타">기타 </option>
 
         </select>
     
@@ -261,9 +254,31 @@ border: 1px solid #DBE0E9;
     <table class ="resumetable">
       <tr>
         <td style="width:800px;">
-		   <textarea class = "resumeinput2" rows="10" cols="50" name="selfintro"  placeholder="자기소개서를 작성하세요(최대 500자)"></textarea></td>		
+		   <textarea class = "resumeinput2" rows="10" cols="50" name="selfintro"  placeholder="자기소개서를 작성하세요(최대 500자)"></textarea></td>	
+		  
+		 
       </tr>
+      
+      
+      
+      
 	</table>
+	
+    <!--  수정됨  --> 
+	<div class="button-container">
+    <table>
+        <tr>
+            <td class="endbutton">
+                <button class="asidesubmit"  type="submit"  id="checkForm">작성완료</button>   
+                <input class="asidesubmit" type="button" value="이전으로" id="goList" style="background-color: white; color: black">
+            </td> 
+        </tr>
+    </table>
+</div>
+	
+	
+	
+	
     </td>
     </tr>
   
@@ -284,6 +299,50 @@ const  goList = document.getElementById('goList')
 goList.onclick = function() {
    location.href = '/Individual/Main?user_id=${param.user_id}'
 } 
+
+</script>
+
+
+<script>
+document.getElementById('checkForm').onclick = function(event) {
+    event.preventDefault(); // 기본 제출 동작 방지
+
+    const title = document.querySelector('input[name="title"]');
+    const birth = document.querySelector('input[name="birth"]');
+    const gender = document.querySelector('select[name="gender"]');
+    const career = document.querySelector('select[name="career"]');
+    const edu = document.querySelector('select[name="edu"]');
+
+    // 필수 입력란 검증
+    if (!title.value ) {
+        alert("제목을 입력해 주세요.");
+        title.focus();
+        return false;
+    }
+    if (birth.value.length !== 8) {
+        alert("생년월일을 다시 확인해 주세요 (예시) 20241029 ");
+        birth.focus();
+        return false;
+    }
+    if (gender.value === "") {
+        alert("성별을 선택해 주세요.");
+        gender.focus();
+        return false;
+    }
+    if (career.value === "") {
+        alert("경력을 선택해 주세요.");
+        career.focus();
+        return false;
+    }
+    if (edu.value === "") {
+        alert("최종 학력을 선택해 주세요.");
+        edu.focus();
+        return false;
+    }
+
+    // 모든 검증 통과 후 폼 제출
+    document.getElementById('WriteForm').submit();
+};
 </script>
 
 </body>

@@ -146,7 +146,7 @@
  
  <footer>
   <div class="footer1">
-   <p><small>&copy; 2024 All rights reserved 기업명</small></p>
+   <p><small>&copy; 2024 All rights reserved 픽미</small></p>
   </div>
  </footer>
 

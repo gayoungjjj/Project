@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,37 +35,31 @@ public class IndividualController {
 	
 	// ------------------------------- 로그인 -------------------------------//
 	// Individual/Login (로그인)
-	@RequestMapping("/Login")
-	public String login(
-			HttpServletRequest  request,
-	        HttpServletResponse response
-		    ) {
-	        String user_id   = request.getParameter("user_id");
-	        String password  = request.getParameter("password");
-	        String uri       = request.getParameter("uri");
-	    	String menu_id   = request.getParameter("menu_id");
-			String nowpage   = request.getParameter("nowpage");
+	@GetMapping("/Login")
+    public String loginForm(Model model) {
+        return "/individual/login"; 
+    }
+	
+	@PostMapping("/Login")
+    public String login(HttpServletRequest  request, 
+    					HttpServletResponse response,
+    					RedirectAttributes redirectAttributes) {
+        String user_id = request.getParameter("user_id"); 
+        String password = request.getParameter("password");
 
-			IndividualVo vo = individualMapper.login(user_id, password);
-	        System.out.println("vo=" + vo);
+        IndividualVo individualVo = individualMapper.login(user_id, password); 
 
-	        HttpSession session = request.getSession();
-	        session.setAttribute("login", vo);
-	        
-	        System.out.println("user_id=" + user_id);
+        HttpSession session = request.getSession();
 
-	        if (vo != null) {
-	       	 // 로그인 성공 처리
-	       	session.setAttribute("login", vo);
-	       	return "redirect:/Individual/Main?user_id=" + user_id;
-	       } else {
-	       	// 로그인 실패 처리
-	       	 request.setAttribute("errorMessage", "아이디 또는 비밀번호를 확인하세요.");
-	            //System.out.println("실패");        
-	            return "/individual/login"; // 로그인 페이지로 돌아가기
-	       }
-	      
-	    }
+        if (individualVo != null) {
+            session.setAttribute("login", individualVo);
+            return "redirect:/Individual/Main?user_id=" + user_id; 
+        } else {
+        	redirectAttributes.addFlashAttribute
+        	("errorMessage", "로그인 또는 비밀번호가 일치하지 않습니다.");
+            return "redirect:/Individual/Login"; 
+        }
+	}
 	// ------------------------------- 로그아웃 -------------------------------//
 	// Individual/Logout (로그아웃)
 	@RequestMapping(value="/Logout",
@@ -89,10 +86,13 @@ public class IndividualController {
 	
 	// ------------------------------- 메인 화면 -------------------------------//
 	// Individual/Main (메인 화면)
-	@RequestMapping("/Main")
-	public String main() {
-		return "individual/main";
-	}
+    @RequestMapping("/Main")
+    public String main(String user_id, Model model) {
+        List<CompanyVo> postList = companyMapper.getPostList();
+        model.addAttribute("postList", postList); 
+        return "/individual/main"; 
+    }
+		
 	// ------------------------------- 회원가입 -------------------------------//
 	// Individual/Signup (회원가입)
     @RequestMapping("/Signup")
@@ -120,7 +120,17 @@ public class IndividualController {
     		IndividualVo  individualVo = individualMapper.idDupCheck( user_id  );		
     		return  individualVo;
     	} 
-	
+    // 이메일 중복 확인
+    @RequestMapping(
+            value = "/EmailDupCheck",
+            method = RequestMethod.GET,
+            headers = "Accept=application/json")
+        @ResponseBody
+        public IndividualVo emailDupCheck(String email) { 
+    	IndividualVo individualemailVo = individualMapper.emailDupCheck(email);
+            System.out.println(individualemailVo);
+            return individualemailVo;
+        	}
 	// ------------------------------- 마이페이지 -------------------------------//
 	// Individual/Mypage (마이페이지)
 	// http://localhost:9090/Individual/Mypage?user_id=user1
@@ -169,64 +179,61 @@ public class IndividualController {
 	// ------------------------------- 채용공고 -------------------------------//
 
 	//Individual/Postlist (채용공고 목록)
-		@RequestMapping("/Postlist")
-		public ModelAndView postlist() {
+	@RequestMapping("/Postlist")
+	public ModelAndView postlist() {
 			
-			List<CompanyVo> mainList = companyMapper.getmainList();
-			System.out.println("mainlist"+mainList);
-			
-			ModelAndView mv = new ModelAndView();
-			mv.addObject("mainList", mainList);
-			mv.setViewName("individual/postlist");
-			return mv ;
-			}
+		List<CompanyVo> mainList = companyMapper.getmainList();
+		System.out.println("mainlist"+mainList);
 		
-		//Individual/Postview (채용공고 상세페이지)
-		// http://localhost:9090/Individual/View?aplnum=1
-		@RequestMapping("/Postview")
-		public ModelAndView postview(CompanyVo companyVo ,IndividualVo individualVo ,HttpServletRequest request, Model model) {
-					
-			//조회수 증가
-			companyMapper.plushit(companyVo);
-			// System.out.println("plusint"+companyVo);
-			
-			//글 조회
-			CompanyVo vo = companyMapper.getmain(companyVo);
-			//System.out.println("vo"+vo);
-			
-			String       duty   =  vo.getDuty().replace("\n", "<br>");
-			vo.setDuty( duty );
-				
-			ModelAndView mv = new ModelAndView();
-			mv.addObject("vo",vo );
-			mv.setViewName("individual/postview");
-
-			return mv;
-			
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("mainList", mainList);
+		mv.setViewName("individual/postlist");
+		return mv ;
 		}
 		
-		       //채용공고 지원 //
-			@RequestMapping("/Postapp")
-			public ModelAndView postapp(String user_id, CompanyVo companyVo ,IndividualVo individualVo ,HttpServletRequest request, Model model) {
-				
-				CompanyVo vo = companyMapper.getmain(companyVo);
-						
-				String       duty   =  vo.getDuty().replace("\n", "<br>");
-				vo.setDuty( duty );
-			    
-				
-				ModelAndView mv = new ModelAndView();
-				mv.addObject("vo",vo );
-				
-				mv.setViewName("individual/postapp");
+	//Individual/Postview (채용공고 상세페이지)
+	// http://localhost:9090/Individual/View?aplnum=1
+	@RequestMapping("/Postview")
+	public ModelAndView postview(CompanyVo companyVo ,IndividualVo individualVo ,HttpServletRequest request, Model model) {
+					
+		//조회수 증가
+		companyMapper.plushit(companyVo);
+		// System.out.println("plusint"+companyVo);
+		
+		//글 조회
+		CompanyVo vo = companyMapper.getmain(companyVo);
+		//System.out.println("vo"+vo);
+			
+		String       duty   =  vo.getDuty().replace("\n", "<br>");
+		vo.setDuty( duty );
+			
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("vo",vo );
+		mv.setViewName("individual/postview");
 
-				List<String> titles = individualMapper.getTitlesByUSerId(user_id);
-				System.out.println("titles"+titles);
-				
-				model.addAttribute("titles", titles);
-				
-				return mv;
-			}
+		return mv;		
+   		}
+		
+	//채용공고 지원 //
+	@RequestMapping("/Postapp")
+	public ModelAndView postapp(String user_id, CompanyVo companyVo ,IndividualVo individualVo ,HttpServletRequest request, Model model) {
+			
+		CompanyVo vo = companyMapper.getmain(companyVo);
+					
+		String       duty   =  vo.getDuty().replace("\n", "<br>");
+		vo.setDuty( duty );  
+			
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("vo",vo );				
+		mv.setViewName("individual/postapp");
+		List<String> titles = individualMapper.getTitlesByUSerId(user_id);
+		System.out.println("titles"+titles);
+		
+		model.addAttribute("titles", titles);			
+		return mv;
+    	}
+	
+	//채용공고 등록 //
 	@RequestMapping("/WriteForm2")
     public ModelAndView writeForm2() {    
         ModelAndView mv = new ModelAndView();
@@ -267,7 +274,7 @@ public class IndividualController {
     }
     
     @RequestMapping("/Write")
-    public ModelAndView signupForm(IndividualVo individualVo) {
+    public ModelAndView signupForm(IndividualVo individualVo ) {  	
         individualMapper.insert(individualVo);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("redirect:/Individual/Main"); 
@@ -280,7 +287,7 @@ public class IndividualController {
 	//Company/ResumeList ( 제출 이력서 목록)
 	@RequestMapping("/ResumeList")
 	public ModelAndView resumeList(IndividualVo individualVo, HttpServletRequest request, String user_id, String compname) {
-		HttpSession session = request.getSession();
+	HttpSession session = request.getSession();
 	IndividualVo login = (IndividualVo) session.getAttribute("login");
 
 	String userid = login.getUser_id();
@@ -304,6 +311,37 @@ public class IndividualController {
 		
 		
 	} 
+	
+	/*
+	 * @RequestMapping("/Delapplist") public ModelAndView delappList(IndividualVo
+	 * individualVo, HttpServletRequest request, String user_id, String app_id) {
+	 * HttpSession session = request.getSession(); System.out.println("user_id=" +
+	 * user_id); System.out.println("compname=" + compname);
+	 * 
+	 * IndividualVo login = (IndividualVo) session.getAttribute("login");
+	 * 
+	 * String userid = login.getUser_id(); IndividualVo vo =
+	 * individualMapper.getUserById(userid);
+	 * 
+	 * List<IndividualVo> appList = individualMapper.getappList(vo);
+	 * List<IndividualVo> reList = individualMapper.getreList(vo);
+	 * 
+	 * System.out.println("appdellist=" + appList); System.out.println("redellist="+
+	 * reList);
+	 * 
+	 * individualMapper.delapplist(individualVo);
+	 * 
+	 * ModelAndView mv = new ModelAndView(); System.out.println(user_id);
+	 * mv.addObject("appList", appList); mv.addObject("title", title);
+	 * mv.setViewName("individual/resumeview"); // 이력서 목록 페이지로 리다이렉트 return
+	 * "redirect:/Individual/ResumeList?user_id="; }
+	 */
+	
+	
+	
+	
+	
+	
 	//Company/Resumeview (이력서 상세페이지)
 	// http://localhost:9090/Company/Resumview?resume_id=1001
 	@RequestMapping("/Resumeview")
@@ -341,56 +379,54 @@ public class IndividualController {
 		mv.addObject("title", title);
 		mv.setViewName("individual/resumeupdate");
 		return mv;
-	}
-
+		}
 
 	@RequestMapping("/UpdatingForm")
 	public ModelAndView updatingForm() {    
    
 		ModelAndView mv = new ModelAndView();
-    mv.setViewName("/individual/Updating");
-    return mv;
-	}
+		mv.setViewName("/individual/Updating");
+		return mv;
+		}
 
 	@RequestMapping("/Updating")
 	public ModelAndView updating(IndividualVo individualVo) {
 	
-    individualMapper.update2(individualVo);
+		individualMapper.update2(individualVo);
     
-    System.out.println("IndividualVo: " + individualVo);
-   
+		System.out.println("IndividualVo: " + individualVo);
+		System.out.println("완료");
     
-    System.out.println("완료");
-    
-    String user_id = individualVo.getUser_id();
-    ModelAndView mv = new ModelAndView();
-    mv.setViewName("redirect:/Individual/ResumeList?user_id=" + user_id); 
-    return mv;
-	}
+		String user_id = individualVo.getUser_id();
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("redirect:/Individual/ResumeList?user_id=" + user_id); 
+		return mv;
+		}
 	// 삭제 
 	@RequestMapping("/Deleteres")
-	public String deleteres(IndividualVo individualVo, RedirectAttributes redirectAttributes) {
-	System.out.println("IndividualVo는" + individualVo );
-	individualMapper.deleteres(individualVo);
+		public String deleteres(IndividualVo individualVo, RedirectAttributes redirectAttributes) {
+		System.out.println("IndividualVo는" + individualVo );
+		individualMapper.deleteres(individualVo);
 	
 	
-	String user_id = individualVo.getUser_id();
-	System.out.println(user_id);
-	redirectAttributes.addFlashAttribute("message", "선택한 이력서가 삭제되었습니다");
-	return "redirect:/Individual/ResumeList?user_id=" + user_id;
-	}
+		String user_id = individualVo.getUser_id();
+		System.out.println(user_id);
+		redirectAttributes.addFlashAttribute("message", "선택한 이력서가 삭제되었습니다");
+		return "redirect:/Individual/ResumeList?user_id=" + user_id;
+		}
 	
 	// ------------------------------- 개인: 기업 추천 -------------------------------//
-    @RequestMapping("/Recommend")
-	public ModelAndView recommend() {	
-		List<IndividualVo> recommendList = individualMapper.recommendList();
-		System.out.println("recommendList"+recommendList);
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("recommendList", recommendList);
-		mv.setViewName("/individual/recommend");
-		return mv;
-	}
- // ------------------------------- 고객센터 -------------------------------//
+	@RequestMapping("/Recommend")
+	public ModelAndView recommend(String user_id) {    
+		List<IndividualVo> recommendList = individualMapper.recommendList(user_id); 
+	    System.out.println("recommendList: " + recommendList);
+	    ModelAndView mv = new ModelAndView();
+	    mv.addObject("recommendList", recommendList);
+	    mv.setViewName("/individual/recommend");
+	    return mv;
+	    } 
+    
+    // ------------------------------- 고객센터 -------------------------------//
  	// Company/Cslist (고객센터)
  	@RequestMapping("/Cslist")
  	public ModelAndView cslist(String user_id, String title) {

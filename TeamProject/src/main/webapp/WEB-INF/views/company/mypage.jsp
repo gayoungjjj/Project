@@ -139,6 +139,10 @@
         </nav> 	   
  	  </header>
     </div>
+    
+    <div class= "div2">
+<a href="/Individual/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
+</div>
 
      <!--메인화면 -->
      <div class= "div3">
@@ -194,7 +198,7 @@
          <script>
         	const goMain      = document.getElementById('goMain')
   			goMain.onclick    = function() {
-  				location.href = '/Company/Main'
+  				location.href = '/Company/Main?user_id=${vo.user_id}'
   			}
   		 	const  goDelete   = document.getElementById('goDelete')
   			goDelete.onclick  = function() {

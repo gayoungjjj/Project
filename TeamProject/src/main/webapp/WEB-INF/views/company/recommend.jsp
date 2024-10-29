@@ -124,7 +124,10 @@
     	</nav> 	   
  	</header>
  </div>
- 
+
+<div class= "div2">
+<a href="/Individual/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
+</div>
   <main>
    <h2>인재 추천</h2>
      <table>
@@ -143,13 +146,13 @@
  
         <c:forEach var="vo" items="${recommendList}">
         <form action="/Company/Bookmarking" method="post">
-        <input type="hidden" name="user_id" value="${param.user_id}">  <!-- 수정 -->
+        <input type="hidden" name="user_id" value="${param.user_id}"> 
                 
             <tr>
             
                 <td>${vo.username}</td>
                 <td>
-                    <a href="/Company/Resumejustview?title=${vo.title}&user_id=${param.user_id}&compname=${param.compname}">  <!-- 수정 -->
+                    <a href="/Company/Resumejustview?title=${vo.title}&user_id=${param.user_id}&compname=${param.compname}"> 
                         ${vo.title}
                     </a>
                 </td>
@@ -177,16 +180,6 @@
     
  
  </main>
- 
- <footer>
-  <div class="footer1">
-   <p><small>&copy; 2024 All rights reserved 기업명</small></p>
-  </div>
- </footer>
-
-
-
-
 
 <script>
 function disableButton(button) {
@@ -202,6 +195,11 @@ function disableButton(button) {
         alert("${alertMessage}");
     </script>
 </c:if>
-
+ 
+ <footer>
+  <div class="footer1">
+   <p><small>&copy; 2024 All rights reserved 픽미</small></p>
+  </div>
+ </footer>
 </body>
 </html>

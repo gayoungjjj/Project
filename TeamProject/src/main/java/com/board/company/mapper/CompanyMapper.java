@@ -78,5 +78,7 @@ public interface CompanyMapper {
 
 	List<CompanyVo> bookmarkList(String userId, String title);
 
+	List<CompanyVo> getPostList();
+
 
 }

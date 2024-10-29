@@ -69,7 +69,6 @@
  	</header>
  </div>
 
-
 <div class= "div2">
 <a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
 </div>

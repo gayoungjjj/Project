@@ -81,6 +81,9 @@
  	</header>
  </div>
 
+<div class= "div2">
+<a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
+</div>
 
   <!--채용공고 목록_상세페이지 -->
 <main>  

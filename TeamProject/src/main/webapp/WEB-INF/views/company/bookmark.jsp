@@ -117,6 +117,10 @@
  	</header>
  </div>
  
+ <div class= "div2">
+<a href="/Individual/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
+</div>
+ 
  <main>
    <h2>북마크한 인재 목록</h2>
      <table>
@@ -131,12 +135,12 @@
        <c:forEach var="book" items="${bookmarkList}">
          <form action="/Company/Bookmarking" method="post">
          <input type="hidden" name="user_id" value="${param.user_id}">
-         <input type="hidden" name="compname" value="${param.compname}">   <!-- 수정 -->
+         <input type="hidden" name="compname" value="${param.compname}"> 
        <tr>
         <td>${book.username}</td>
         <td>${book.birth}</td>
         <td>
-          <a href="/Company/Resumejustview?title=${book.title}&user_id=${param.user_id}&compname=${param.compname}">  <!-- 수정 -->
+          <a href="/Company/Resumejustview?title=${book.title}&user_id=${param.user_id}&compname=${param.compname}"> 
                 ${book.title}
             </a>
          </td>
@@ -149,17 +153,15 @@
         </td>
        </tr>
        </form>  
-       </c:forEach>
+       </c:forEach>       
        
-       
-     </table>
-      
+     </table>     
  
  </main>
  
  <footer>
   <div class="footer1">
-   <p><small>&copy; 2024 All rights reserved 기업명</small></p>
+   <p><small>&copy; 2024 All rights reserved 픽미</small></p>
   </div>
  </footer>
 

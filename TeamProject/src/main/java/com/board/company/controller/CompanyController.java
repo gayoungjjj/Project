@@ -93,16 +93,19 @@ public class CompanyController {
 	}
 	
 	// ------------------------------- 메인 화면 -------------------------------//
-	// Company/Main (메인 화면)
-	@RequestMapping("/Main")
+    // Company/Main (메인 화면)
+    @RequestMapping("/Main")
 	public ModelAndView main(String user_id) {
-		String compname = companyMapper.compnameByUserId(user_id);
-		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("user_id", user_id);
-		mv.addObject("compname", compname);
-		mv.setViewName("/company/main");
-		return mv ;
+    	String compname = companyMapper.compnameByUserId(user_id);
+
+	    List<CompanyVo> postList = companyMapper.getPostList();
+	      
+	    ModelAndView mv = new ModelAndView();
+	    mv.addObject("postList", postList);
+	    mv.addObject("user_id", user_id);
+	    mv.addObject("compname", compname);
+	    mv.setViewName("/company/main");
+	    return mv ;
 	}
 	
 	// ------------------------------- 회원가입 -------------------------------//		   
@@ -249,13 +252,12 @@ public class CompanyController {
 	// http://localhost:9090/Company/WriteForm?aplnum=1
 	
 	@RequestMapping("/WriteForm")
-	public ModelAndView writeform(CompanyVo companyVo,String user_id, String compname) {
+	public ModelAndView writeform(CompanyVo companyVo, String user_id, String compname) {
 		
 		ModelAndView mv = new ModelAndView();
 		System.out.println("writeformVo"+companyVo);
 		mv.addObject("companyVo", companyVo);
 		mv.addObject("user_id", user_id);
-		mv.addObject("compname", compname);
 		mv.setViewName("company/postwrite");
 		return mv;
 	}
@@ -266,7 +268,7 @@ public class CompanyController {
 	    
 	    ModelAndView mv = new ModelAndView();
 		mv.addObject("user_id", user_id);
-		mv.setViewName("redirect:/Company/Postlist");
+		mv.setViewName("redirect:/Company/Postlist?user_id=" + user_id + "&compname=" + compname);
 		return mv;
 	}
 	
@@ -281,7 +283,7 @@ public class CompanyController {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("user_id", user_id);
-		mv.setViewName("redirect:/Company/Postlist");
+		mv.setViewName("redirect:/Company/Postlist?user_id=" + user_id + "&compname=" + compname);
 //		mv.setViewName("redirect:/Company/ListManagement");
 		return mv;
 	}
@@ -408,8 +410,6 @@ public class CompanyController {
 	
 	}
 	
-	
-	
 	// ------------------------------- 인재 추천 -------------------------------//
 	// http://localhost:9090/Company/Recommend?user_id=user3&compname=카카오
 	//인재 추천
@@ -428,9 +428,6 @@ public class CompanyController {
 	
 	//-----------------------------------북마크--------------------------------------//
 	//http://localhost:9090/Company/Bookmark?user_id=user3&compname=%EC%82%BC%EC%84%B1
-	
-	
-	// 전체 수정  import 필여함
 	
 	//북마크기능 
 	@SuppressWarnings("null")

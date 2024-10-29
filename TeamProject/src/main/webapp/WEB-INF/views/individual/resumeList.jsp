@@ -104,17 +104,9 @@ table td a:hover {
  	</header>
  </div>
 
-
-
 <div class= "div2">
 <a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
 </div>
-
-
-
-
-  <!-- 받은 이력서 목록_메인화면 -->
-  <!-- 지원자아이디 : user_id -->
   
 <div class= "div3">
  <main>
@@ -140,19 +132,21 @@ table td a:hover {
  
  
  <table>
-    <h2 style=text-align:center;>지원 내역</h2>
+    <h2 style=text-align:center;>제출한 이력서 내역</h2>
      <tr>
+     <th>지원번호</th>
       <th>지원자명</th>
       <th>지원공고명</th>
       <th>이력서제목</th>
       <th>희망 근무 지역</th>
       <th>지원일</th>
       <th>합격여부</th>
+      <th>지원취소</th>
      </tr>
      
      <c:forEach var="app" items="${appList}">
       <tr>
-
+      <td>${ app.app_id}</td>
        <td>${ app.user_id }</td>
        <td>${ app.post_id }</td>
        <td>
@@ -161,7 +155,15 @@ table td a:hover {
        </td>
        <td>${ app.location }</td>
        <td>${ app.app_date }</td>
-       <td>${ app.result }</td>
+       <td>${ app.result }</td>    
+       
+       <td>   
+         <form action="/Individual/Delapplist" method="POST"> <!-- POST 요청을 위한 form -->
+         <input type="hidden" name="app_id" value="${app.app_id}" />
+         <input type="hidden" name="user_id" value="${app.user_id}" />
+         <button type="submit" class="cancelButton">취소</button>
+         </form>
+	  </td>
       </tr>
      </c:forEach>
     </table>
@@ -173,6 +175,12 @@ table td a:hover {
    <p><small>&copy; 2024 All rights reserved 픽미</small></p>
   </div>
  </footer>
+
+
+<script>
+
+</script>
+
 
 </body>
 </html>

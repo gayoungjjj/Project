@@ -24,7 +24,7 @@ public interface IndividualMapper {
 
 	IndividualVo idDupCheck(String user_id);
 
-	List<IndividualVo> recommendList();
+	List<IndividualVo> recommendList(String user_id);
 
 	void insert(IndividualVo individualVo);
 	
@@ -43,6 +43,8 @@ public interface IndividualMapper {
 	void update2(IndividualVo individualVo);
 
 	void deleteres(IndividualVo individualVo);
+
+	void delapplist(IndividualVo individualVo);
 
 
 

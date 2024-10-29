@@ -120,7 +120,7 @@
      <tr>
       <td colspan="4"> 	
        <a class="btn btn-outline-primary" 
-         href="/Company/WriteForm?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=${compname}">새로운 공고 쓰기</a>
+         href="/Company/WriteForm?aplnum=${vo.aplnum}&user_id=${param.user_id}&compname=${param.compname}">새로운 공고 쓰기</a>
       
       <!-- login이 완성되면 c:if -user_id를 compname로 변경 -->
       <c:if test="${login.user_id eq vo.user_id}">

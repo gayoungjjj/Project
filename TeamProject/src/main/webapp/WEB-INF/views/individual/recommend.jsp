@@ -87,7 +87,7 @@
 <body>
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Individual/Main"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Individual/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
@@ -115,13 +115,16 @@
  	</header>
  </div>
  
- <main>
+<div class= "div2">
+<a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
+</div>
+
+<main>
    <h2>기업 추천</h2>
      <table>
        <tr>
         <td>기업명</td>
         <td>채용공고</td>
-        <td>경력</td>
         <td>급여</td>
         <td>필수 자격증</td>
         <td>등록 마감일</td>
@@ -130,21 +133,27 @@
        <c:forEach var="vo" items="${recommendList}">
        <tr>
         <td>${vo.compname}</td>
-        <td><a href="/Individual/Postview?aplnum=${ vo.aplnum }" />${vo.post_id}</td>
-        <td>${vo.career}</td>
+        <td><a href="/Individual/Postview?aplnum=${vo.aplnum}">${vo.post_id}</a></td>       
         <td>${vo.salary}</td>
         <td>${vo.licenses}</td>
         <td>${vo.deadline}</td>
        </tr>
        </c:forEach>
        
+       <c:if test="${empty recommendList}">
+       <tr>
+           <td colspan="6">추천할 채용공고가 없습니다.</td>
+       </tr>
+      </c:if>
+
      </table>
  
  </main>
+
  
  <footer>
   <div class="footer1">
-   <p><small>&copy; 2024 All rights reserved 기업명</small></p>
+   <p><small>&copy; 2024 All rights reserved 픽미</small></p>
   </div>
  </footer>
 
