@@ -135,7 +135,7 @@
       		   <li><a href="/Company/ListManagement?user_id=${sessionScope.login.user_id }&compname=${sessionScope.login.compname}">등록 공고 관리</a></li>
       		   <li><a href="/Company/ResumeList?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">지원 받은 이력서</a></li>
                <li><a href="/Company/Recommend?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">북마크한 인재</a></li>               
+               <li><a href="/Company/Bookmark?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">PICK ME</a></li>               
                <li><a href="/Company/Cslist?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">고객센터</a></li>  
           </ul> 
               
@@ -161,7 +161,7 @@
         <td>전화번호</td>
         <td>생년월일</td>
         <td>자격증</td>
-        <td>북마크</td>
+        <td>PICK ME</td>
        </tr>
        
     
@@ -187,7 +187,7 @@
 				   <input type="hidden" name="compname" value="${sessionScope.login.compname}">
                    <input type="hidden" name="phone_number" value="${vo.phone_number}">
                    <input type="hidden" name="birth" value="${vo.birth}">
-                   <input type="submit"  value="북마크" onclick="disableButton(this)">
+                   <input type="submit"  value="PICK ME" onclick="disableButton(this)">
                 </td>
             </tr>
                </form>  

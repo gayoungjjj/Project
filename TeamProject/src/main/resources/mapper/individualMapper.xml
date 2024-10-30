@@ -239,6 +239,36 @@ WHERE user_id = #{arg0} AND title = #{arg1}
 	DELETE FROM APPLICATIONS
 	WHERE   APP_ID= #{app_id}
 	</delete>  
+	
+	<!-- 수정됨-->
+	
+	<select id="getallUserById">
+	SELECT * FROM RESUMES
+	WHERE USER_ID= #{user_id}	
+			
+	</select>
+	
+	
+	
+	<!-- 원호 수정됨-->
+	<select id="getBookmarksByUsername">
+    SELECT * FROM COMBOOKMARK
+    WHERE USERNAME = #{username}
+    AND   BIRTH = #{birth}
+    AND   PHONE_NUMBER =  #{phone_number}
+	AND   BOOKMARK ='ON'	
+		
+		
+	</select>
+	
+	<!-- 원호 수정됨-->
+	<select id="getJobPostingsByUserId">
+    SELECT * FROM JOBPOSTING
+    WHERE USER_ID= #{arg1}
+	
+	</select>
+	
+	
 </mapper>
 
 

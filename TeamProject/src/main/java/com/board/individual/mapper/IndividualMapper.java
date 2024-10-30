@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.board.company.vo.CompanyVo;
 import com.board.individual.vo.IndividualVo;
 
 @Mapper
@@ -55,6 +56,16 @@ public interface IndividualMapper {
 	List<IndividualVo> checkappex(String user_id, String aplnum);
 
 	List<IndividualVo> checkTitleExists( String userId, String title);
+	
+	// 원호 수정됨
+
+	List<IndividualVo> getBookmarksByUsername(IndividualVo vo);
+
+	IndividualVo getallUserById(String user_id);
+
+	List<IndividualVo> getJobPostingsByUserId(String string);
+
+
 
 
 

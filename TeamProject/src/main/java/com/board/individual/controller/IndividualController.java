@@ -1,5 +1,8 @@
 package com.board.individual.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -78,7 +82,7 @@ public class IndividualController {
 		session.invalidate();
 
 		//return "redirect:" + (String) url;
-		return "/individual/login";
+		return "/home";
 		}
 	
 	// ------------------------------- 홈 화면 -------------------------------//
@@ -520,7 +524,32 @@ public class IndividualController {
 	    mv.setViewName("/individual/recommend");
 	    return mv;
 	    } 
-    
+	
+	
+	// ------------------------------- 북마크(PICK ME기능) // 원호 수정됨 -------------------------------//
+	
+	@RequestMapping("/Bookmarking")
+	public String bookmark(IndividualVo individualVo, Model model) {
+	    
+		IndividualVo vo = individualMapper.getallUserById(individualVo.getUser_id());	
+		System.out.println("버"+vo);
+	    // user_id를 사용하여 북마크 목록 가져오기
+	    List<IndividualVo> bookmarkList = individualMapper.getBookmarksByUsername(vo);
+	    System.out.println("북"+bookmarkList);
+	    // 뷰에 데이터 추가
+	    List<IndividualVo> jobPostings = new ArrayList<>();
+	    for (IndividualVo bookmark : bookmarkList) {
+	        jobPostings.addAll(individualMapper.getJobPostingsByUserId(bookmark.getUser_id()));
+	    }
+	    System.out.println("공고"+jobPostings);
+	    
+	    model.addAttribute("bookmarkList", bookmarkList);
+	    model.addAttribute("jobPostings", jobPostings);	    
+	    // 리다이렉트할 URL 설정
+	    return "individual/bookmark";
+	}
+	
+	
     // ------------------------------- 고객센터 -------------------------------//
  	// Company/Cslist (고객센터)
  	@RequestMapping("/Cslist")
@@ -597,7 +626,20 @@ public class IndividualController {
  		companyMapper.updatecs(companyVo);
  		
  		ModelAndView mv = new ModelAndView();
- 		mv.setViewName("redirect:/Individual/Cslist");
+ 		mv.setViewName("individual/cslist");
  		return mv;
  	}
+ 	
+	// Company/csdelete (문의글 삭제)
+	@RequestMapping("/Csdelete")
+	public ModelAndView csdelete(CompanyVo companyVo, String user_id) {
+		companyMapper.deletecs(companyVo);
+		System.out.println(user_id);
+		System.out.println(companyVo);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("user_id", user_id);
+		mv.setViewName("redirect:/Individual/Cslist");
+		return mv;
+	}
 }

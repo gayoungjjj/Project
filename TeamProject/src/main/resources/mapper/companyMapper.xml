@@ -356,6 +356,28 @@ INSERT INTO COMBOOKMARK (
     WHERE CSP_ID = #{csp_id}  
   </delete>
   
+     <!-- stats -->
+  <select id="getTotalUsers" resultType="int">
+    SELECT COUNT(*) FROM COMPANY_USERS
+  </select>
+
+  <select id="getTotalCompUsers">
+    SELECT COUNT(*) FROM JOBPOSTING
+  </select>
+  
+  <select id="getTotalPost">
+    SELECT COUNT(*) FROM USERS
+  </select>
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
 </mapper>
 
 

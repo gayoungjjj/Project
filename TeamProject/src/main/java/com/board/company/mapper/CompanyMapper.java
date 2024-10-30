@@ -84,5 +84,14 @@ public interface CompanyMapper {
 
 	void deletecs(CompanyVo companyVo);
 
+	int getTotalUsers();
+
+	int getTotalCompUsers();
+
+	int getTotalPost();
+
+
+
+
 
 }

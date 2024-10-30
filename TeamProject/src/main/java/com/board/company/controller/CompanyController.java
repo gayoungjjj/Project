@@ -80,7 +80,7 @@ public class CompanyController {
 		session.invalidate();
 
 		//return "redirect:" + (String) url;
-		return "/company/login";
+		return "/home";
 		}
 	
 	// ------------------------------- 홈 화면 -------------------------------//
@@ -595,10 +595,10 @@ public class CompanyController {
 				String  isBookmarked =  companyMapper.isBookmark(userId, title);
 				if ("ON".equals(isBookmarked)){
 			        companyMapper.toggleBookmark(userId, title);  // DB의 BOOKMARK 값이 ON일경우 
-			        alertMessage = "북마크가 해제되었습니다.";
+			        alertMessage = "Pick! 취소 되었습니다.";
 			         } else if ("OFF".equals(isBookmarked)){      // DB의 BOOKMARK 값이 OFF일경우 
 			        companyMapper.toggleBookmark(userId, title);
-			        alertMessage = "북마크가 등록되었습니다.";
+			        alertMessage = "Pick! 하셨습니다.";
 			         }
 			        	 System.out.println("북마크 상태를 토글했습니다: User ID = " + userId + ", Title = " + title);
 				} else {
@@ -608,7 +608,7 @@ public class CompanyController {
 			System.out.println("북마크 저장: " + companyVo);
 			 
 			companyMapper.toggleBookmark(userId, title); // 북마크 값 변경(OFF -> ON)
-			alertMessage = "북마크가 등록되었습니다.";
+			alertMessage = "Pick! 하셨습니다.";
 			System.out.println("없는상태로 북마크 상태를 토글했습니다: User ID = " + userId + ", Title = " + title);	
 	        }
 		       
@@ -636,7 +636,6 @@ public class CompanyController {
 		System.out.println("bookmark"+bookmarkList);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("bookmarkList", bookmarkList);
-
 		mv.setViewName("/company/bookmark");
 		return mv;
 	}

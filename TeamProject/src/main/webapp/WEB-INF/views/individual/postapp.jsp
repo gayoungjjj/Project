@@ -67,6 +67,7 @@
    			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
     		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
     		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
+    		<li><a href="/Individual/Bookmarking?user_id=${param.user_id}">PICK ME</a></li>
     		<li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>     
           </ul> 
             <div class="rightmenu" >   
@@ -128,7 +129,7 @@
      <!-- 이력서 작성(이력서 불러오기 등)해서 이력서 보내기로 넘어가는 기능 구현하면 어떨까요? -->
      <tr>
       <td colspan="4"> 	
-       <a href="/Individual/Postlist?aplnum=${vo.aplnum}&user_id=${param.user_id}">목록</a>
+       <a href="/Individual/Postlist?aplnum=${vo.aplnum}&user_id=${param.user_id}">목록</a>               <!-- 수정됨 -->
       </td>
      </tr>
     
