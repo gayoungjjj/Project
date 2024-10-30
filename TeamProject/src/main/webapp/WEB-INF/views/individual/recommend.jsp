@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,8 +94,6 @@
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
   		<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" >
 	</div>
-
-   
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
@@ -102,24 +101,19 @@
    			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
     		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
     		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
-            <li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>      
+    		<li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>     
           </ul> 
-              
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Individual/Logout">로그아웃</a></li>
-     		   <li><a href="/Individual/Mypage">마이페이지</a></li>
+     		   <li><a href="/Individual/Mypage?user_id=${param.user_id}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
  	</header>
  </div>
  
-<div class= "div2">
-<a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
-</div>
-
-<main>
+ <main>
    <h2>기업 추천</h2>
      <table>
        <tr>
@@ -133,7 +127,7 @@
        <c:forEach var="vo" items="${recommendList}">
        <tr>
         <td>${vo.compname}</td>
-        <td><a href="/Individual/Postview?aplnum=${vo.aplnum}">${vo.post_id}</a></td>       
+        <td><a href="/Individual/Postview?aplnum=${vo.aplnum}&user_id=${param.user_id}">${vo.post_id}</a></td>       
         <td>${vo.salary}</td>
         <td>${vo.licenses}</td>
         <td>${vo.deadline}</td>
@@ -141,19 +135,18 @@
        </c:forEach>
        
        <c:if test="${empty recommendList}">
-       <tr>
-           <td colspan="6">추천할 채용공고가 없습니다.</td>
-       </tr>
-      </c:if>
+    	<tr>
+        	<td colspan="6">추천할 채용공고가 없습니다.</td>
+    	</tr>
+		</c:if>
 
      </table>
  
  </main>
-
  
  <footer>
   <div class="footer1">
-   <p><small>&copy; 2024 All rights reserved 픽미</small></p>
+   <p><small>&copy; 2024 All rights reserved 기업명</small></p>
   </div>
  </footer>
 

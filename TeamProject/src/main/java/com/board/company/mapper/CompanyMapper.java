@@ -58,7 +58,7 @@ public interface CompanyMapper {
 
 	void updatecs(CompanyVo companyVo);
 
-	List<CompanyVo> recommendList();
+	List<CompanyVo> recommendList(String compname);
 	
 	List<CompanyVo> getSortedPostList();
 
@@ -79,6 +79,10 @@ public interface CompanyMapper {
 	List<CompanyVo> bookmarkList(String userId, String title);
 
 	List<CompanyVo> getPostList();
+	
+	List<IndividualVo> getappList();
+
+	void deletecs(CompanyVo companyVo);
 
 
 }

@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
+<%@ taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pick Me</title>
     <style>
-body {
+        body {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -28,16 +30,22 @@ body {
             margin:  10px; 
             padding: 10px; 
             border: none;
-            border-radius: 4px;
+            border-radius: 10px;
             color: white;
             cursor: pointer;
             font-size: 25px; 
             transition: background-color 0.3s;
-            background-color: #2759FF
+            background-color: #2759FF;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    		box-sizing: border-box;
         } 
         .button:hover {
-            background-color: #405DAB; 
+            background-color: #405DAB;
+            transform: translateY(-5px);
+    		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); 
         }
+
     </style>
 </head>
 <body>

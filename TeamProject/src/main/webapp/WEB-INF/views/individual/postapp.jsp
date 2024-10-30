@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,35 +52,33 @@
 </head>
 <body>
 
- <div class = "div1">
+  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Individual/Main"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Individual/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
-  		<input type="text" placeholder="#픽미 는 당신의 취업을 응원합니다!! ">
+  		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
   		<img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" >
 	</div>
-
-   
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-			<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
+          	<li><a href="/Individual/Postlist?user_id=${param.user_id}">채용공고</a></li>
    			<li><a href="/Individual/Resumereg?user_id=${param.user_id}">이력서 등록</a></li>
     		<li><a href="/Individual/ResumeList?user_id=${param.user_id}">등록 이력서 관리</a></li>  		
     		<li><a href="/Individual/Recommend?user_id=${param.user_id}">기업 추천</a></li>
-            <li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>    
+    		<li><a href="/Individual/Cslist?user_id=${param.user_id}">고객센터</a></li>     
           </ul> 
-              
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Individual/Logout">로그아웃</a></li>
-     		   <li><a href="/Individual/Mypage">마이페이지</a></li>
+     		   <li><a href="/Individual/Mypage?user_id=${param.user_id}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
  	</header>
  </div>
+ 
 
 <div class= "div2">
 <a href="/Company/Main"><img src="/img/examplebanner.png" alt="예시 배너"></a>
@@ -129,7 +128,7 @@
      <!-- 이력서 작성(이력서 불러오기 등)해서 이력서 보내기로 넘어가는 기능 구현하면 어떨까요? -->
      <tr>
       <td colspan="4"> 	
-       <a href="/Individual/Postlist?aplnum=${vo.aplnum}">목록</a>
+       <a href="/Individual/Postlist?aplnum=${vo.aplnum}&user_id=${param.user_id}">목록</a>
       </td>
      </tr>
     
@@ -203,7 +202,7 @@ document.getElementById('applicationForm').onsubmit = function(event) {
         },
         success: function(response) {
             if (response.submitted) {
-                alert("이미 해당 공고에 지원하셨습니다. 중복 제출이 불가능합니다.");
+                alert(" 해당 공고에 지원한 내역이 있습니다. 중복 제출이 불가능합니다.");
             } else {
                 // 중복이 없으면 폼 제출
                 alert("해당 공고에 지원하셨습니다.");

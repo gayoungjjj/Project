@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -147,10 +148,29 @@ table td a:hover {
      
      <c:forEach var="cs" items="${csList}">
       <tr>
-       <td>${ cs.csp_id    }</td>
+       <td>${ cs.type    }</td>
        <td>
+         <c:choose>
+           <c:when test="${not empty cs.csp_pw && param.user_id != cs.user_id}">
+             <a href="javascript:void(0);" onclick="alert('비밀글입니다. 작성자만 접근할 수 있습니다.');">
+              ${cs.csp_title}
+             </a>
+           </c:when>
+    
+           <c:when test="${not empty cs.csp_pw && param.user_id == cs.user_id}">
+           <c:url var="encodedCspTitle" value="${cs.csp_title}" />
+             <a href="javascript:void(0);" onclick="checkPassword('${encodedCspTitle}', '${cs.csp_pw}')">
+              ${cs.csp_title}
+             </a>
+           </c:when>
+    
+           <c:otherwise>
          <a href="/Individual/Csview?user_id=${param.user_id}&csp_title=${cs.csp_title}">
-           ${ cs.csp_title }</td>
+           ${ cs.csp_title }
+         </a>
+           </c:otherwise>
+         </c:choose>
+       </td>
        <td>${ cs.result    }</td>
       </tr>
      </c:forEach>
@@ -172,6 +192,17 @@ table td a:hover {
      goWrite.onclick = function() {
          location.href = '/Individual/CswriteForm?user_id=${param.user_id}';
      };
+     
+     function checkPassword(encodedCspTitle, storedPassword) {
+      	  const userPassword = prompt("비밀번호를 입력하세요:");
+      	  
+      	  // 입력된 비밀번호가 저장된 비밀번호와 일치하면 페이지로 이동
+      	  if (userPassword === storedPassword) {
+      	    location.href = `/Company/Csview?user_id=${param.user_id}&csp_title=${encodedCspTitle}&compname=${compname}`;
+      	  } else {
+      	    alert("비밀번호가 올바르지 않습니다.");
+      	  }
+      	}
 </script>
  
  </main>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -149,13 +150,16 @@ table td a:hover {
      <tr>
       <td colspan="4"> 	
        <a class="btn btn-outline-primary" 
-         href="/Individual/CswriteForm?user_id=${param.user_id}">새 글 쓰기</a>
+         href="/Individual/CswriteForm?user_id=${sessionScope.login.user_id}">새 글 쓰기</a>
        <c:if test="${login.user_id eq vo.user_id}">
        <a class="btn btn-outline-warning" 
-         href="/Individual/CsupdateForm?csp_id=${vo.csp_id}&user_id=${param.user_id}&csp_title=${vo.csp_title}">수정</a>
+         href="/Individual/CsupdateForm?csp_id=${vo.csp_id}&user_id=${sessionScope.login.user_id}&csp_title=${vo.csp_title}">수정</a>
+       <a class="btn btn-outline-danger" 
+         href="/Individual/Csdelete?csp_id=${vo.csp_id}&user_id=${sessionScope.login.user_id}">삭제
+        </a>
        </c:if>
        <a class="btn btn-outline-success" 
-         href="/Individual/Cslist?user_id=${param.user_id}">목록</a>
+         href="/Individual/Cslist?user_id=${sessionScope.login.user_id}">목록</a>
       </td>
      </tr>
     

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
+<%@ taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +9,7 @@
     <title>개인 회원가입</title>
     <script src="https://code.jquery.com/jquery.min.js"></script>
     <style>
-         body {
+        body {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -65,38 +67,39 @@
     </style>
 </head>
 <body>
-	<img src="/img/로고.png"  alt=회사로고/>
+	<img src="/img/로고.png"  alt=회사로고 onclick="location.href='/'"/>
     <div class="container">
 	<h2>개인 회원 가입</h2>
-        <input type="button" class="inbtn" onclick="location.href='/Individual/Signup'" value="개인회원가입"/>
-        <input type="button" class="cobtn"onclick="location.href='/Company/Signup'" value="기업회원가입"/>
+        <input type="button" class="inbtn" onclick="location.href='/Individual/Signup'" value="개인회원가입" style="width: 300px;"/>
+        <input type="button" class="cobtn"onclick="location.href='/Company/Signup'" value="기업회원가입" style="width: 190px; background-color: #405DAB;"/>
         <form action="/Individual/SignupForm" method="POST">
             <table>
                 <tr>
                     <td colspan="2">
-                    <input type="text" name="user_id" placeholder="아이디" required />
-                    <input type="button" id="dupCheck" value="중복확인" />
+                    <input type="text" name="user_id" placeholder="*아이디" required />
+                    <input type="button" id="dupCheck" value="중복확인" style="width: 100%;"/>
                     <span id="dupResult"></span>
                     </td>
                 </tr>
                 <tr>
                 	<td colspan="2">
-                    <input type="password" name="password" placeholder= 비밀번호 required />
+                    <input type="password" name="password" id="password" placeholder="*비밀번호" required />
                     </td>
                 </tr>
                 <tr>
                 	<td colspan="2">
-                    <input type="password" name="passwordCheck" placeholder="비밀번호 확인" required/>
+                    <input type="password" name="passwordCheck" id="passwordCheck" placeholder="*비밀번호 확인" required/>
                     </td>
                 </tr>
                 <tr>
                 	<td colspan="2">
-                    <input type="text" name="username" placeholder="이름" required />
+                    <input type="text" name="username" placeholder="*이름" required />
                     </td>
                 </tr>
                 <tr>
                 	<td colspan="2">
-                    <input type="email" name="email" placeholder="이메일" required/>
+                    <input type="email" name="email" placeholder="*이메일" required/>
+                    <span id="dupResultEmail"></span>
                     </td>
                 </tr>
                 <tr>
@@ -128,7 +131,7 @@
 	    
        const  formEl          = document.querySelector('form');
        const  user_idEl       = document.querySelector('[name=user_id]');
-       const  emailEl   	  = document.querySelector('#email');
+       const  emailEl   	  = document.querySelector('[name=email]');
        const  passwordEl   	  = document.querySelector('#password');
        const  passwordCheckEl = document.querySelector('#passwordCheck');
        const  usernameEl   	  = document.querySelector('[name=username]');
@@ -141,28 +144,28 @@
        
        
        formEl.onsubmit   = function () {           
-		   if(  user_idEl.value.trim() == ''  ) {
+		   if(  user_idEl.value.trim() === ''  ) {
                alert('아이디를 입력하세요')
                user_idEl.focus()
            	   return  false;
 		   } 
-		   if( passwordEl.value.trim() == '' ) {
+		   if( passwordEl.value.trim() === '' ) {
 			   alert('비밀번호를 입력하세요')
                passwordEl.focus()
 	           return  false;
 		   }
-		   if( passwordCheckEl.value.trim() == '' ) {
+		   if( passwordCheckEl.value.trim() === '' ) {
 			   alert('비밀번호확인을 입력하세요')
                passwordCheckEl.focus()
 	           return  false;
 		   }          
-           if( passwordEl.value != passwordCheckEl.value ) {
+           if( passwordEl.value !== passwordCheckEl.value ) {
         	   alert('비밀번호가 일치하지 않습니다')
                passwordCheckEl.focus()
         	   return  false;
            }
            if( usernameEl.value.trim().length < 2 ) {
-        	   alert('이름은 2자 이상 입력하세요')
+        	   alert('이름은 두자 이상 입력하세요')
                usernameEl.focus()
 	           return  false;
 		   }	
@@ -171,12 +174,13 @@
                emailEl.focus();
                return false;
            }
-           if(  dupCheckClicked == false ) {
+           if(  dupCheckClicked === false ) {
         	   alert('중복확인을 하세요')
                return false;
            }
+           alert('회원가입이 완료되었습니다. 로그인을 해주세요.');
 		   return  true;
-	   }
+	   };
     </script> 
     <script>
        $( function() {
@@ -191,7 +195,6 @@
                
                 $.ajax({
                    url  : '/Individual/IdDupCheck',
-                   
                    data : { user_id : $('[name=user_id]').val()  }  
         	       
                })
@@ -214,6 +217,32 @@
            })
        })     
     </script>
-    <a href="/">홈으로</a>
+    <script>
+    $(function() {
+        emailEl.addEventListener('blur', function() { 
+            const email = emailEl.value.trim();
+            if (email === '') return; 
+
+            $.ajax({
+                url: '/Individual/EmailDupCheck',        // company 로 된거 individual 로 수정됨 !!
+                data: { email: email }, 
+                method: 'GET' 
+            })
+            .done(function(data) {
+                console.log(data);
+                if (data == null || data == '') { 
+                    $('#dupResultEmail').html('사용 가능한 이메일입니다').addClass('green');
+                } else { 
+                    $('#dupResultEmail').html('중복된 이메일입니다').addClass('red');
+                    alert('중복된 이메일입니다'); 
+                }
+            })
+            .fail(function(err) {
+                console.log(err);
+                alert('오류: 다시 시도해주세요.');
+            })
+        })
+    });
+	</script>
 </body>
 </html>

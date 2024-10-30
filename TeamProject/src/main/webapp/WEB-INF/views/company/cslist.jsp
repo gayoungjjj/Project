@@ -76,7 +76,7 @@ table td a:hover {
 
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Company/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Company/Main?user_id=${sessionScope.login.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
@@ -87,18 +87,18 @@ table td a:hover {
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=${param.compname}">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=${param.compname}">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=${param.compname}">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=${param.compname}">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=${param.compname}">북마크한 인재</a></li>
-               <li><a href="/Company/Cslist?user_id=${param.user_id}&compname=${param.compname}">고객센터</a></li>  
+          	   <li><a href="/Company/Postlist?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">인재 추천</a></li>
+               <li><a href="/Company/Bookmark?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">북마크한 인재</a></li>
+               <li><a href="/Company/Cslist?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">고객센터</a></li>  
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage?user_id=${param.user_id}&compname=${param.compname}">마이페이지</a></li>
+     		   <li><a href="/Company/Mypage?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -147,10 +147,29 @@ table td a:hover {
      
      <c:forEach var="cs" items="${csList}">
       <tr>
-       <td>${ cs.csp_id    }</td>
+       <td>${ cs.type    }</td>
        <td>
-         <a href="/Company/Csview?user_id=${param.user_id}&csp_title=${cs.csp_title}&compname=${compname}">
-           ${ cs.csp_title }</td>
+         <c:choose>
+           <c:when test="${not empty cs.csp_pw && param.user_id != cs.user_id}">
+             <a href="javascript:void(0);" onclick="alert('비밀글입니다. 작성자만 접근할 수 있습니다.');">
+              ${cs.csp_title}
+             </a>
+           </c:when>
+    
+           <c:when test="${not empty cs.csp_pw && param.user_id == cs.user_id}">
+           <c:url var="encodedCspTitle" value="${cs.csp_title}" />
+             <a href="javascript:void(0);" onclick="checkPassword('${encodedCspTitle}', '${cs.csp_pw}')">
+              ${cs.csp_title}
+             </a>
+           </c:when>
+    
+           <c:otherwise>
+              <a href="/Company/Csview?user_id=${sessionScope.login.user_id}&csp_title=${cs.csp_title}&compname=${sessionScope.login.compname}">
+              ${ cs.csp_title }
+              </a>
+           </c:otherwise>
+         </c:choose>
+       </td>
        <td>${ cs.result    }</td>
       </tr>
      </c:forEach>
@@ -171,8 +190,20 @@ table td a:hover {
 
      const goWrite = document.getElementById('goWrite');
      goWrite.onclick = function() {
-         location.href = '/Company/CswriteForm?user_id=${param.user_id}&compname=${compname}';        
+         location.href = '/Company/CswriteForm?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}';        
      };
+     
+     function checkPassword(encodedCspTitle, storedPassword) {
+   	  const userPassword = prompt("비밀번호를 입력하세요:");
+   	  
+   	  // 입력된 비밀번호가 저장된 비밀번호와 일치하면 페이지로 이동
+   	  if (userPassword === storedPassword) {
+   	    location.href = `/Company/Csview?user_id=${param.user_id}&csp_title=${encodedCspTitle}&compname=${compname}`;
+   	  } else {
+   	    alert("비밀번호가 올바르지 않습니다.");
+   	  }
+   	}
+     
 </script>
  
  </main>

@@ -54,6 +54,8 @@ public interface IndividualMapper {
 
 	List<IndividualVo> checkappex(String user_id, String aplnum);
 
+	List<IndividualVo> checkTitleExists( String userId, String title);
+
 
 
 }

@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -301,7 +305,8 @@ goList.onclick = function() {
 
 document.getElementById('checkForm').onclick = function(event) {
     event.preventDefault(); // 기본 제출 동작 방지
-
+    
+    const userId = '${param.user_id}';
     const title = document.querySelector('input[name="title"]');
     const birth = document.querySelector('input[name="birth"]');
     const gender = document.querySelector('select[name="gender"]');
@@ -334,9 +339,29 @@ document.getElementById('checkForm').onclick = function(event) {
         edu.focus();
         return false;
     }
-
-    // 모든 검증 통과 후 폼 제출
-    document.getElementById('WriteForm').submit();
+    console.log('모든 검증을 통과했습니다. AJAX 요청을 보냅니다.'); 
+    
+    $.ajax({
+        url: '/Individual/Checktitle', // 제목 중복 확인 API URL
+        type: 'POST', // POST 메서드 사용
+        contentType: 'application/json',
+        data: JSON.stringify({
+            user_id: userId,
+            title: title.value // title.value로 수정
+        }),
+        success: function(response) {
+            if (response.submitted) {
+                alert("이미 같은 제목의 이력서가 등록되어있습니다. 다른 제목을 입력해 주세요.");
+                title.focus();
+            } else {
+                // 모든 검증 통과 후 폼 제출
+                document.getElementById('WriteForm').submit();
+            }
+        },
+        error: function() {
+            alert("제목 중복 확인 중 오류가 발생했습니다.");
+        }
+    });
 };
 
 </script>

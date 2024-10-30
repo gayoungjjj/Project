@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -88,13 +89,14 @@ public class IndividualController {
 	}
 	
 	// ------------------------------- 메인 화면 -------------------------------//
-	// Individual/Main (메인 화면)
-    @RequestMapping("/Main")
-    public String main(String user_id, Model model) {
-        List<CompanyVo> postList = companyMapper.getPostList();
-        model.addAttribute("postList", postList); 
-        return "/individual/main"; 
-    }
+	// Individual/Main (메인 화면) 수정됨
+	 @RequestMapping("/Main")
+	    public String main(String user_id, Model model) {
+	         String compname = companyMapper.compnameByUserId(user_id);
+	        List<CompanyVo> postList = companyMapper.getPostList();
+	        model.addAttribute("postList", postList); 
+	        return "/individual/main"; 
+	    }
 		
 	// ------------------------------- 회원가입 -------------------------------//
 	// Individual/Signup (회원가입)
@@ -305,7 +307,25 @@ public class IndividualController {
         return mv;
     }
 
+   //제출 이력서 (제목중복확인)
+    @RequestMapping(value = "/Checktitle", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> checktitle(@RequestBody IndividualVo individualVo) {
+        String userId = individualVo.getUser_id(); // IndividualVo에서 user_id 추출
+        String title = individualVo.getTitle(); // IndividualVo에서 title 추출
 
+        List<IndividualVo> isDuplicate = individualMapper.checkTitleExists(userId, title);
+        System.err.println("2"+isDuplicate);
+        boolean submitted = (isDuplicate != null && !isDuplicate.isEmpty());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("submitted", submitted);
+
+        return response;
+    }
+
+
+	
 
 	// ------------------------------- 이력서 -------------------------------//
 	//Company/ResumeList ( 제출 이력서 목록)

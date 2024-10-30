@@ -1,5 +1,6 @@
 package com.board.company.controller;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -8,10 +9,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -36,38 +40,32 @@ public class CompanyController {
 	
 	// ------------------------------- 로그인 -------------------------------//
 	// Company/Login (로그인)
-	@RequestMapping("/Login")
-	public String login(
-			HttpServletRequest  request,
-	        HttpServletResponse response,
-	        RedirectAttributes redirectAttributes
-		    ) {
-	        String user_id   = request.getParameter("user_id");
-	        String password  = request.getParameter("password");                
-	        String uri       = request.getParameter("uri");
-			String menu_id   = request.getParameter("menu_id");
-			String nowpage   = request.getParameter("nowpage");
-
-	        CompanyVo vo = companyMapper.login(user_id, password);
-	        System.out.println("vo=" + vo);
-
-	        HttpSession session = request.getSession();
-	        session.setAttribute("login", vo);
-
-	        if (vo != null) {
-	       	 // 로그인 성공 처리
-	       	session.setAttribute("login", vo);
-	       	return "redirect:/Company/Main?user_id=" + user_id;
-	           			
-	       } else {
-	       	// 로그인 실패 처리
-	    	   
-	       	 request.setAttribute("errorMessage", "아이디 또는 비밀번호를 확인하세요.");
-	            //System.out.println("실패");
-	            return "company/login"; // 로그인 페이지로 돌아가기
-	       }         
+	@GetMapping("/Login")
+    public String loginForm(Model model) {
+        return "/company/login"; 
     }
 	
+	@PostMapping("/Login")
+    public String login(HttpServletRequest  request, 
+    					HttpServletResponse response,
+    					RedirectAttributes redirectAttributes) {
+        String user_id = request.getParameter("user_id"); 
+        String password = request.getParameter("password");
+
+        CompanyVo companyVo = companyMapper.login(user_id, password); 
+        System.out.println(companyVo);
+
+        HttpSession session = request.getSession();
+
+        if (companyVo != null) {
+            session.setAttribute("login", companyVo);
+            return "redirect:/Company/Main?user_id=" + user_id; 
+        } else {
+        	redirectAttributes.addFlashAttribute
+        	("errorMessage", "로그인 또는 비밀번호가 일치하지 않습니다.");
+            return "redirect:/Company/Login"; 
+        }
+	}
 	// ------------------------------- 로그아웃 -------------------------------//
 	// Company/Logout (로그아웃)
 	@RequestMapping(value="/Logout",
@@ -93,20 +91,14 @@ public class CompanyController {
 	}
 	
 	// ------------------------------- 메인 화면 -------------------------------//
-    // Company/Main (메인 화면)
-    @RequestMapping("/Main")
-	public ModelAndView main(String user_id) {
-    	String compname = companyMapper.compnameByUserId(user_id);
-
-	    List<CompanyVo> postList = companyMapper.getPostList();
-	      
-	    ModelAndView mv = new ModelAndView();
-	    mv.addObject("postList", postList);
-	    mv.addObject("user_id", user_id);
-	    mv.addObject("compname", compname);
-	    mv.setViewName("/company/main");
-	    return mv ;
-	}
+	   // Company/Main (메인 화면)
+	 @RequestMapping("/Main")
+	    public String main(String user_id, Model model) {
+	         String compname = companyMapper.compnameByUserId(user_id);
+	        List<CompanyVo> postList = companyMapper.getPostList();
+	        model.addAttribute("postList", postList); 
+	        return "/company/main"; 
+	    }
 	
 	// ------------------------------- 회원가입 -------------------------------//		   
     // Company/Signup (회원가입)
@@ -134,14 +126,44 @@ public class CompanyController {
         return mv;
     }
  // Company/CompanySignupForm (기업등록)
-    @RequestMapping("/CompanySignupForm")
-    public ModelAndView companysignupForm(CompanyVo companyVo) {
-    	companyMapper.companysignup(companyVo);
+    @PostMapping("/CompanySignupForm")
+    public ModelAndView companysignupForm(
+            @RequestParam("logo") MultipartFile logo,
+            CompanyVo companyVo) {
+
+        // 프로젝트의 실제 경로
+        String img = "D:\\dev_2\\spring\\TeamProject\\src\\main\\resources\\static\\img"; 
+
+        // 파일 저장 경로 
+        String filePath = img + "/" + logo.getOriginalFilename();
+
+        try {
+            // 디렉토리가 존재하지 않으면 생성
+            File directory = new File(img);
+            if (!directory.exists()) {
+                directory.mkdirs(); // 디렉토리 생성
+            }
+
+            // 파일 저장
+            logo.transferTo(new File(filePath));
+
+            // 웹에서 접근할 수 있는 로고 경로 설정
+            companyVo.setLogoPath("/img/" + logo.getOriginalFilename()); // DB에 저장할 경로 설정
+            		// 동기 수정됨 vo 추가 하면됨 setlogopath 오류나면 불러주세요
+            // 데이터베이스에 기업 정보 저장
+            companyMapper.companysignup(companyVo);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 파일 저장 실패 시 처리 로직 추가
+        }
+
         ModelAndView mv = new ModelAndView();
         System.out.println("Address: " + companyVo.getAddress());
-        mv.setViewName("redirect:/Company/Signup"); 
+        mv.setViewName("redirect:/Company/Signup");
         return mv;
     }
+    
 	// 아이디 중복확인
     @RequestMapping(
     		value   = "/IdDupCheck",
@@ -165,6 +187,19 @@ public class CompanyController {
     	System.out.println("컴퍼니:" + compnameVo);
     	return  compnameVo;
     } 
+    
+    // 이메일 중복방지  // 수정됨
+    @RequestMapping(
+    	    value = "/EmailDupCheck",
+    	    method = RequestMethod.GET,
+    	    headers = "Accept=application/json")
+    @ResponseBody
+    public CompanyVo emailDupCheck(String email) { 
+        CompanyVo compemailVo = companyMapper.emailDupCheck(email);
+        System.out.println(compemailVo);
+        return compemailVo;
+    	}
+    
     // ------------------------------- 마이페이지 -------------------------------//
 	// Company/Mypage (마이페이지)
     // http://localhost:9090/Company/Mypage?user_id=user1 
@@ -213,10 +248,11 @@ public class CompanyController {
 	//Company/Postlist (채용공고 목록)
 	@RequestMapping("/Postlist")
 	public ModelAndView postlist(@RequestParam String user_id, @RequestParam String compname) {
-	    System.out.println("User ID: " + user_id);
+	    System.out.println("/Postlist User ID: " + user_id);
 	    System.out.println("Company Name: " + compname);
 	    
 	    List<CompanyVo> mainList = companyMapper.getmainList();
+	    System.out.println("mainList"+mainList);
 	    ModelAndView mv = new ModelAndView();
 	    mv.addObject("mainList", mainList);
 	    mv.addObject("user_id", user_id);
@@ -225,6 +261,7 @@ public class CompanyController {
 	    return mv;
 	}
 	
+	//-----------------------채용공고 상세페이지------------------------------------
 	//Company/Postview (채용공고 상세페이지)
 	// http://localhost:9090/Company/View?aplnum=1
 	@RequestMapping("/Postview")
@@ -248,6 +285,7 @@ public class CompanyController {
 		return mv;
 	}
 	
+	//----------------------채용공고 등록---------------------------------------------------
 	//Company/WriteForm (채용공고 등록)
 	// http://localhost:9090/Company/WriteForm?aplnum=1
 	
@@ -265,14 +303,16 @@ public class CompanyController {
 	@RequestMapping("/Postwrite")
 	public ModelAndView postwrite(CompanyVo companyVo, String user_id, String compname) {
 	    companyMapper.insertposting(companyVo);
+	    System.out.println("writeVo"+companyVo);
 	    
 	    ModelAndView mv = new ModelAndView();
 		mv.addObject("user_id", user_id);
-		mv.setViewName("redirect:/Company/Postlist?user_id=" + user_id + "&compname=" + compname);
+		mv.addObject("compname", compname);
+		mv.setViewName("redirect:/Company/Postlist");
 		return mv;
 	}
 	
-	
+	//--------------------------채용공고 삭제-------------------------------------------
 	// /Company/Postdelete (채용공고 삭제)
 	// http://localhost:9090/Company/Postdelete?&aplnum=11
 	@RequestMapping("/Postdelete")
@@ -283,11 +323,13 @@ public class CompanyController {
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("user_id", user_id);
-		mv.setViewName("redirect:/Company/Postlist?user_id=" + user_id + "&compname=" + compname);
+		mv.addObject("compname", compname);
+		mv.setViewName("redirect:/Company/Postlist");
 //		mv.setViewName("redirect:/Company/ListManagement");
 		return mv;
 	}
 	
+	//-----------------------------채용공고 수정-------------------------------------------------
 	// /Company/PostupdateForm (채용공고 수정)
 	//http://localhost:9090/Company/PostupdateForm?&aplnum=8
 	@RequestMapping("/PostupdateForm")
@@ -299,6 +341,7 @@ public class CompanyController {
 		
 		mv.addObject("vo", vo);
 		mv.addObject("user_id", user_id);
+		mv.addObject("compname", compname);
 		mv.setViewName("company/postupdate");
 		return mv;
 	}
@@ -306,12 +349,14 @@ public class CompanyController {
 	@RequestMapping("/Postupdate")
 	public ModelAndView postupdate(CompanyVo companyVo, String user_id, String compname) {
 		
-		System.out.println("Postupdate"+companyVo);
+		System.out.println("Postupdate:"+companyVo);
 		
 		companyMapper.updateposting(companyVo);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/Company/Postlist?user_id=" + user_id + "&compname=" + compname);
+		mv.addObject("user_id", user_id);
+		mv.addObject("compname", compname);
+		mv.setViewName("redirect:/Company/Postlist");
 		return mv;
 	}
 	
@@ -331,6 +376,103 @@ public class CompanyController {
 			mv.addObject("user_id", user_id);
 			mv.addObject("compname", compname);
 			mv.setViewName("company/listmanagement");
+			return mv;
+		}
+	
+	//------------------------등록공고에서 새로운 공고-----------------------// 
+		@RequestMapping("/WriteForm2")
+		public ModelAndView writeform2(CompanyVo companyVo, String user_id, String compname) {
+			
+			ModelAndView mv = new ModelAndView();
+			System.out.println("writeformVo"+companyVo);
+			mv.addObject("companyVo", companyVo);
+			mv.addObject("user_id", user_id);
+			mv.setViewName("/company/postwrite2");
+			return mv;
+		}
+		
+		@RequestMapping("/Postwrite2")
+		public ModelAndView postwrite2(CompanyVo companyVo, String user_id, String compname) {
+			
+			companyMapper.insertposting(companyVo);
+			
+			System.out.println("writeVo"+companyVo);
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("user_id", user_id);
+			mv.addObject("compname", compname);
+			mv.addObject("companyVo", companyVo);
+			mv.setViewName("redirect:/Company/ListManagement");
+			return mv;
+		}
+		
+		//-----------------------등록공고에서 삭제------------------------------
+		@RequestMapping("/Postdelete2")
+		public ModelAndView postdelete2(CompanyVo companyVo,String user_id, String compname) {
+			
+			companyMapper.deleteposting(companyVo);
+			System.out.println("delete"+companyVo);
+			
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("user_id", user_id);
+			mv.addObject("compname", compname);
+			mv.addObject("companyVo", companyVo);
+			mv.setViewName("redirect:/Company/ListManagement");
+			return mv;
+		}
+		
+		
+		//---------------------------등록공고에서 상세보기----------------------------------------
+		@RequestMapping("/Postview2")
+		public ModelAndView postview2(CompanyVo companyVo,String user_id) {
+			
+			//조회수 증가
+			companyMapper.plushit(companyVo);
+			System.out.println("plusint"+companyVo);
+			
+			//글 조회
+			CompanyVo vo = companyMapper.getmain(companyVo);
+			//System.out.println("vo"+vo);
+			
+			String       duty   =  vo.getDuty().replace("\n", "<br>");
+			vo.setDuty( duty );
+			
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("vo",vo );
+			mv.addObject("user_id", user_id);
+			mv.addObject("companyVo", companyVo);
+			mv.setViewName("company/postview2");
+			return mv;
+		}
+		
+		
+		//--------------------------------등록공고에서 수정
+		@RequestMapping("/PostupdateForm2")
+		public ModelAndView postupdateForm2(CompanyVo companyVo,String user_id, String compname) {
+			
+			ModelAndView mv = new ModelAndView();
+			CompanyVo vo = companyMapper.getmain(companyVo);
+			System.out.println("postupdateForm"+vo);
+			
+			mv.addObject("vo", vo);
+			mv.addObject("user_id", user_id);
+			mv.addObject("compname", compname);
+			mv.addObject("companyVo", companyVo);
+			mv.setViewName("company/postupdate2");
+			return mv;
+		}
+		
+		@RequestMapping("/Postupdate2")
+		public ModelAndView postupdate2(CompanyVo companyVo,String user_id, String compname) {
+			
+			System.out.println("Postupdate"+companyVo);
+			
+			companyMapper.updateposting(companyVo);
+			
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("user_id", user_id);
+			mv.addObject("compname", compname);
+			mv.addObject("companyVo", companyVo);
+			mv.setViewName("redirect:/Company/ListManagement");
 			return mv;
 		}
 	
@@ -414,14 +556,16 @@ public class CompanyController {
 	// http://localhost:9090/Company/Recommend?user_id=user3&compname=카카오
 	//인재 추천
 	@RequestMapping("/Recommend")
-	public ModelAndView recommend(String user_id, String compname) {
+	public ModelAndView recommend(String user_id,String compname) {
 		
 		
-		List<CompanyVo> recommendList = companyMapper.recommendList();
+		List<CompanyVo> recommendList = companyMapper.recommendList(compname);
 		System.out.println("recommendList"+recommendList);
 		ModelAndView mv = new ModelAndView();
 		
 		mv.addObject("recommendList", recommendList);
+		mv.addObject("user_id", user_id);
+	    mv.addObject("compname", compname);
 		mv.setViewName("company/recommend");
 		return mv;
 	}
@@ -510,12 +654,13 @@ public class CompanyController {
 		mv.addObject("faqList", faqList);
 		mv.addObject("csList", csList);
 		mv.addObject("title", title);
+		mv.addObject("user_id", user_id);
 		mv.setViewName("company/cslist");
 		return mv ;
 	}
 	// Company/Csview (문의글 상세페이지)
 	@RequestMapping("/Csview")
-	public ModelAndView csview(CompanyVo companyVo, String csp_title, String compname) {
+	public ModelAndView csview(CompanyVo companyVo, String user_id, String csp_title, String compname) {
 		CompanyVo vo = companyMapper.getcs(companyVo);
 		
 		// csp_title = csp_title.replaceAll(" ", "");
@@ -523,6 +668,7 @@ public class CompanyController {
 		System.out.println("vo1111=" +vo);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("vo",vo );
+		mv.addObject("user_id",user_id );
 		mv.addObject("csp_title",csp_title );
 		mv.setViewName("company/csview");
 		return mv;
@@ -556,12 +702,13 @@ public class CompanyController {
 	}
 	// Company/CsupdateForm (문의글 수정)
 	@RequestMapping("/CsupdateForm")
-	public ModelAndView csupdateForm(CompanyVo companyVo, String csp_id, String csp_title, String compname) {
+	public ModelAndView csupdateForm(CompanyVo companyVo, String user_id, String csp_id, String csp_title, String compname) {
 		CompanyVo vo = companyMapper.getcs(companyVo);
 		System.out.println("updatevo=" +vo );
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("vo",vo );
 		mv.addObject("csp_id",csp_id );
+		mv.addObject("user_id",user_id );
 		mv.setViewName("company/csupdate");
 		return mv;
 	}
@@ -572,8 +719,23 @@ public class CompanyController {
 		companyMapper.updatecs(companyVo);
 		
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("user_id", user_id);
 		mv.setViewName("redirect:/Company/Cslist");
 		return mv;
 	}
 	
+	// Company/csdelet (문의글 삭제)
+	@RequestMapping("/Csdelete")
+	public ModelAndView csdelete(CompanyVo companyVo, String user_id) {
+		companyMapper.deletecs(companyVo);
+		System.out.println(user_id);
+		System.out.println(companyVo);
+		
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("user_id", user_id);
+		mv.setViewName("redirect:/Company/Cslist");
+		return mv;
+	}
+
 }

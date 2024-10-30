@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -118,7 +120,7 @@
      <!-- 이력서 작성(이력서 불러오기 등)해서 이력서 보내기로 넘어가는 기능 구현하면 어떨까요? -->
      <tr>
       <td colspan="4"> 	
-       <a href="/Individual/Postlist?aplnum=${vo.aplnum}">목록</a>
+       <a href="/Individual/Postlist?aplnum=${vo.aplnum}&user_id=${param.user_id}">목록</a>
        <a href="/Individual/Postapp?aplnum=${vo.aplnum}&user_id=${param.user_id}">이력서 작성</a>
       </td>
      </tr>

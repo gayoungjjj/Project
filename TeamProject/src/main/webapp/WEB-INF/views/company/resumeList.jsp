@@ -76,7 +76,7 @@ table td a:hover {
 
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Company/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Company/Main?user_id=${sessionScope.login.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
@@ -87,18 +87,18 @@ table td a:hover {
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=${compname}">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=${compname}">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=${compname}">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=${compname}">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=${compname}">북마크한 인재</a></li>               
-               <li><a href="/Company/Cslist?user_id=${param.user_id}&compname=${compname}">고객센터</a></li>
+          	   <li><a href="/Company/Postlist?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">인재 추천</a></li>
+               <li><a href="/Company/Bookmark?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">북마크한 인재</a></li>               
+               <li><a href="/Company/Cslist?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">고객센터</a></li>
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage?user_id=${param.user_id}&compname=${compname}">마이페이지</a></li>
+     		   <li><a href="/Company/Mypage?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -134,7 +134,7 @@ table td a:hover {
        <td>${ app.aplnum   }</td>
        <td>${ app.post_id }</td>
        <td>
-       <a href="/Company/Resumeview?title=${app.title}&post_id=${app.post_id}&user_id=${param.user_id}&compname=${param.compname}">
+       <a href="/Company/Resumeview?title=${app.title}&post_id=${app.post_id}&user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">
            ${ app.title }</a>
        </td>
        <td>${ app.location }</td>

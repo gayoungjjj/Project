@@ -1,5 +1,7 @@
 package com.board.company.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -70,5 +72,8 @@ public class CompanyVo {
 	private String portfolio;
 	private String selfintro;
 	private String u_date;
+	
+	private MultipartFile logo; 
+	private String logoPath;
 
 }

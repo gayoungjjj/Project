@@ -16,6 +16,7 @@
 <style>
   main{
   h2    {margin-left : 16%;}
+  
   table {
          border : 1px solid #DCDBDB;
          text-align : center;
@@ -24,16 +25,66 @@
          width : 78%;
          font-weight : bold;
          height: auto;
+         
+         background-color: #ffffff;
+		 box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+		 margin: 20px auto;
+		 width: 90%;
+	     max-width: 1100px;
+		 border-radius: 10px;
+ 
+   	     margin-top:20px;
+	     display: flex;
+	     justify-content: center;		  
+	     padding: 20px;
          }
-   td {border : 1px solid #DCDBDB;
-       padding : 10px;}
-   tr {padding : 10px;}
+         
+   td {
+         padding : 10px;
+         padding-left : 80px;
+         padding-right : 80px;
+         white-space: nowrap;}
+        
+   tr {
+         padding : 10px;
+         border-bottom: 1px solid #ddd;}
    
-   a { text-decoration:none; color : black;}
+   a {text-decoration:none; color : black;}
    a:hover{color : blue;}
    }
-  tr:first-child{background : #E7E7E7; }
+   
+  td:nth-of-type(1){background : #E7E7E7; }
+  td:nth-of-type(3){background : #E7E7E7; }
+  
+  table tr:last-of-type td {
+       background-color: white; 
+       border: none; }
+    
   select{margin-left : 16%;}
+  
+  .textarea1{
+      height : 50px;
+      width  : 80%;
+      resize: none;}
+      
+  .textarea2{
+      height : 200px;
+      width  : 100%;
+      resize: none;}
+      
+  .textarea3{
+      height : 30px;
+      width  : 100%;
+      resize: none;}
+      
+   input[type=number]{height : 40px;
+                      width  : 100%;}
+                      
+   input[type=text]{height : 40px;
+                    width  : 100%; }
+                    
+   .deadline{height : 40px;
+             width  : 100%;}
   
   input[type=submit] {padding : 8px;
                       background : white;
@@ -54,6 +105,24 @@
                       
   input[type=button]:hover {background: #308752;
                             color : white;}
+                            
+    .select1
+   {width: 100px; 
+    padding: 10px; 
+    font-size: 16px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    background-color: #E7E7E7;}
+    
+  .select2
+   {width: 100px; 
+    padding: 10px; 
+    font-size: 16px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    background-color: #E7E7E7;} 
+    
+    #red{color:red;}                       
 </style>
 
 
@@ -62,7 +131,7 @@
 
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Company/Main?user_id=${param.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Company/Main?user_id=${sessionScope.login.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
@@ -72,18 +141,18 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=${compname}">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id}&compname=${compname}">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=${compname}">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=${compname}">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=${compname}">북마크한 인재</a></li>               
-               <li><a href="/Company/Cslist?user_id=${param.user_id}&compname=${compname}">고객센터</a></li>    
+          	   <li><a href="/Company/Postlist?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">인재 추천</a></li>
+               <li><a href="/Company/Bookmark?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">북마크한 인재</a></li>               
+               <li><a href="/Company/Cslist?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">고객센터</a></li>    
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage?user_id=${param.user_id}&compname=${compname}">마이페이지</a></li>
+     		   <li><a href="/Company/Mypage?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -98,16 +167,16 @@
 
   <!--채용공고 목록_수정 -->
 <main>   
-    <form action="/Company/Postupdate?aplnum=${param.aplnum}&user_id=${param.user_id}&compname=${param.compname}"  method="POST">
+    <form action="/Company/Postupdate?aplnum=${param.aplnum}&user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}"  method="POST">
     <h2>공고 수정(${param.aplnum})</h2>
     <tr>
-       <select 	name="career" value="${vo.career }">
+       <select 	name="career" value="${vo.career }" class="select1">
          <option value="">경력</option>
          <option value="신입">신입</option>
          <option value="경력">경력</option>
          <option value="무관">무관</option>
        </select>
-       <select name="edu" value="${vo.edu}">
+       <select name="edu" value="${vo.edu}" class="select2">
          <option value="">학력</option>
          <option value="고졸">고졸</option>
          <option value="대졸">대졸</option>
@@ -118,13 +187,9 @@
     <table id="table">
      
      <tr>
-       <td>공고명</td>
-       <td>
-       <input type="text"     name="post_id"   id="post_id" value="${vo.post_id}" /> 
-       </td>
-       <td>모집인원</td>
-       <td>
-       <input type="number"     name="recruitnum"   id="recruitnum" value="${vo.recruitnum}"   /> 
+       <td><span id="red">*</span>공고명</td>
+       <!--<input type="text"  class="name" name="post_id"   id="post_id"  />  --> 
+       <td colspan="3"><textarea name="post_id" id = "post_id" class="textarea1" maxlength="40" >${vo.post_id}</textarea>
        </td>
      </tr>
      <tr>
@@ -142,14 +207,14 @@
        <td>
        <input type="text"     name="workspace"   id="workspace" value="${vo.workspace}"  /> 
        </td>
-       <td>급여</td>
+       <td><span id="red">*</span>급여</td>
        <td>
        <input type="number"     name="salary"   id="salary" value="${vo.salary}"  /> 
        </td>
      <tr>
-       <td>보유기술</td>
+       <td><span id="red">*</span>모집인원</td>
        <td>
-       <input type="text"     name="skills"   id="skills" value="${vo.skills}"  /> 
+       <input type="number"     name="recruitnum"   id="recruitnum" value="${vo.recruitnum}"   /> 
        </td>
        <td>자격증</td>
        <td>
@@ -157,8 +222,16 @@
        </td>
      </tr>
      <tr>
-      <td>직무내용</td>
-      <td colspan="3"><textarea name="duty" id ="duty" maxlength="1300" >${vo.duty}</textarea></td>
+       <td>보유기술</td>
+       <td colspan="3">
+       <input type="text"     name="skills"   id="skills" value="${vo.skills}" />
+       <!-- <textarea name="text" id = "skills" class="textarea3" maxlength="50" >${vo.skills}</textarea> -->
+       </td>
+     </tr>
+     <tr>
+      <td><span id="red">*</span>직무내용</td>
+      <td colspan="3">
+      <textarea name="duty" id ="duty" maxlength="1300" class="textarea2">${vo.duty}</textarea></td>
      </tr>
      <tr>
       <td colspan="4">
@@ -174,18 +247,29 @@
         
        const  goListEl = document.getElementById('goList')
        goListEl.onclick = function() {
-          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${param.user_id}&compname=${compname}'
+          location.href = '/Company/Postlist?aplnum=${aplnum}&user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}'
        }    
        
        const  formEl       = document.querySelector('form');
        const  post_idEl      = document.querySelector('#post_id');
        const  dutyEl      = document.querySelector('#duty');
-       
+       const  salaryEl          = document.querySelector('#salary');
+       const  recruitnumEl      = document.querySelector('#recruitnum');	
        
        formEl.onsubmit   = function () {           
 		   if(  post_idEl.value.trim() == ''  ) {
                alert('제목을 입력하세요')
                post_idEl.focus()
+           	   return  false;
+		   } 
+		   if(  recruitnumEl.value.trim() == ''  ) {
+               alert('모집인원을 입력하세요')
+               recruitnumEl.focus()
+           	   return  false;
+		   } 
+		   if(  salaryEl.value.trim() == ''  ) {
+               alert('급여를 입력하세요')
+               salaryEl.focus()
            	   return  false;
 		   } 
 		   if(  dutyEl.value.trim() == ''  ) {

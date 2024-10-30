@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>개인 회원 로그인</title>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
     <style>
         body {
             display: flex;
@@ -64,6 +67,7 @@
     <img src="/img/로고.png"  alt=회사로고 onclick="location.href='/'"/>
     <div class="container">
         <h2>개인 로그인</h2>
+        
         <form action="/Individual/Login" method="POST">
             <table>
                 <tr>
@@ -88,9 +92,16 @@
                 </tr>
             </table>
         </form>
-        <c:if test="${not empty errorMessage}">
-          <div class="error">${errorMessage}</div>
-        </c:if>
     </div>
+        <script>
+        $(document).ready(function() {
+        	var errorMessage = 
+            "<%= request.getAttribute("errorMessage") != null ? 
+            	 request.getAttribute("errorMessage") : "" %>";
+            if (errorMessage) {
+                alert(errorMessage);
+            }
+        });
+        </script>
 </body>
 </html>

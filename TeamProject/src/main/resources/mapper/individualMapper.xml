@@ -88,18 +88,22 @@
   </insert>
   
   
-  <!-- 개인 - 기업추천 -->
+  <!-- 개인 - 기업추천 --> <!-- 동기 수정됨 -->
    <select id="recommendList">
-        SELECT  JP.* 
-        FROM    JOBPOSTING JP
-        JOIN    RESUMES RE ON RE.USER_ID = #{user_id} 
-        WHERE   JP.LICENSES IS NOT NULL
+    SELECT 
+        JP.* 
+    FROM 
+        JOBPOSTING JP
+    JOIN 
+        RESUMES RE ON RE.USER_ID = #{user_id} 
+    WHERE 
+        JP.LICENSES IS NOT NULL
         AND (
-                JP.LICENSES LIKE '%' || RE.LICENSES1 || '%'
-                OR JP.LICENSES LIKE '%' || RE.LICENSES2 || '%'
-                OR JP.LICENSES LIKE '%' || RE.LICENSES3 || '%'
-            )
-    </select> 
+            RE.LICENSES1 IS NOT NULL AND JP.LICENSES = RE.LICENSES1
+            OR RE.LICENSES2 IS NOT NULL AND JP.LICENSES = RE.LICENSES2
+            OR RE.LICENSES3 IS NOT NULL AND JP.LICENSES = RE.LICENSES3
+        )
+    </select>
   	
    	<!-- title 가져오기-->
     <select id="getTitlesByUSerId" resultType="string" parameterType="string">
@@ -211,6 +215,14 @@
 	WHERE REPLACE(TITLE, ' ', '')= #{arg1} 
         	AND   USER_ID=#{arg0}
 </select>
+
+
+<!--  등록 이력서 제목 중복확인  -->
+<select id="checkTitleExists">
+ SELECT * FROM RESUMES
+WHERE user_id = #{arg0} AND title = #{arg1}
+</select>
+
 
 	
  <!-- 등록 이력서 삭제  수정됨 -->

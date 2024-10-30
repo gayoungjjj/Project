@@ -16,26 +16,52 @@
 
 <style>
 
- /*임시-----------*/
  main{
-  h2    {margin-left : 16%;}
-  table {
-         border : 1px solid #DCDBDB;
-         text-align : center;
-         border-collapse: collapse;
-         margin-left : 16%;
-         width : 78%;
-         font-weight : bold;
-         height: auto;
-         }
-   td {border : 1px solid #DCDBDB;
-       padding : 10px;}
-   tr {padding : 10px;}
+    h2    {
+           margin-left : 16%;
+           font-weight : bold;}
+    table {
+           border : 1px solid #DCDBDB;
+           text-align : center;
+           border-collapse: collapse;
+           margin-left : 16%;
+           width : 78%;
+           font-family:arial;
+           height: auto;
+         
+           background-color: #ffffff;
+	  	   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+		   margin: 20px auto;
+		   width: 73%;
+		   border-radius: 10px;
+ 
+   	       margin-top:10px;
+	       display: flex;
+	       justify-content: center;		  
+	       padding: 20px;}
+         
+   td { 
+           padding : 10px;
+           padding-left : 60px;
+           padding-right : 60px;}
+        
+   tr { 
+           padding : 10px;
+           border-bottom: 1px solid #ddd;}
    
-   a { text-decoration:none; color : black;}
-   a:hover{color : blue;}
+   a     {    
+           text-decoration:none; color : black;}
+   a:hover {color : blue;}
    }
-  tr:first-child{background : #E7E7E7; }
+   
+  tr:first-child  { 
+            background : #E7E7E7;
+            font-weight : bold; }
+  
+  #bookmark  { width:30px;
+               height: auto; 
+               cursor: pointer;}
+  
 /*----------------*/
   .legnav {
    margin-top:20px;
@@ -88,7 +114,7 @@
 <body>
  <div class = "div1">
  	 <h1 class ="logo">
-  		<a href="/Company/Main"><img src="/img/로고.png"  alt=회사로고/></a>
+  		<a href="/Company/Main?user_id=${sessionScope.login.user_id}"><img src="/img/로고.png"  alt=회사로고/></a>
  	 </h1>
      <div class="search">
   		<input type="text" placeholder="#픽미 는 당신의 채용을 응원합니다!! ">
@@ -99,18 +125,18 @@
   	<header>
  	  <nav class ="headernav">
     	<ul class ="leftmenu"> 
-          	   <li><a href="/Company/Postlist?user_id=${param.user_id}&compname=${param.compname}">채용공고</a></li>
-      		   <li><a href="/Company/ListManagement?user_id=${param.user_id }&compname=${param.compname}">등록 공고 관리</a></li>
-      		   <li><a href="/Company/ResumeList?user_id=${param.user_id}&compname=${param.compname}">지원 받은 이력서</a></li>
-               <li><a href="/Company/Recommend?user_id=${param.user_id}&compname=${param.compname}">인재 추천</a></li>
-               <li><a href="/Company/Bookmark?user_id=${param.user_id}&compname=${param.compname}">북마크한 인재</a></li>               
-               <li><a href="/Company/Cslist?user_id=${param.user_id}&compname=${param.compname}">고객센터</a></li>  
+          	   <li><a href="/Company/Postlist?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">채용공고</a></li>
+      		   <li><a href="/Company/ListManagement?user_id=${sessionScope.login.user_id }&compname=${sessionScope.login.compname}">등록 공고 관리</a></li>
+      		   <li><a href="/Company/ResumeList?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">지원 받은 이력서</a></li>
+               <li><a href="/Company/Recommend?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">인재 추천</a></li>
+               <li><a href="/Company/Bookmark?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">북마크한 인재</a></li>               
+               <li><a href="/Company/Cslist?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">고객센터</a></li>  
           </ul> 
               
             <div class="rightmenu" >   
             	<ul>   
   			   <li><a href="/Company/Logout">로그아웃</a></li>
-     		   <li><a href="/Company/Mypage?user_id=${param.user_id}&compname=${param.compname}">마이페이지</a></li>
+     		   <li><a href="/Company/Mypage?user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}">마이페이지</a></li>
     		</ul>  	
     		</div>
     	</nav> 	   
@@ -134,13 +160,13 @@
        
        <c:forEach var="book" items="${bookmarkList}">
          <form action="/Company/Bookmarking" method="post">
-         <input type="hidden" name="user_id" value="${param.user_id}">
-         <input type="hidden" name="compname" value="${param.compname}"> 
+         <input type="hidden" name="user_id" value="${sessionScope.login.user_id}">
+         <input type="hidden" name="compname" value="${sessionScope.login.compname}"> 
        <tr>
         <td>${book.username}</td>
         <td>${book.birth}</td>
         <td>
-          <a href="/Company/Resumejustview?title=${book.title}&user_id=${param.user_id}&compname=${param.compname}"> 
+          <a href="/Company/Resumejustview?title=${book.title}&user_id=${sessionScope.login.user_id}&compname=${sessionScope.login.compname}"> 
                 ${book.title}
             </a>
          </td>
